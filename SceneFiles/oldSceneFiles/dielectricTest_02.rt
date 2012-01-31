@@ -1,0 +1,7 @@
+shape sphere 0.0 0.0 0.0 1.0 lambertian 0.4 0.4 1.0 instanceid eggBase
+instance eggBase blinnphong 0.0 0.0 1.0 1.0 1.0 1.0 16.0 transform translate 0.0 1.0 -2.0 scale 0.5 0.5 0.5
+instance eggBase dielectric 1.42 transform translate 0.0 1.0 0.0 
+shape triangle -50.0 0.0 50.0 50.0 0.0 50.0 50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.08
+shape triangle -50.0 0.0 50.0 50.0 0.0 -50.0 -50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.08
+camera 0.0 1.0 4.0 0.0 -0.05 -3.0 0.40 0.5
+light -10.0 80.0 10.0 1.0 1.0 1.0

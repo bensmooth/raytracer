@@ -1,0 +1,20 @@
+shape triangle -1.0 0.0 0.0 1.0 0.0 0.0 1.0 2.0 0.0 lambertian 0.5 0.5 0.5 instanceid wall1
+shape triangle 1.0 2.0 0.0 -1.0 2.0 0.0 -1.0 0.0 0.0 lambertian 0.5 0.5 0.5 instanceid wall2
+shape sphere 0.0 1.0 0.0 1.0 lambertian 0.4 0.4 1.0
+shape sphere -0.85 0.5 0.85 0.5 lambertian 1.0 0.4 0.4
+shape sphere 0.85 0.5 0.85 0.5 lambertian 1.0 1.0 0.4
+shape sphere 0.0 0.5 -0.85 0.5 lambertian 0.4 1.0 0.4
+instance wall1 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate -3.4641 0.0 -2.0 scale 1.0 2.0 1.0 rotY 42.0
+instance wall2 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate -3.4641 0.0 -2.0 scale 1.0 2.0 1.0 rotY 42.0
+instance wall1 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate -2.0 0.0 -3.4641 scale 1.0 2.0 1.0 rotY 20.0
+instance wall2 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate -2.0 0.0 -3.4641 scale 1.0 2.0 1.0 rotY 20.0
+instance wall1 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate 0.0 0.0 -4.0 scale 1.0 2.0 1.0
+instance wall2 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate 0.0 0.0 -4.0 scale 1.0 2.0 1.0
+instance wall1 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate 2.0 0.0 -3.4641 scale 1.0 2.0 1.0 rotY -20.0
+instance wall2 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate 2.0 0.0 -3.4641 scale 1.0 2.0 1.0 rotY -20.0
+instance wall1 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate 3.4641 0.0 -2.0 scale 1.0 2.0 1.0 rotY -42.0
+instance wall2 blinnphong 0.5 0.5 0.5 1.0 1.0 1.0 16.0 m 0.5 g 0.0 transform translate 3.4641 0.0 -2.0 scale 1.0 2.0 1.0 rotY -42.0
+shape triangle -50.0 0.0 50.0 50.0 0.0 50.0 50.0 0.0 -50.0 lambertian 0.5 0.6 0.5 
+shape triangle -50.0 0.0 50.0 50.0 0.0 -50.0 -50.0 0.0 -50.0 lambertian 0.5 0.6 0.5 
+camera 0.0 3.0 6.0 0.0 -1.0 -3.0 0.40 0.5
+light 0.0 10.0 0.0 1.0 1.0 1.0 area 4.0 4.0 normal 0.0 -1.0 0.0

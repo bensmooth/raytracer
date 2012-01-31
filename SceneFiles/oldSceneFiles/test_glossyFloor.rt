@@ -1,0 +1,10 @@
+shape sphere 0.0 0.0 0.0 1.0 lambertian 0.4 0.4 1.0 instanceid eggBase
+instance eggBase lambertian 0.8 0.2 0.2 transform translate 0.0 2.0 -2.0 scale 1.0 2.0 1.0
+instance eggBase lambertian 0.2 0.8 0.2 transform translate 0.0 0.0 -2.0 rotZ -45.0 translate 0.0 2.0 0.0 scale 1.0 2.0 1.0
+instance eggBase lambertian 0.2 0.2 0.8 transform translate 0.0 0.0 -2.0 rotZ 45.0 translate 0.0 2.0 0.0 scale 1.0 2.0 1.0
+shape triangle -50.0 0.0 50.0 50.0 0.0 50.0 50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.8
+shape triangle -50.0 0.0 50.0 50.0 0.0 -50.0 -50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.8
+camera 0.0 3.0 8.0 0.0 -1.0 -3.0 0.50 0.5
+light -10.0 10.0 1.0 1.0 1.0 1.0
+light 10.0 8.0 1.0 0.8 0.8 0.8
+light 1.0 3.0 8.0 0.25 0.25 0.25

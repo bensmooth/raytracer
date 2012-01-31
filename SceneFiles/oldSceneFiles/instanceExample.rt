@@ -1,0 +1,11 @@
+shape mesh dragon.obj lambertian 0.4 0.4 1.0 instanceid dragon1
+instance dragon1 lambertian 0.2 0.2 1.0 transform scale 1.0 1.0 1.0 
+instance dragon1 lambertian 0.8 0.8 0.9 transform scale 2.0 2.0 2.0 translate 0.0 1.0 0.0 rotY 120.0 rotX -90.0 
+instance dragon1 lambertian 0.8 0.8 0.9 transform translate -2.0 1.5 3.0 scale 2.0 2.0 2.0 rotY 155.0 rotX -90.0 
+instance dragon1 lambertian 0.8 0.8 0.9 m 0.2 transform translate 2.0 1.5 4.0 scale 2.0 2.0 2.0 rotY 35.0 rotX -90.0 
+shape triangle -50.0 0.0 50.0 50.0 0.0 50.0 50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.2
+shape triangle -50.0 0.0 50.0 50.0 0.0 -50.0 -50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.2
+camera 0.0 3.0 8.0 0.0 -1.0 -3.0 0.40 0.5
+light -10.0 10.0 1.0 1.0 1.0 1.0
+light 10.0 8.0 1.0 0.8 0.8 0.8
+light 1.0 3.0 8.0 0.25 0.25 0.25

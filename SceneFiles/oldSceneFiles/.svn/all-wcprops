@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles
+END
+simpleSceneThreeLightsPhongIdealDielectric.rt
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/simpleSceneThreeLightsPhongIdealDielectric.rt
+END
+dragons.rt
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dragons.rt
+END
+sphereInstances.rt
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/sphereInstances.rt
+END
+test_AreaLight00.rt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_AreaLight00.rt
+END
+test_AreaLight01.rt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_AreaLight01.rt
+END
+test_1KSpheres.rt
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_1KSpheres.rt
+END
+test_simpleSceneThreeLightsPhongIdeal.rt
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_simpleSceneThreeLightsPhongIdeal.rt
+END
+test_simpleSceneThreeLightsPhong.rt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_simpleSceneThreeLightsPhong.rt
+END
+dielectricTest_00.rt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_00.rt
+END
+test_1MSpheres.rt
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_1MSpheres.rt
+END
+test_simpleScene.rt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_simpleScene.rt
+END
+dielectricTest_01.rt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_01.rt
+END
+metallicDragons.rt
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/metallicDragons.rt
+END
+dielectricTest_02.rt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_02.rt
+END
+dielectricTest_03.rt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_03.rt
+END
+test_simpleSceneThreeLights.rt
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_simpleSceneThreeLights.rt
+END
+buddhas.rt
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/buddhas.rt
+END
+test_threeInstancedDragons.rt
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_threeInstancedDragons.rt
+END
+threeEggs.rt
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/threeEggs.rt
+END
+test_simpleSceneThreeLightsPhongIdealDielectric2.rt
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_simpleSceneThreeLightsPhongIdealDielectric2.rt
+END
+instanceExample.rt
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/instanceExample.rt
+END
+bneumann_scene00.rt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/bneumann_scene00.rt
+END
+bneumann_scene01.rt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/bneumann_scene01.rt
+END
+test_glossyFloor.rt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_glossyFloor.rt
+END
+phongExp.rt
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/phongExp.rt
+END
+glossinessIdeal.rt
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/glossinessIdeal.rt
+END
+glossiness.rt
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/glossiness.rt
+END
+simpleSceneThreeLightsPhongIdealTextured.rt
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/simpleSceneThreeLightsPhongIdealTextured.rt
+END

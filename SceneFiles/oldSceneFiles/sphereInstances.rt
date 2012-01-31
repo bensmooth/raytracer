@@ -1,0 +1,21 @@
+shape sphere 0.0 0.0 0.0 1.0 lambertian 0.4 0.4 1.0 instanceid eggBase
+instance eggBase transform translate -5.5 1.0 -4.0
+instance eggBase blinnphong 0.8 0.2 0.2 1.0 1.0 1.0 128.0 transform translate -3.8 1.0 -4.0 scale 0.5 1.5 1.0
+instance eggBase blinnphong 0.2 0.8 0.2 1.0 1.0 1.0 512.0 transform translate -1.5 1.0 -4.0 scale 1.0 0.5 1.5
+instance eggBase blinnphong 0.2 0.2 0.2 1.0 0.0 0.0 32.0 m 0.9 transform translate 5.0 1.0 -4.0 scale 0.8 1.2 1.0
+instance eggBase transform translate -4.5 1.0 -1.0
+instance eggBase blinnphong 0.8 0.2 0.2 1.0 1.0 1.0 128.0 transform translate -3.2 1.0 -1.0 scale 0.5 1.5 1.0
+instance eggBase blinnphong 0.2 0.8 0.2 1.0 1.0 1.0 512.0 transform translate 1.5 1.0 -1.0 scale 1.0 0.5 1.5
+instance eggBase blinnphong 0.2 0.2 0.2 1.0 0.0 0.0 32.0 m 0.9 transform translate 2.5 1.0 -1.0 scale 0.8 1.2 1.0
+instance eggBase transform translate -3.5 1.0 1.0
+instance eggBase blinnphong 0.8 0.2 0.2 1.0 1.0 1.0 128.0 transform translate -2.8 1.0 1.0 rotZ -45.0 scale 0.5 1.5 1.0 
+instance eggBase blinnphong 0.2 0.8 0.2 1.0 1.0 1.0 512.0 transform translate 0.5 1.0 1.0 scale 1.0 0.5 1.5
+instance eggBase blinnphong 0.2 0.2 0.2 1.0 0.0 0.0 32.0 m 0.9 transform translate 2.0 1.0 1.0 scale 0.8 1.2 1.0
+instance eggBase dielectric 1.2 transform translate -3.5 1.0 3.0
+instance eggBase blinnphong 0.8 0.2 0.2 1.0 1.0 1.0 128.0 m 0.2 transform translate -2.8 1.0 3.0 scale 0.5 1.5 1.0
+instance eggBase dielectric 1.1 transform translate 0.5 1.0 3.0 rotX 90.0 scale 1.0 0.25 1.0 
+instance eggBase blinnphong 0.2 0.2 0.2 1.0 0.0 0.0 32.0 m 0.9 transform translate 2.0 1.0 1.0 scale 0.8 1.2 3.0
+shape triangle -50.0 0.0 50.0 50.0 0.0 50.0 50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.08
+shape triangle -50.0 0.0 50.0 50.0 0.0 -50.0 -50.0 0.0 -50.0 blinnphong 0.3 0.3 0.3 1.0 1.0 1.0 4.0 m 0.08
+camera -0.5 8.0 6.0 0.0 -3.2 -2.8 0.40 0.5
+light -10.0 80.0 10.0 1.0 1.0 1.0

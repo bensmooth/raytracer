@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/cssvn/cs5721/!svn/ver/92/trunk/SceneFiles
+END
+convertObjTortTriList.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/cssvn/cs5721/!svn/ver/33/trunk/SceneFiles/convertObjTortTriList.cpp
+END
+test_oneSphere.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cssvn/cs5721/!svn/ver/92/trunk/SceneFiles/test_oneSphere.xml
+END
+test_oneBox.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/cssvn/cs5721/!svn/ver/86/trunk/SceneFiles/test_oneBox.xml
+END

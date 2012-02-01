@@ -7,5 +7,5 @@
  */
 struct Ray
 {
-	Vector3D position, direction;
+	sivelab::Vector3D position, direction;
 };

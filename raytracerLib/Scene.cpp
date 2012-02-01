@@ -1,6 +1,9 @@
 #include "Scene.h"
 
 #include <cfloat>
+#include <png++/image.hpp>
+
+#include "Intersection.h"
 
 
 Scene::Scene(std::string filename)
@@ -11,6 +14,9 @@ Scene::Scene(std::string filename)
 
 void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 {
+	// This is the image we will be writing to.
+	png::image<png::rgb_pixel> outputImage(imageWidth, imageHeight);
+
 	// Get color values for each pixel.
 	for (int imageX = 0; imageX < imageWidth; imageX++)
 	{
@@ -35,12 +41,28 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 				}
 			}
 
-			// TODO: If it did intersect, invoke closest object's shader.
+			// The color of the pixel.
+			png::rgb_pixel color;
 
-			// TODO: Save color to PNG structure.
+			// If it did intersect, invoke closest object's shader.
+			if (closestIntersect.t != DBL_MAX)
+			{
+				color = closestIntersect.object->GetShader()->Shade(closestIntersect);
+			}
+			else
+			{
+				// Use black as the background color for now.
+				color.red = 0;
+				color.green = 0;
+				color.blue = 0;
+			}
+
+			// Save color to PNG structure.
+			outputImage.set_pixel(imageX, imageY, color);
 		}
 	}
 
-	// TODO: Write out PNG.
+	// Write out PNG.
+	outputImage.write(outfile);
 }
 

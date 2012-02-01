@@ -1,7 +1,12 @@
 #pragma once
 
 #include "Vector3D.h"
-#include "Ray.h"
+
+
+struct Ray;
+
+class IObject;
+
 
 /**
  * This structure represents an intersection.

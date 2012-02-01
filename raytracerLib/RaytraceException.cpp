@@ -3,7 +3,8 @@
  * Ben Hart
  */
 
-#include "GraphicsException.h"
+#include "RaytraceException.h"
+
 
 RaytraceException::RaytraceException(std::string what)
 {

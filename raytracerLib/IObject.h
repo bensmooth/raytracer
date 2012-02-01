@@ -1,12 +1,15 @@
 #pragma once
 
-#include "Ray.h"
 #include "IShader.h"
-#include "Intersection.h"
+
+struct Ray;
+
+struct Intersection;
 
 
 class IObject
 {
+public:
 	/**
 	 * Sees if the given ray intersects with the object.
 	 * @param ray The ray to test for intersection.

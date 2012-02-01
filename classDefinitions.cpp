@@ -1,10 +1,14 @@
 class Scene
 {
 public:
-	ICamera camera;
+	ICamera *camera;
 	vector<const IObject const *> objects;
 	vector<const ILight const *> lights;
 	vector<const IShader const *> shaders;
+	
+	void Render(string filename);
+	
+	bool LoadXmlScene(string filename);
 };
 
 
@@ -17,6 +21,12 @@ class IObject
 	 * @return True if there was an intersection, false if there was not.
 	 */
 	virtual bool Intersect(const Ray &ray, Intersection &result) = 0;
+
+
+	/**
+	 * Gets the shader associated with this object.
+	 */
+	virtual IShader *GetShader() = 0;
 };
 
 

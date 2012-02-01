@@ -1,13 +1,13 @@
 cmake_minimum_required (VERSION 2.8)
 project(raytracer)
 
-# Find libxml2 stuff.
-IF(WIN32)
-INCLUDE_DIRECTORIES("C:/Program Files/libxml2/include")
-LINK_DIRECTORIES("C:/Program Files/libxml2")
-ELSE()
-INCLUDE_DIRECTORIES(/usr/include/libxml2)
-ENDIF()
+# Include libxml2 stuff.
+if(WIN32)
+  include_directories("C:/Program Files/libxml2/include")
+  link_directories("C:/Program Files/libxml2")
+else()
+  include_directories(/usr/include/libxml2)
+endif()
 
 add_subdirectory(cs5721GraphicsLib)
 add_subdirectory(raytracerLib)

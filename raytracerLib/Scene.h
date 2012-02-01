@@ -1,12 +1,14 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "ICamera.h"
 #include "IObject.h"
 #include "IShader.h"
 #include "ILight.h"
 #include "RaytraceException.h"
+
 
 /**
  * Represents the entirety of a scene.
@@ -18,20 +20,24 @@ public:
 	/**
 	 * Loads a scene from the given XML file.
 	 * @param filename The filename to load from.
-	 * @throws RaytraceException when something goes wrong.
+	 * @throws RaytraceException If something goes wrong.
 	 */
 	Scene(std::string filename);
 
 
 	/**
-	 * Renders the scene, generating the following png file.
+	 * Renders the scene, generating a png file with the given name.
+	 * @param outfile The output filename.
+	 * @param imageWidth The width of the image.
+	 * @param imageHeight The height of the image.
+	 * @throws RaytraceException If something goes wrong.
 	 */
-	void Render(std::string outfile);
+	void Render(std::string outfile, int imageWidth, int imageHeight);
 
 private:
-	ICamera *camera;
-	vector<const IObject const *> objects;
-	vector<const ILight const *> lights;
-	vector<const IShader const *> shaders;
+	ICamera *m_camera;
+	std::vector<IObject *> m_objects;
+	std::vector<ILight *> m_lights;
+	std::vector<IShader *> m_shaders;
 };
 

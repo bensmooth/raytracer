@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 55
-/cssvn/cs5721/!svn/ver/93/trunk/cs5721GraphicsLib/tests
+/cssvn/cs5721/!svn/ver/94/trunk/cs5721GraphicsLib/tests
 END
 test_pngWrite.cpp
 K 25
@@ -44,12 +44,6 @@ K 25
 svn:wc:ra_dav:version-url
 V 78
 /cssvn/cs5721/!svn/ver/78/trunk/cs5721GraphicsLib/tests/boostThreadExample.cpp
-END
-testScene.xml
-K 25
-svn:wc:ra_dav:version-url
-V 69
-/cssvn/cs5721/!svn/ver/71/trunk/cs5721GraphicsLib/tests/testScene.xml
 END
 CMakeLists.txt
 K 25

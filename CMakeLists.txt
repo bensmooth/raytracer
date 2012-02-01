@@ -3,4 +3,4 @@ project(raytracer)
 
 add_subdirectory(cs5721GraphicsLib)
 add_subdirectory(raytracerLib)
-add_subdirectory(graphicsLibTest)
+add_subdirectory(basisTest)

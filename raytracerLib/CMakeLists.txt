@@ -9,3 +9,5 @@ add_library(raytracerLib
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)
+
+add_definitions("-g")

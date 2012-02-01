@@ -9,4 +9,10 @@ add_executable(raytracer
   main.cpp
 )
 
+FIND_PACKAGE(Boost COMPONENTS program_options)
 target_link_libraries(raytracer raytracerLib)
+target_link_libraries(raytracer ${Boost_PROGRAM_OPTIONS_LIBRARIES})
+target_link_libraries(raytracer ${PNG_LIBRARY})
+target_link_libraries(raytracer xml2)
+
+add_definitions("-g")

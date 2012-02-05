@@ -6,6 +6,10 @@ add_library(raytracerLib
   Basis.cpp Basis.h
   RaytraceException.cpp RaytraceException.h
   Scene.cpp Scene.h
+  Ray.cpp Ray.h
+  Sphere.cpp Sphere.h
+  SolidShader.cpp SolidShader.h
+  Color.cpp Color.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

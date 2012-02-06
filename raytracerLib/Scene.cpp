@@ -148,6 +148,8 @@ public:
 
 Scene::Scene(std::string filename)
 {
+	m_camera = NULL;
+
 	// Parse the XML scene file.
 	XMLSceneParser xmlScene;
 
@@ -159,6 +161,12 @@ Scene::Scene(std::string filename)
 	xmlScene.registerCallback("shape", new ObjectCreator());
 
 	xmlScene.parseFile(filename);
+
+	// Make sure they set a camera.
+	if (m_camera == NULL)
+	{
+		throw RaytraceException("Camera not set!");
+	}
 }
 
 
@@ -172,9 +180,8 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 	{
 		for (int imageY = 0; imageY < imageHeight; imageY++)
 		{
-			// TODO: Calculate ray we need to shoot for this pixel.
-			//Ray ray = m_camera->CalculateViewingRay(imageX, imageY);
-			Ray ray;
+			// Calculate ray we need to shoot for this pixel.
+			Ray ray = m_camera->CalculateViewingRay(imageX, imageY);
 
 			// See if ray intersects any objects.
 			Intersection closestIntersect;

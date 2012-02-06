@@ -154,11 +154,14 @@ Scene::Scene(std::string filename)
 	XMLSceneParser xmlScene;
 
 	// Register object creation handlers with the scene parser.
-	// TODO: Are these all memory leaks?
-	xmlScene.registerCallback("camera", new CameraCreator());
-	xmlScene.registerCallback("light", new GenericCreator());
-	xmlScene.registerCallback("shader", new GenericCreator());
-	xmlScene.registerCallback("shape", new ObjectCreator());
+	CameraCreator cameraCreator;
+	ObjectCreator objectCreator;
+	GenericCreator lightCreator;
+	GenericCreator shaderCreator;
+	xmlScene.registerCallback("camera", &cameraCreator);
+	xmlScene.registerCallback("light", &lightCreator);
+	xmlScene.registerCallback("shader", &shaderCreator);
+	xmlScene.registerCallback("shape", &objectCreator);
 
 	xmlScene.parseFile(filename);
 

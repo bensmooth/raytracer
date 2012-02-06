@@ -20,7 +20,8 @@ inline double radiansToDegrees(double radians)
 int main(int argc, char *argv[])
 {
 	Vector3D a(12.42, -62.714, 19.908);
-	Basis b(a);
+	Basis b;
+	b.Calculate(a, Vector3D(0.0, 1.0, 0.0));
 
 	cout << "a = " << a << endl;
 	a.normalize();

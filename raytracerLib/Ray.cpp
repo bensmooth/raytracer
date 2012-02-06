@@ -19,6 +19,13 @@ Ray::Ray(const sivelab::Vector3D& position, const sivelab::Vector3D& direction)
 }
 
 
+Ray::Ray(const Ray& other)
+{
+	m_position = other.m_position;
+	m_direction = other.m_direction;
+}
+
+
 const sivelab::Vector3D& Ray::GetDirection() const
 {
 	return (m_direction);
@@ -34,5 +41,17 @@ const sivelab::Vector3D& Ray::GetPosition() const
 sivelab::Vector3D Ray::GetPositionAtTime(double t) const
 {
 	return ((t * m_direction) + m_position);
+}
+
+
+void Ray::SetPosition(const sivelab::Vector3D& position)
+{
+	m_position = position;
+}
+
+
+void Ray::SetDirection(const sivelab::Vector3D& direction)
+{
+	m_direction = direction;
 }
 

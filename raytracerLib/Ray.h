@@ -23,6 +23,12 @@ public:
 
 
 	/**
+	 * Copy constructor.
+	 */
+	Ray(const Ray &other);
+
+
+	/**
 	 * Calculates the position of the ray after a given time.
 	 * @param t The time at which to calculate the position of the ray.
 	 */
@@ -39,6 +45,18 @@ public:
 	 * Gets a reference to the direction of the array.
 	 */
 	const sivelab::Vector3D &GetDirection() const;
+
+
+	/**
+	 * Sets the position of the ray.
+	 */
+	void SetPosition(const sivelab::Vector3D &position);
+
+
+	/**
+	 * Sets the direction of the ray.
+	 */
+	void SetDirection(const sivelab::Vector3D &direction);
 
 private:
 	sivelab::Vector3D m_position, m_direction;

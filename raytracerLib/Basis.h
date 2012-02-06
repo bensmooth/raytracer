@@ -11,14 +11,24 @@ class Basis
 {
 public:
 	/**
-	 * Constructs a basis from a vector.
+	 * Sets all vectors to the zero vector.
+	 */
+	Basis();
+
+	/**
+	 * Constructs a basis from a single vector.
 	 * @param a The vector to construct a basis from.
 	 */
-	Basis(const Vector3D &a);
+	void Calculate(const Vector3D &a);
 
-	const Vector3D &GetU();
-	const Vector3D &GetV();
-	const Vector3D &GetW();
+	/**
+	 * Constructs a basis from two vectors.
+	 */
+	void Calculate(const Vector3D &a, const Vector3D &b);
+
+	const Vector3D &GetU() const;
+	const Vector3D &GetV() const;
+	const Vector3D &GetW() const;
 private:
 	Vector3D m_u, m_v, m_w;
 };

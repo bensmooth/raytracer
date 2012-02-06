@@ -10,6 +10,7 @@ add_library(raytracerLib
   Sphere.cpp Sphere.h
   SolidShader.cpp SolidShader.h
   Color.cpp Color.h
+  PerspectiveCamera.cpp PerspectiveCamera.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

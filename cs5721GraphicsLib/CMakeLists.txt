@@ -13,9 +13,7 @@ endif (PNG_FOUND)
 # SET(Boost_DEBUG 1)
 
 # Necessary to get Win32 version to work.
-if (WIN32)
-  SET(Boost_USE_STATIC_LIBS ON)
-endif (WIN32)
+SET(Boost_USE_STATIC_LIBS ON)
 
 FIND_PACKAGE(Boost REQUIRED)
 IF(${Boost_FOUND})

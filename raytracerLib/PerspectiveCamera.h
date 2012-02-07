@@ -9,7 +9,7 @@ public:
 	/**
 	 * Constructs a perspective camera with the given position, direction, and view plane.
 	 */
-	PerspectiveCamera(const Ray &positionAndDirection, double viewPlaneDist);
+	PerspectiveCamera(const Ray &positionAndDirection, double viewPlaneDist, double viewPlaneWidth);
 
     virtual Ray GetPositionAndDirection();
 
@@ -32,6 +32,11 @@ private:
 	 * The distance between the camera and the view plane.
 	 */
 	double m_viewPlaneDist;
+
+	/**
+	 * The width of the view plane, in world units.
+	 */
+	double m_viewPlaneWidth;
 
 	/**
 	 * The dimensions of the image, in pixels.

@@ -4,10 +4,11 @@
 using namespace sivelab;
 
 
-PerspectiveCamera::PerspectiveCamera(const Ray& positionAndDirection, double viewPlaneDist)
+PerspectiveCamera::PerspectiveCamera(const Ray& positionAndDirection, double viewPlaneDist, double viewPlaneWidth)
 {
 	m_positionAndDirection = positionAndDirection;
 	m_viewPlaneDist = viewPlaneDist;
+	m_viewPlaneWidth = viewPlaneWidth;
 	m_basis.Calculate(positionAndDirection.GetDirection(), Vector3D(0.0, 1.0, 0.0));
 }
 
@@ -28,11 +29,10 @@ Ray PerspectiveCamera::GetPositionAndDirection()
 Ray PerspectiveCamera::CalculateViewingRay(double imageX, double imageY)
 {
 	// The dimensions of the screen in the world.
-	const double SCREEN_WIDTH = 100.0;
-	const double SCREEN_HEIGHT = SCREEN_WIDTH * m_imageHeight / m_imageWidth;
-	double right = SCREEN_WIDTH / 2.0;
+	double viewPlaneHeight = m_viewPlaneWidth * m_imageHeight / m_imageWidth;
+	double right = m_viewPlaneWidth / 2.0;
 	double left = -right;
-	double top = SCREEN_HEIGHT / 2.0;
+	double top = viewPlaneHeight / 2.0;
 	double bottom = -top;
 
 	double u = left + (right - left) * (imageX + 0.5) / m_imageWidth;

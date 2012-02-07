@@ -1,4 +1,4 @@
-include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(../src)
 
 FIND_PACKAGE(Boost COMPONENTS thread REQUIRED)
 IF(${Boost_THREAD_FOUND})

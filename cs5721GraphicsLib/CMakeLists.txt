@@ -12,9 +12,6 @@ endif (PNG_FOUND)
 # If you want to get more info on what FindBoost is doing...
 # SET(Boost_DEBUG 1)
 
-# Necessary to get Win32 version to work.
-SET(Boost_USE_STATIC_LIBS ON)
-
 FIND_PACKAGE(Boost REQUIRED)
 IF(${Boost_FOUND})
   INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})

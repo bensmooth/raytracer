@@ -376,6 +376,8 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
     // This is the image we will be writing to.
     png::image<png::rgb_pixel> outputImage(imageWidth, imageHeight);
 
+	m_camera->SetImageDimensions(imageWidth, imageHeight);
+
     // Get color values for each pixel.
     for (int imageX = 0; imageX < imageWidth; imageX++)
     {
@@ -393,7 +395,7 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
                 if (m_objects.at(i)->Intersect(ray, currentIntersect) == true)
                 {
                     // If this intersection is closer to the camera, this intersection is the one we care about.
-                    if (currentIntersect.t < closestIntersect.t)
+                    if ((currentIntersect.t < closestIntersect.t) && (currentIntersect.t > 0))
                     {
                         closestIntersect = currentIntersect;
                     }
@@ -416,12 +418,12 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
                 color.SetBlue(0.0);
             }
 
-            // Save color to PNG structure.
-            outputImage.set_pixel(imageX, imageY, color.GetImageColor());
+            // Save color to PNG structure.  Flip Y,  because I am rendering upside down.
+            outputImage.set_pixel(imageX, imageHeight -1 - imageY, color.GetImageColor());
         }
     }
 
-    // Write out PNG.
-    outputImage.write(outfile);
+	// Write out PNG.
+	outputImage.write(outfile);
 }
 

@@ -31,6 +31,14 @@ Color::Color(double red, double green, double blue)
 }
 
 
+Color::Color(const sivelab::Vector3D& color)
+{
+	m_red = color[0];
+	m_green = color[1];
+	m_blue = color[2];
+}
+
+
 Color::Color(const Color& source)
 {
 	m_red = source.m_red;

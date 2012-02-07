@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <png++/png.hpp>
 
+#include "Vector3D.h"
+
 
 class Color
 {
@@ -24,6 +26,12 @@ public:
 	 * Copy constructor.
 	 */
 	Color(const Color &source);
+
+
+	/**
+	 * Initializes the color from a vector.
+	 */
+	Color(const sivelab::Vector3D &color);
 
 
 	/**

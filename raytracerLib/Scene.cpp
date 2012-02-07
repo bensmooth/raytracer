@@ -412,13 +412,13 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
             }
             else
             {
-                // Use green as the background color for now.
-                color.SetRed(0.0);
-                color.SetGreen(1.0);
-                color.SetBlue(0.0);
+                // Set background color.
+                color.SetRed(0.2);
+                color.SetGreen(0.2);
+                color.SetBlue(0.2);
             }
 
-            // Save color to PNG structure.  Flip Y,  because I am rendering upside down.
+            // Save color to PNG structure.  Flip Y,  because we are rendering upside down.
             outputImage.set_pixel(imageX, imageHeight -1 - imageY, color.GetImageColor());
         }
     }

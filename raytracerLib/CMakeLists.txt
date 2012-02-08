@@ -12,6 +12,7 @@ add_library(raytracerLib
   Color.cpp Color.h
   PerspectiveCamera.cpp PerspectiveCamera.h
   Triangle.cpp Triangle.h
+  Box.cpp Box.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

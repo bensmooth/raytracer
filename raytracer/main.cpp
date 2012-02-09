@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <time.h>
 
 #include "handleGraphicsArgs.h"
 #include "Scene.h"
@@ -8,6 +9,19 @@
 
 using namespace std;
 using namespace sivelab;
+
+
+long long GetTickCount()
+{
+	// This clock should never, ever go backwards.
+	timespec time;
+	clock_gettime(CLOCK_MONOTONIC_RAW, &time);
+
+	long long result = time.tv_sec * 1000;
+	result += time.tv_nsec /  1000000;
+	
+	return (result);
+}
 
 
 int main(int argc, char *argv[])
@@ -28,7 +42,9 @@ int main(int argc, char *argv[])
 	// Try to read in the given scene file.
 	try
 	{
+		long long beginTime = GetTickCount();
 		scene = new Scene(args.inputFileName);
+		cout << "Parsing scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
 	catch (RaytraceException &e)
 	{
@@ -53,7 +69,9 @@ int main(int argc, char *argv[])
 	// Try to render the scene.
 	try
 	{
+		long long beginTime = GetTickCount();
 		scene->Render(args.outputFileName, args.width, args.height);
+		cout << "Rendering scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
 	catch (RaytraceException &e)
 	{

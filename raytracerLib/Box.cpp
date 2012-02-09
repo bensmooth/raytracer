@@ -1,3 +1,5 @@
+#include <limits>
+
 #include "Box.h"
 
 using namespace sivelab;
@@ -30,17 +32,33 @@ IShader* Box::GetShader()
 
 bool Box::Intersect(const Ray& ray, Intersection& result)
 {
+	// We need to test for more than one interestion.
+	double maxDouble = std::numeric_limits<double>::max();
+	result.t = maxDouble;
+	Intersection intersect;
+
 	for (int i = 0; i < TRIANGLES_IN_A_BOX; i++)
 	{
-		if (m_triangles[i]->Intersect(ray, result) == true)
+		if (m_triangles[i]->Intersect(ray, intersect) == true)
 		{
-			result.object = this;
-			return (true);
+			if (intersect.t < result.t)
+			{
+				result = intersect;
+			}
 		}
 	}
 
-	// If we got here, we were not intersected.
-	return (false);
+	// See if there was a collision.
+	if (result.t < maxDouble)
+	{
+		result.object = this;
+		return (true);
+	}
+	else
+	{
+		// If we got here, we did not have an intersection.
+		return (false);
+	}
 }
 
 

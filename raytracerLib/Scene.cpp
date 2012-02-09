@@ -11,6 +11,7 @@
 #include "PerspectiveCamera.h"
 #include "Sphere.h"
 #include "SolidShader.h"
+#include "Box.h"
 
 using namespace sivelab;
 using namespace std;
@@ -290,9 +291,32 @@ public:
 			m_scene->m_objects.push_back(new Sphere(center, radius, shaderRef));
 
 			// Print details.
+			cout << "\tShader: " << shaderName << endl;
 			cout << "\tCenter: " << center << endl;
 			cout << "\tRadius: " << radius << endl;
-			cout << "\tShader ref: " << shaderName << endl;
+		}
+		else if(type == "box")
+		{
+			// Read shader.
+			string shaderName;
+			ReadString(sdMap, "shader_ref", shaderName);
+			IShader *shaderRef = ResolveShaderRef(name, shaderName);
+
+			// Read minimum point.
+			Vector3D minPoint;
+			ReadVector(sdMap, "shape_minPt", minPoint);
+
+			// Read maximum point.
+			Vector3D maxPoint;
+			ReadVector(sdMap, "shape_maxPt", maxPoint);
+
+			// Construct box and add it to the list of objects.
+			m_scene->m_objects.push_back(new Box(minPoint, maxPoint, shaderRef));
+
+			// Print info.
+			cout << "\tShader: " << shaderName << endl;
+			cout << "\tMin point: " << minPoint << endl;
+			cout << "\tMax point: " << maxPoint << endl;
 		}
 		else
 		{
@@ -413,9 +437,9 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
             else
             {
                 // Set background color.
-                color.SetRed(0.2);
-                color.SetGreen(0.2);
-                color.SetBlue(0.2);
+                color.SetRed(1.0);
+                color.SetGreen(1.0);
+                color.SetBlue(1.0);
             }
 
             // Save color to PNG structure.  Flip Y,  because we are rendering upside down.

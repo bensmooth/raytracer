@@ -11,13 +11,13 @@ using namespace std;
 using namespace sivelab;
 
 
-long long GetTickCount()
+int64_t GetTickCount()
 {
 	// This clock should never, ever go backwards.
 	timespec time;
 	clock_gettime(CLOCK_MONOTONIC_RAW, &time);
 
-	long long result = time.tv_sec * 1000;
+	int64_t result = time.tv_sec * 1000;
 	result += time.tv_nsec /  1000000;
 	
 	return (result);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	// Try to read in the given scene file.
 	try
 	{
-		long long beginTime = GetTickCount();
+		int64_t beginTime = GetTickCount();
 		scene = new Scene(args.inputFileName);
 		cout << "Parsing scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 	// Try to render the scene.
 	try
 	{
-		long long beginTime = GetTickCount();
+		int64_t beginTime = GetTickCount();
 		scene->Render(args.outputFileName, args.width, args.height);
 		cout << "Rendering scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}

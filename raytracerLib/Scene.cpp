@@ -372,14 +372,14 @@ Scene::~Scene()
 	m_camera = NULL;
 
 	// Delete all objects.
-	for (int i = 0; i < m_objects.size(); i++)
+	for (size_t i = 0; i < m_objects.size(); i++)
 	{
 		delete m_objects[i];
 		m_objects[i] = NULL;
 	}
 
 	// Delete all lights.
-	for (int i = 0; i < m_lights.size(); i++)
+	for (size_t i = 0; i < m_lights.size(); i++)
 	{
 		delete m_lights[i];
 		m_lights[i] = NULL;
@@ -413,7 +413,7 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
             // See if ray intersects any objects.
             Intersection closestIntersect;
             closestIntersect.t = DBL_MAX;
-            for (int i = 0; i < m_objects.size(); i++)
+            for (size_t i = 0; i < m_objects.size(); i++)
             {
                 Intersection currentIntersect;
                 if (m_objects.at(i)->Intersect(ray, currentIntersect) == true)

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Comments can be embedded as well. -->
+<scene>
+	<!-- Simple camera placed back from the origin looking in -Z direction -->
+	<camera name="main" type="perspective">
+		<position>0 0 8</position>
+		<viewDir>0 0 -1</viewDir>
+		<focalLength>1.0</focalLength>
+		<imagePlaneWidth>0.5</imagePlaneWidth>
+	</camera>
+	
+	<!-- Basic point light source placed just above the camera. -->
+	<light type="point">
+		<position>0 4 4</position>
+		<intensity>1.0 1.0 1.0</intensity>
+	</light>
+	
+	<!-- Lambertian Shader -->
+	<shader name="blue" type="Lambertian">
+		<diffuse>0 0 1</diffuse>
+	</shader>
+	
+	<shader name="Dark Red Lambertian" type="Lambertian">
+		<diffuse>.8 0 0</diffuse>
+	</shader>
+	
+	<shader name="Gray" type="Lambertian">
+		<diffuse>.3 .3 .3</diffuse>
+	</shader>
+	
+	<shader name="Green" type="Lambertian">
+		<diffuse>0 .8 0</diffuse>
+	</shader>
+	
+	
+	<!-- Sphere placed just above the ground. -->
+	<shape name="sphere1" type="sphere">
+		<shader ref="blue" />
+		<center>-0.9 0.5 0</center>
+		<radius>1</radius>
+	</shape>
+	
+	<shape name="sphere2" type="sphere">
+		<shader ref="Dark Red Lambertian" />
+		<center>1.1 0.5 -0.5</center>
+		<radius>0.7</radius>
+	</shape>
+	
+	<shape name="box1" type="box">
+		<shader ref="Gray" />
+		<minPt>5 -5 -1.9</minPt>
+		<maxPt>-5 5 -2.1</maxPt>
+	</shape>
+	
+	<shape name="box2" type="box">
+		<shader ref="Green" />
+		<minPt>-2 -2 -0.5</minPt>
+		<maxPt>1 -1 0.5</maxPt>
+	</shape>
+	
+</scene>

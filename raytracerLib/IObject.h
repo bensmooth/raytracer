@@ -10,6 +10,9 @@ struct Intersection;
 class IObject
 {
 public:
+	virtual ~IObject() { }
+
+
 	/**
 	 * Sees if the given ray intersects with the object.
 	 * @param ray The ray to test for intersection.

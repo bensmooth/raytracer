@@ -7,6 +7,9 @@
 class ILight
 {
 public:
+	~ILight() { }
+
+
 	/**
 	 * Gets the radiance that should be cast by the light at the given position, assuming no other objects are in the way.
 	 */

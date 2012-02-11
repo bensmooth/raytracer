@@ -9,6 +9,9 @@
 class ICamera
 {
 public:
+	~ICamera() { }
+
+
 	/**
 	 * Gets a ray that represents the position and viewing direction of the camera.
 	 */

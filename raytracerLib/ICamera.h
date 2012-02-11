@@ -9,7 +9,7 @@
 class ICamera
 {
 public:
-	~ICamera() { }
+	virtual ~ICamera() { }
 
 
 	/**

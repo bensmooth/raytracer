@@ -1,18 +1,23 @@
 #pragma once
 
 #include "Vector3D.h"
-#include <png++/rgb_pixel.hpp>
-
+#include "Color.h"
 
 class ILight
 {
 public:
-	~ILight() { }
+	virtual ~ILight() { }
+
+
+	/**
+	 * Gets the position of the light.
+	 */
+	virtual sivelab::Vector3D GetPosition();
 
 
 	/**
 	 * Gets the radiance that should be cast by the light at the given position, assuming no other objects are in the way.
 	 */
-	virtual png::rgb_pixel GetRadiance(const sivelab::Vector3D &position) = 0;
+	virtual Color GetRadiance(const sivelab::Vector3D &position) = 0;
 };
 

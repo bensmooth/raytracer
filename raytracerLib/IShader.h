@@ -7,7 +7,7 @@ struct Intersection;
 class IShader
 {
 public:
-	~IShader() { }
+	virtual ~IShader() { }
 
 
 	/**

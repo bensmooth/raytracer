@@ -422,36 +422,14 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
             Ray ray = m_camera->CalculateViewingRay(imageX, imageY);
 
             // See if ray intersects any objects.
-            Intersection closestIntersect;
-            closestIntersect.t = DBL_MAX;
-            for (size_t i = 0; i < m_objects.size(); i++)
-            {
-                Intersection currentIntersect;
-                if (m_objects.at(i)->Intersect(ray, currentIntersect) == true)
-                {
-                    // If this intersection is closer to the camera, this intersection is the one we care about.
-                    if ((currentIntersect.t < closestIntersect.t) && (currentIntersect.t > 0))
-                    {
-                        closestIntersect = currentIntersect;
-                    }
-                }
-            }
-
-            // The color of the pixel.
-            Color color;
-
-            // If it did intersect, invoke closest object's shader.
-            if (closestIntersect.t != DBL_MAX)
-            {
-                color = closestIntersect.object->GetShader()->Shade(closestIntersect);
-            }
-            else
-            {
-                // Set background color.
-                color.SetRed(1.0);
-                color.SetGreen(1.0);
-                color.SetBlue(1.0);
-            }
+			Color color;
+			if (CastRayAndShade(ray, color) == false)
+			{
+				// If we hit nothing, assume background is black.
+				color.SetRed(0.0);
+				color.SetGreen(0.0);
+				color.SetBlue(0.0);
+			}
 
             // Save color to PNG structure.  Flip Y,  because we are rendering upside down.
             outputImage.set_pixel(imageX, imageHeight -1 - imageY, color.GetImageColor());
@@ -461,6 +439,60 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 	// Write out PNG.
 	outputImage.write(outfile);
 }
+
+
+inline bool Scene::CastRayAndShade(const Ray& ray, Color& result)
+{
+	Intersection intersect;
+	if (CastRay(ray, intersect) == true)
+	{
+		result = ShadeIntersection(intersect);
+		return (true);
+	}
+	else
+	{
+		return (false);
+	}
+}
+
+
+bool Scene::CastRay(const Ray& ray, Intersection &result)
+{
+	Intersection closestIntersect;
+	closestIntersect.t = DBL_MAX;
+	for (size_t i = 0; i < m_objects.size(); i++)
+	{
+		Intersection currentIntersect;
+		if (m_objects.at(i)->Intersect(ray, currentIntersect) == true)
+		{
+			// If this intersection is closer to the camera, this intersection is the one we care about.
+			if ((currentIntersect.t < closestIntersect.t) && (currentIntersect.t > 0))
+			{
+				closestIntersect = currentIntersect;
+			}
+		}
+	}
+
+	if (closestIntersect.t != DBL_MAX)
+	{
+		// We had an intersection.
+		result = closestIntersect;
+		return (true);
+	}
+	else
+	{
+		// No intersection.
+		return (false);
+	}
+}
+
+
+inline Color Scene::ShadeIntersection(Intersection& data)
+{
+	// Invoke the object's shader.
+	return (data.object->GetShader()->Shade(data));
+}
+
 
 
 LightList::const_iterator Scene::GetLightsBegin()

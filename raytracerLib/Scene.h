@@ -42,6 +42,29 @@ public:
 	 */
 	void Render(std::string outfile, int imageWidth, int imageHeight);
 
+
+	/**
+	 * Casts the given ray in the scene.
+	 * @param ray The ray to cast through the scene.
+	 * @param result If the ray collided with something, this will contain the result of the collision.
+	 * @return True if the ray hit something.
+	 */
+	bool CastRay(const Ray &ray, Intersection &result);
+
+	/**
+	 * Returns the appropriate color for the given intersection data.
+	 * @param data The data to use to get the color of the object at the intersection.
+	 */
+	Color ShadeIntersection(Intersection &data);
+
+	/**
+	 * Casts the given ray into the scene and returns the color it hit.
+	 * @param ray The ray to cast.
+	 * @param result If this returns true, the color the ray ran into.
+	 * @return If true there was an intersection, or false otherwise.
+	 */
+	bool CastRayAndShade(const Ray &ray, Color &result);
+
 	/**
 	 * Get a constant iterator to the beginning of the list of lights.
 	 */

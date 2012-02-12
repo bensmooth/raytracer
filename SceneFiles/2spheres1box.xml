@@ -25,7 +25,7 @@
 	</shader>
 	
 	<shader name="Gray" type="Lambertian">
-		<diffuse>.3 .3 .3</diffuse>
+		<diffuse>.4 .4 .4</diffuse>
 	</shader>
 	
 	<shader name="Green" type="Lambertian">

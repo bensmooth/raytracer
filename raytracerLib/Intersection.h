@@ -14,7 +14,7 @@ struct Intersection
 	/**
 	 * The ray that collided with the object.
 	 */
-	Ray collidedWith;
+	Ray collidedRay;
 
 	/**
 	 * The time t that the ray collided with the object at.

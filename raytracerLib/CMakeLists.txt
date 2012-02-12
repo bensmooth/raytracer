@@ -21,6 +21,11 @@ add_library(raytracerLib
   Triangle.cpp Triangle.h
   Box.cpp Box.h
   PointLight.cpp PointLight.h
+  CosineShader.cpp CosineShader.h
+  ILight.h
+  IObject.h
+  IShader.h
+  ICamera.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

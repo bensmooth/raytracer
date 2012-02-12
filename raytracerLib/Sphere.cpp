@@ -43,7 +43,7 @@ bool Sphere::Intersect(const Ray& ray, Intersection& result)
 
 		// Record intersection.
 		result.t = std::min(t1, t2);
-		result.collidedWith = ray;
+		result.collidedRay = ray;
 		result.object = this;
 
 		// Calculate surface normal.

@@ -103,11 +103,11 @@ public:
 private:
 };
 
-class GenericCreator : public SceneElementCreator
+class LightCreator : public SceneElementCreator
 {
 public:
-  GenericCreator() {}
-  ~GenericCreator() {}
+  LightCreator() {}
+  ~LightCreator() {}
 
   void instance(std::map<std::string, SceneDataContainer> &sdMap)
   {
@@ -169,8 +169,8 @@ int main(int argc, char *argv[])
 
   // register object creation function with xmlScene
   xmlScene.registerCallback("camera", new CameraCreator);
-  xmlScene.registerCallback("light", new GenericCreator);
-  xmlScene.registerCallback("shader", new GenericCreator);
+  xmlScene.registerCallback("light", new LightCreator);
+  xmlScene.registerCallback("shader", new LightCreator);
   xmlScene.registerCallback("shape", new ShapeCreator);
 
   if (args.inputFileName != "")

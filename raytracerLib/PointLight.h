@@ -13,13 +13,11 @@ public:
 	 */
 	PointLight(const sivelab::Vector3D &position, const Color &radiance);
 
-	virtual ~PointLight() { }
+
+	virtual sivelab::Vector3D GetPosition() const;
 
 
-	virtual sivelab::Vector3D GetPosition();
-
-
-	virtual Color GetRadiance(const sivelab::Vector3D& position);
+	virtual Color GetRadiance(const sivelab::Vector3D& position) const;
 
 private:
 	Color m_radiance;

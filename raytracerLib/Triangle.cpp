@@ -75,7 +75,7 @@ bool Triangle::Intersect(const Ray& ray, Intersection& result)
 	}
 
 	// If we got here, we had an instersection.
-	result.collidedWith = ray;
+	result.collidedRay = ray;
 	result.t = t;
 	result.object = this;
 	result.surfaceNormal = m_normal;

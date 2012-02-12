@@ -8,13 +8,13 @@ PointLight::PointLight(const sivelab::Vector3D& position, const Color& radiance)
 }
 
 
-sivelab::Vector3D PointLight::GetPosition()
+sivelab::Vector3D PointLight::GetPosition() const
 {
     return (m_position);
 }
 
 
-Color PointLight::GetRadiance(const sivelab::Vector3D& position)
+Color PointLight::GetRadiance(const sivelab::Vector3D& position) const
 {
 	return (m_radiance);
 }

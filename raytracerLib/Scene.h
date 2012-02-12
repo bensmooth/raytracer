@@ -11,6 +11,8 @@
 #include "RaytraceException.h"
 
 typedef std::map<std::string, IShader*> ShaderMap;
+typedef std::vector<IObject*> ObjectList;
+typedef std::vector<ILight*> LightList;
 
 /**
  * Represents the entirety of a scene.
@@ -40,16 +42,25 @@ public:
 	 */
 	void Render(std::string outfile, int imageWidth, int imageHeight);
 
+	/**
+	 * Get a constant iterator to the beginning of the list of lights.
+	 */
+	LightList::const_iterator GetLightsBegin();
 
-	friend class GenericCreator;
+	/**
+	 * Gets an iterator to one element past the end of the list of lights.
+	 */
+	LightList::const_iterator GetLightsEnd();
+
+	friend class LightCreator;
 	friend class CameraCreator;
 	friend class ObjectCreator;
 	friend class ShaderCreator;
 
 private:
 	ICamera *m_camera;
-	std::vector<IObject *> m_objects;
-	std::vector<ILight *> m_lights;
+	ObjectList m_objects;
+	LightList m_lights;
 	ShaderMap m_shaders;
 };
 

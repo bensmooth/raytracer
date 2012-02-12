@@ -12,6 +12,8 @@
 #include "Sphere.h"
 #include "SolidShader.h"
 #include "Box.h"
+#include "CosineShader.h"
+#include "PointLight.h"
 
 using namespace sivelab;
 using namespace std;
@@ -139,42 +141,52 @@ private:
 
 
 /**
- * This creator is used for elements that we don't know how to create yet.
+ * This creator is used for lights.
  */
-class GenericCreator : public SceneElementCreator
+class LightCreator : public SceneElementCreator
 {
 public:
-    GenericCreator(Scene *scene)
+    LightCreator(Scene *scene)
 	{
 		m_scene = scene;
 	}
-    ~GenericCreator() {}
+    ~LightCreator() {}
+
 
     void instance(std::map<std::string, SceneDataContainer> &sdMap)
     {
-        if (m_otype == CAMERA)
-            std::cout << "SceneElementCreator type =  CAMERA" << std::endl;
-        else if (m_otype == LIGHT)
-            std::cout << "SceneElementCreator type =  LIGHT" << std::endl;
-        else if (m_otype == SHADER)
-            std::cout << "SceneElementCreator type =  SHADER" << std::endl;
-        else if (m_otype == SHAPE)
-            std::cout << "SceneElementCreator type =  SHAPE" << std::endl;
-        else
-            std::cout << "BOGUS TYPE" << std::endl;
+		string type;
+		ReadString(sdMap, "light_type", type);
 
+		cout << "Light: type=" << type << endl;
 
-        // Figure out how to instance the other things...
-        std::map<std::string, SceneDataContainer>::const_iterator sdIter;
-        for (sdIter=sdMap.begin(); sdIter != sdMap.end(); sdIter++)
-        {
-            SceneDataContainer sd = sdIter->second;
-            std::cout << "Data [" << sdIter->first << "]: "
-                      << sd.dtype << ", " << sd.name << ", "
-                      << sd.val << ", " << sd.isSet << std::endl;
-        }
-    }
+		if (type == "point")
+		{
+			Vector3D position;
+			ReadVector(sdMap, "light_position", position);
 
+			Vector3D intensity;
+			ReadVector(sdMap, "light_intensity", intensity);
+
+			m_scene->m_lights.push_back(new PointLight(position, intensity));
+
+			// Print info.
+			cout << "\tPosition=" << position << endl;
+			cout << "\tIntensity=" << intensity << endl;
+		}
+		else
+		{
+			cout << "Light type \"" << type << "\" is unknown!" << endl;
+			map<string, SceneDataContainer>::const_iterator sdIter;
+			for (sdIter=sdMap.begin(); sdIter != sdMap.end(); sdIter++)
+			{
+				SceneDataContainer sd = sdIter->second;
+				cout << "Data [" << sdIter->first << "]: "
+				<< sd.dtype << ", " << sd.name << ", "
+				<< sd.val << ", " << sd.isSet << endl;
+			}
+		}
+	}
 private:
 	Scene *m_scene;	
 	
@@ -209,8 +221,7 @@ public:
 			Vector3D diffuse;
 			ReadVector(sdMap, "shader_diffuse", diffuse);
 
-			// TODO: Actually create a lambertian shader.
-			m_scene->m_shaders.insert(make_pair(name, new SolidShader(diffuse)));
+			m_scene->m_shaders.insert(make_pair(name, new CosineShader(m_scene, diffuse)));
 
 			// Print info.
 			cout << "\tdiffuse=" << diffuse << endl;
@@ -349,7 +360,7 @@ Scene::Scene(std::string filename)
     // Register object creation handlers with the scene parser.
     CameraCreator cameraCreator(this);
 	ObjectCreator objectCreator(this);
-	GenericCreator lightCreator(this);
+	LightCreator lightCreator(this);
 	ShaderCreator shaderCreator(this);
     xmlScene.registerCallback("camera", &cameraCreator);
     xmlScene.registerCallback("light", &lightCreator);
@@ -449,5 +460,17 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 
 	// Write out PNG.
 	outputImage.write(outfile);
+}
+
+
+LightList::const_iterator Scene::GetLightsBegin()
+{
+	return (m_lights.begin());
+}
+
+
+LightList::const_iterator Scene::GetLightsEnd()
+{
+	return (m_lights.end());
 }
 

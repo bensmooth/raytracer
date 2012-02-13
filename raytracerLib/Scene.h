@@ -14,6 +14,13 @@ typedef std::map<std::string, IShader*> ShaderMap;
 typedef std::vector<IObject*> ObjectList;
 typedef std::vector<ILight*> LightList;
 
+
+/**
+ * A small value that is useful for comparing doubles.
+ */
+const double EPSILON = 0.00005;
+
+
 /**
  * Represents the entirety of a scene.
  * Is also responsible for loading and rendering a scene.

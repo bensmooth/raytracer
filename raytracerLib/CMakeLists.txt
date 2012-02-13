@@ -22,10 +22,7 @@ add_library(raytracerLib
   Box.cpp Box.h
   PointLight.cpp PointLight.h
   CosineShader.cpp CosineShader.h
-  ILight.h
-  IObject.h
-  IShader.h
-  ICamera.h
+  ReferenceTileShader.cpp ReferenceTileShader.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

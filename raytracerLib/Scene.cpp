@@ -14,6 +14,7 @@
 #include "Box.h"
 #include "CosineShader.h"
 #include "PointLight.h"
+#include "ReferenceTileShader.h"
 
 using namespace sivelab;
 using namespace std;
@@ -225,6 +226,10 @@ public:
 
 			// Print info.
 			cout << "\tdiffuse=" << diffuse << endl;
+		}
+		else if (type == "Tile")
+		{
+			m_scene->m_shaders.insert(make_pair(name, new ReferenceTileShader()));
 		}
 		else
 		{

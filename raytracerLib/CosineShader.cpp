@@ -29,15 +29,34 @@ Color CosineShader::Shade(Intersection& intersection)
 		Vector3D lightDir = (*iter)->GetPosition() - intersectPoint;
 		lightDir.normalize();
 
-		// TODO: See if there is anything in between the intersection point and the light.
+		// This will contain the calculated color that the current light is producing on the surface.
+		Color color;
 
-		// color += diffuse * lightRadiance * max(0, n dot l)
-		double nDotL = max(0.0, normal.dot(lightDir));
-		const Color &radiance = (*iter)->GetRadiance(intersectPoint);
-		double r = m_diffuse.GetRed() * radiance.GetRed();
-		double g = m_diffuse.GetGreen() * radiance.GetGreen();
-		double b = m_diffuse.GetBlue() * radiance.GetBlue();
-		finalColor.AddColors(Color(r, g, b).LinearMult(nDotL));
+		// See if there is anything in between the intersection point and the light.
+		Ray ray(intersectPoint, lightDir);
+		// Scootch the ray forward a bit, so that it doesn't get stuck inside the object it just came out of.
+		ray.SetPosition(ray.GetPositionAtTime(EPSILON));
+
+		Intersection intersect;
+		if (m_scene->CastRay(ray, intersect) == true)
+		{
+			// There was an intersection, use the color of the object.
+			color = m_diffuse;
+			color.LinearMult(0.25);
+		}
+		else
+		{
+			// No intersection.
+			// color = diffuse * lightRadiance * max(0, n dot l)
+			double nDotL = max(0.0, normal.dot(lightDir));
+			const Color &radiance = (*iter)->GetRadiance(intersectPoint);
+			color.SetRed(m_diffuse.GetRed() * radiance.GetRed());
+			color.SetGreen(m_diffuse.GetGreen() * radiance.GetGreen());
+			color.SetBlue(m_diffuse.GetBlue() * radiance.GetBlue());
+			color.LinearMult(nDotL);
+		}
+
+		finalColor.AddColors(color);
 
 		// Go to next light.
 		iter++;

@@ -7,11 +7,17 @@
 		<imagePlaneWidth>1.0</imagePlaneWidth>
 	</camera>
 
-	<!-- Basic point light source placed just above the camera. -->
+	<!-- Basic point light source placed just above the brown box. -->
 	<light type="point">
 		<position>0 4 4</position>
-		<intensity>1.0 1.0 1.0</intensity>
+		<intensity>0.8 0.8 0.8</intensity>
 	</light>
+
+	<light type="point">
+		<position>1.5 4 -0.5</position>
+		<intensity>0.8 0.8 0.8</intensity>
+	</light>
+   
 
 	<!-- Lambertian Shader -->
 	<shader name="blue" type="Lambertian">

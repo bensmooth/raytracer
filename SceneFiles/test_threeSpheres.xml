@@ -20,16 +20,33 @@
     <diffuse>0 0 1</diffuse>
   </shader>
 
-  <shader name="Dark Red Lambertian" type="Lambertian">
-    <diffuse>.8 0 0</diffuse>
+  <shader name="Yellow Lambertian" type="Lambertian">
+    <diffuse>.8 .8 0</diffuse>
   </shader>
 
+  <shader name="DarkRed" type="BlinnPhong">
+    <diffuse>.8 0 0</diffuse>
+    <specular>1 1 1</specular>
+    <phongExp>32</phongExp>
+  </shader>
 
   <!-- Sphere placed just above the ground. -->
   <shape name="sphere1" type="sphere">
     <shader ref="blue" />
     <center>0 0.0 -5</center>
+    <radius>0.5</radius>
+  </shape>
+
+  <shape name="sphere2" type="sphere">
+    <shader ref="DarkRed" />
+    <center>0 0.0 -6</center>
     <radius>1</radius>
+  </shape>
+
+  <shape name="sphere3" type="sphere">
+    <shader ref="Yellow Lambertian" />
+    <center>0 0.0 -8</center>
+    <radius>2</radius>
   </shape>
 
 </scene>

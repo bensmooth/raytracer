@@ -1,7 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 42
-/cssvn/cs5721/!svn/ver/92/trunk/SceneFiles
+/cssvn/cs5721/!svn/ver/98/trunk/SceneFiles
+END
+test_threeSpheres.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/cssvn/cs5721/!svn/ver/98/trunk/SceneFiles/test_threeSpheres.xml
 END
 convertObjTortTriList.cpp
 K 25
@@ -13,7 +19,7 @@ test_oneSphere.xml
 K 25
 svn:wc:ra_dav:version-url
 V 61
-/cssvn/cs5721/!svn/ver/92/trunk/SceneFiles/test_oneSphere.xml
+/cssvn/cs5721/!svn/ver/95/trunk/SceneFiles/test_oneSphere.xml
 END
 test_oneBox.xml
 K 25

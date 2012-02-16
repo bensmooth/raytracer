@@ -1,6 +1,5 @@
 #include "Scene.h"
 
-#include <cfloat>
 #include <png++/image.hpp>
 
 #include "png++/png.hpp"
@@ -470,10 +469,10 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 }
 
 
-inline bool Scene::CastRayAndShade(const Ray& ray, Color& result)
+inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT)
 {
 	Intersection intersect;
-	if (CastRay(ray, intersect) == true)
+	if (CastRay(ray, intersect, maxT) == true)
 	{
 		result = ShadeIntersection(intersect);
 		return (true);
@@ -485,10 +484,10 @@ inline bool Scene::CastRayAndShade(const Ray& ray, Color& result)
 }
 
 
-bool Scene::CastRay(const Ray& ray, Intersection &result)
+bool Scene::CastRay(const Ray& ray, Intersection &result, double maxT)
 {
 	Intersection closestIntersect;
-	closestIntersect.t = DBL_MAX;
+	closestIntersect.t = maxT;
 	for (size_t i = 0; i < m_objects.size(); i++)
 	{
 		Intersection currentIntersect;
@@ -502,7 +501,7 @@ bool Scene::CastRay(const Ray& ray, Intersection &result)
 		}
 	}
 
-	if (closestIntersect.t != DBL_MAX)
+	if (closestIntersect.t != maxT)
 	{
 		// We had an intersection.
 		result = closestIntersect;

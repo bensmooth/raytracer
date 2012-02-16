@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <cfloat>
 
 #include "ICamera.h"
 #include "IObject.h"
@@ -56,7 +57,7 @@ public:
 	 * @param result If the ray collided with something, this will contain the result of the collision.
 	 * @return True if the ray hit something.
 	 */
-	bool CastRay(const Ray &ray, Intersection &result);
+	bool CastRay(const Ray &ray, Intersection &result, double maxT = DBL_MAX);
 
 	/**
 	 * Returns the appropriate color for the given intersection data.
@@ -68,9 +69,10 @@ public:
 	 * Casts the given ray into the scene and returns the color it hit.
 	 * @param ray The ray to cast.
 	 * @param result If this returns true, the color the ray ran into.
+	 * @param maxT The maximum t value that should be considered.
 	 * @return If true there was an intersection, or false otherwise.
 	 */
-	bool CastRayAndShade(const Ray &ray, Color &result);
+	bool CastRayAndShade(const Ray &ray, Color &result, double maxT = DBL_MAX);
 
 	/**
 	 * Get a constant iterator to the beginning of the list of lights.

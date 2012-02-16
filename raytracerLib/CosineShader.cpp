@@ -50,10 +50,8 @@ Color CosineShader::Shade(Intersection& intersection)
 			// color = diffuse * lightRadiance * max(0, n dot l)
 			double nDotL = max(0.0, normal.dot(lightDir));
 			const Color &radiance = (*iter)->GetRadiance(intersectPoint);
-			color.SetRed(m_diffuse.GetRed() * radiance.GetRed());
-			color.SetGreen(m_diffuse.GetGreen() * radiance.GetGreen());
-			color.SetBlue(m_diffuse.GetBlue() * radiance.GetBlue());
-			color.LinearMult(nDotL);
+			color = m_diffuse;
+			color.MultiplyColors(radiance).LinearMult(nDotL);
 		}
 
 		finalColor.AddColors(color);

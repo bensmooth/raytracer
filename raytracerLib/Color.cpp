@@ -57,6 +57,16 @@ Color& Color::AddColors(const Color& other)
 }
 
 
+Color& Color::MultiplyColors(const Color& other)
+{
+	m_red *= other.m_red;
+	m_green *= other.m_green;
+	m_blue *= other.m_blue;
+
+	return *this;
+}
+
+
 Color& Color::LinearMult(double scalar)
 {
 	m_red *= scalar;

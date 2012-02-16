@@ -50,6 +50,14 @@ public:
 
 
 	/**
+	 * Destructively multiplies each component of this color with each component of the other color.
+	 * @param other The other color to multiply with this color.
+	 * @return A reference to this color, so that calls can be chained.
+	 */
+	Color &MultiplyColors(const Color &other);
+
+
+	/**
 	 * Destructively multiplies each component in this color by a scalar.
 	 * Results are undefined if the scalar is zero.
 	 */

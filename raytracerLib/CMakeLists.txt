@@ -6,6 +6,7 @@ include_directories(${CMAKE_SOURCE_DIR}/cs5721GraphicsLib/src)
 add_definitions("-Werror -Wall -pedantic")
 
 # Set fastest possible code switch for release mode.
+# TODO: When raytracer is more mature, see if this actually makes a difference.
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast")
 
 
@@ -23,6 +24,7 @@ add_library(raytracerLib
   PointLight.cpp PointLight.h
   CosineShader.cpp CosineShader.h
   ReferenceTileShader.cpp ReferenceTileShader.h
+  BlinnPhongShader.cpp BlinnPhongShader.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

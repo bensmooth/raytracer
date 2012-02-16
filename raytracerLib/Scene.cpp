@@ -15,6 +15,7 @@
 #include "CosineShader.h"
 #include "PointLight.h"
 #include "ReferenceTileShader.h"
+#include "BlinnPhongShader.h"
 
 using namespace sivelab;
 using namespace std;
@@ -226,6 +227,29 @@ public:
 
 			// Print info.
 			cout << "\tdiffuse=" << diffuse << endl;
+		}
+		else if (type == "BlinnPhong")
+		{
+			Vector3D diffuse;
+			ReadVector(sdMap, "shader_diffuse", diffuse);
+
+			Vector3D specular;
+			ReadVector(sdMap, "shader_specular", specular);
+
+			double phongExp;
+			ReadDouble(sdMap, "shader_phongExp", phongExp);
+
+			double mirrorCoef;
+			ReadDouble(sdMap, "shader_mirrorCoef", mirrorCoef);
+
+			// Add shader to list.
+			m_scene->m_shaders.insert(make_pair(name, new BlinnPhongShader(m_scene, diffuse, specular, phongExp, mirrorCoef)));
+
+			// Print parameters out.
+			cout << "\tDiffuse=" << diffuse << endl;
+			cout << "\tSpecular=" << specular << endl;
+			cout << "\tPhong Exp=" << phongExp << endl;
+			cout << "\tMirror Coef=" << mirrorCoef << endl;
 		}
 		else if (type == "Tile")
 		{

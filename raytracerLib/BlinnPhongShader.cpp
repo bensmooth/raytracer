@@ -1,0 +1,60 @@
+#include "BlinnPhongShader.h"
+#include "Intersection.h"
+
+using namespace std;
+using namespace sivelab;
+
+
+BlinnPhongShader::BlinnPhongShader(Scene* scene, const Color& diffuse, const Color& specular, double phongExp, double mirrorCoef)
+{
+	m_scene = scene;
+	m_diffuse = diffuse;
+	m_specular = specular;
+	m_phongExp = phongExp;
+	m_mirrorCoef = mirrorCoef;
+}
+
+
+Color BlinnPhongShader::Shade(Intersection& intersection)
+{
+	const Vector3D &normal = intersection.surfaceNormal;
+	Vector3D viewDir = intersection.collidedRay.GetDirection();
+	viewDir *= -1.0;
+	viewDir.normalize();
+	Vector3D intersectPoint = intersection.collidedRay.GetPositionAtTime(intersection.t);
+
+	Color finalColor(0.0, 0.0, 0.0);
+
+	LightList::const_iterator currentLight;
+	for (currentLight = m_scene->GetLightsBegin(); currentLight != m_scene->GetLightsEnd(); currentLight++)
+	{
+		// The direction to the light from the intersection point.
+		Vector3D lightDir = (*currentLight)->GetPosition() - intersectPoint;
+		lightDir.normalize();
+
+		// The direction halfway between the light direction and the view direction.
+		Vector3D halfDir = lightDir + viewDir;
+		halfDir.normalize();
+
+		// The radiance at the point of intersection.
+		Color radiance = (*currentLight)->GetRadiance(intersectPoint);
+
+		// Make sure it is above 0.
+		double diffuseIntensity = max(0.0, lightDir.dot(normal));
+
+		Color diffuseColor = radiance;
+		diffuseColor.LinearMult(diffuseIntensity).MultiplyColors(m_diffuse);
+
+		// Make sure it is above 0.
+		double specularIntensity = pow(max(0.0, halfDir.dot(normal)), m_phongExp);
+
+		Color specularColor = radiance;
+		specularColor.LinearMult(specularIntensity).MultiplyColors(m_specular);
+
+		// Sum colors into the final color.
+		finalColor.AddColors(diffuseColor).AddColors(specularColor);
+	}
+
+	return (finalColor);
+}
+

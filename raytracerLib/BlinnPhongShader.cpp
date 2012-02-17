@@ -35,24 +35,34 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 		// The direction halfway between the light direction and the view direction.
 		Vector3D halfDir = lightDir + viewDir;
 		halfDir.normalize();
+		
+		// Always add the ambient amount of light.
+		Color ambient = m_scene->GetAmbient();
+		ambient.MultiplyColors(m_diffuse);
+		finalColor.AddColors(ambient);
 
-		// The radiance at the point of intersection.
-		Color radiance = (*currentLight)->GetRadiance(intersectPoint);
+		// See if we are in shadow.
+		bool inShadow = m_scene->CastShadowRay(*currentLight, intersectPoint);
+		if (inShadow == false)
+		{
+			// The radiance at the point of intersection.
+			Color radiance = (*currentLight)->GetRadiance(intersectPoint);
 
-		// Make sure it is above 0.
-		double diffuseIntensity = max(0.0, lightDir.dot(normal));
+			// Make sure it is above 0.
+			double diffuseIntensity = max(0.0, lightDir.dot(normal));
 
-		Color diffuseColor = radiance;
-		diffuseColor.LinearMult(diffuseIntensity).MultiplyColors(m_diffuse);
+			Color diffuseColor = radiance;
+			diffuseColor.LinearMult(diffuseIntensity).MultiplyColors(m_diffuse);
 
-		// Make sure it is above 0.
-		double specularIntensity = pow(max(0.0, halfDir.dot(normal)), m_phongExp);
+			// Make sure it is above 0.
+			double specularIntensity = pow(max(0.0, halfDir.dot(normal)), m_phongExp);
 
-		Color specularColor = radiance;
-		specularColor.LinearMult(specularIntensity).MultiplyColors(m_specular);
+			Color specularColor = radiance;
+			specularColor.LinearMult(specularIntensity).MultiplyColors(m_specular);
 
-		// Sum colors into the final color.
-		finalColor.AddColors(diffuseColor).AddColors(specularColor);
+			// Sum colors into the final color.
+			finalColor.AddColors(diffuseColor).AddColors(specularColor);
+		}
 	}
 
 	return (finalColor);

@@ -75,14 +75,27 @@ public:
 	bool CastRayAndShade(const Ray &ray, Color &result, double maxT = DBL_MAX);
 
 	/**
+	 * Casts a shadow ray.
+	 * @param light The light that will be testing for casting a shadow.
+	 * @param intersectPoint The position that we want to know if there is a shadow at.
+	 * @return True if we are in shadow, false otherwise.
+	 */
+	bool CastShadowRay(ILight *light, sivelab::Vector3D intersectPoint);
+
+	/**
 	 * Get a constant iterator to the beginning of the list of lights.
 	 */
-	LightList::const_iterator GetLightsBegin();
+	LightList::const_iterator GetLightsBegin() const;
 
 	/**
 	 * Gets an iterator to one element past the end of the list of lights.
 	 */
-	LightList::const_iterator GetLightsEnd();
+	LightList::const_iterator GetLightsEnd() const;
+
+	/**
+	 * Gets the amount of ambient light in the scene.
+	 */
+	const Color &GetAmbient() const;
 
 	friend class LightCreator;
 	friend class CameraCreator;
@@ -94,5 +107,10 @@ private:
 	ObjectList m_objects;
 	LightList m_lights;
 	ShaderMap m_shaders;
+
+	/**
+	 * The amount of ambient light in the scene.
+	 */
+	Color m_ambient;
 };
 

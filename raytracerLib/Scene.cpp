@@ -380,6 +380,7 @@ private:
 
 Scene::Scene(std::string filename)
 {
+	m_ambient = Color(0.1, 0.1, 0.1);
     m_camera = NULL;
 
     // Parse the XML scene file.
@@ -484,6 +485,20 @@ inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT)
 }
 
 
+bool Scene::CastShadowRay(ILight* light, Vector3D intersectPoint)
+{
+	// Construct ray from the intersection point to the light.
+	Ray shadowRay(intersectPoint, light->GetPosition() - intersectPoint);
+
+	// Step ray forward by a small amount to overcome numerical inaccuracy.
+	shadowRay.SetPosition(shadowRay.GetPositionAtTime(EPSILON));
+
+	// Cast ray into scene with max t of 1.0, so that objects beyond the light are not taken into account.
+	Intersection intersection;
+	return (CastRay(shadowRay, intersection, 1.0));
+}
+
+
 bool Scene::CastRay(const Ray& ray, Intersection &result, double maxT)
 {
 	Intersection closestIntersect;
@@ -522,15 +537,20 @@ inline Color Scene::ShadeIntersection(Intersection& data)
 }
 
 
-
-LightList::const_iterator Scene::GetLightsBegin()
+LightList::const_iterator Scene::GetLightsBegin() const
 {
 	return (m_lights.begin());
 }
 
 
-LightList::const_iterator Scene::GetLightsEnd()
+LightList::const_iterator Scene::GetLightsEnd() const
 {
 	return (m_lights.end());
+}
+
+
+const Color& Scene::GetAmbient() const
+{
+	return (m_ambient);
 }
 

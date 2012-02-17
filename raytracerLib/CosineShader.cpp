@@ -29,32 +29,23 @@ Color CosineShader::Shade(Intersection& intersection)
 		Vector3D lightDir = (*iter)->GetPosition() - intersectPoint;
 		lightDir.normalize();
 
-		// This will contain the calculated color that the current light is producing on the surface.
-		Color color;
+		// Always add the ambient amount of light.
+		Color ambient = m_scene->GetAmbient();
+		ambient.MultiplyColors(m_diffuse);
+		finalColor.AddColors(ambient);
 
-		// See if there is anything in between the intersection point and the light.
-		Ray ray(intersectPoint, lightDir);
-		// Scootch the ray forward a bit, so that it doesn't get stuck inside the object it just came out of.
-		ray.SetPosition(ray.GetPositionAtTime(EPSILON));
-
-		Intersection intersect;
-		if (m_scene->CastRay(ray, intersect) == true)
+		// See if we are in shadow.
+		if (m_scene->CastShadowRay(*iter, intersectPoint) == false)
 		{
-			// There was an intersection, use the color of the object.
-			color = m_diffuse;
-			color.LinearMult(0.25);
-		}
-		else
-		{
-			// No intersection.
+			// We are not in shadow.
 			// color = diffuse * lightRadiance * max(0, n dot l)
 			double nDotL = max(0.0, normal.dot(lightDir));
 			const Color &radiance = (*iter)->GetRadiance(intersectPoint);
-			color = m_diffuse;
-			color.MultiplyColors(radiance).LinearMult(nDotL);
+			Color diffuse;
+			diffuse = m_diffuse;
+			diffuse.MultiplyColors(radiance).LinearMult(nDotL);
+			finalColor.AddColors(diffuse);
 		}
-
-		finalColor.AddColors(color);
 
 		// Go to next light.
 		iter++;

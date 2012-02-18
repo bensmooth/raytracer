@@ -21,3 +21,4 @@ do
 done
 
 echo "Done rendering!"
+echo "All renders are in renders/"

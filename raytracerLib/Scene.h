@@ -32,9 +32,10 @@ public:
 	/**
 	 * Loads a scene from the given XML file.
 	 * @param filename The filename to load from.
+	 * @param verbose Set to true if you want lots of information printed out during scene loading.
 	 * @throws RaytraceException If something goes wrong.
 	 */
-	Scene(std::string filename);
+	Scene(std::string filename, bool verbose = false);
 
 	/**
 	 * Frees all memory associated with the scene.
@@ -96,6 +97,11 @@ public:
 	 * Gets the amount of ambient light in the scene.
 	 */
 	const Color &GetAmbient() const;
+
+	/**
+	 * Set this to true to have verbose output printed out.
+	 */
+	bool VerboseOutput;
 
 	friend class LightCreator;
 	friend class CameraCreator;

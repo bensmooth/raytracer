@@ -120,18 +120,28 @@ public:
 		buf >> imagePlaneWidth;
 		buf.clear();
 
-		cout << "Camera: name=" << name << ", type=" << type << endl;
-		cout << "\tposition: " << position << endl;
+		if (m_scene->VerboseOutput)
+		{
+			cout << "Camera: name=" << name << ", type=" << type << endl;
+			cout << "\tposition: " << position << endl;
+		}
+
 		if (lookatSet)
 		{
-			cout << "\tlook at point: " << lookatPoint << endl;
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tlook at point: " << lookatPoint << endl;
+			}
 			// Calculate viewing direction.
 			viewDir = lookatPoint - position;
 		}
 
-		cout << "\tview direction: " << viewDir << endl;
-        cout << "\tfocal length: " << focalLength << endl;
-        cout << "\timage plane width: " << imagePlaneWidth << endl;
+		if (m_scene->VerboseOutput)
+		{
+			cout << "\tview direction: " << viewDir << endl;
+			cout << "\tfocal length: " << focalLength << endl;
+			cout << "\timage plane width: " << imagePlaneWidth << endl;
+		}
 
 		m_scene->m_camera = new PerspectiveCamera(Ray(position, viewDir), focalLength, imagePlaneWidth);
     }
@@ -159,7 +169,10 @@ public:
 		string type;
 		ReadString(sdMap, "light_type", type);
 
-		cout << "Light: type=" << type << endl;
+		if (m_scene->VerboseOutput)
+		{
+			cout << "Light: type=" << type << endl;
+		}
 
 		if (type == "point")
 		{
@@ -171,18 +184,21 @@ public:
 
 			m_scene->m_lights.push_back(new PointLight(position, intensity));
 
-			// Print info.
-			cout << "\tPosition=" << position << endl;
-			cout << "\tIntensity=" << intensity << endl;
+			// Print info if verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tPosition=" << position << endl;
+				cout << "\tIntensity=" << intensity << endl;
+			}
 		}
 		else
 		{
-			cout << "Light type \"" << type << "\" is unknown!" << endl;
+			cerr << "Light type \"" << type << "\" is unknown!" << endl;
 			map<string, SceneDataContainer>::const_iterator sdIter;
 			for (sdIter=sdMap.begin(); sdIter != sdMap.end(); sdIter++)
 			{
 				SceneDataContainer sd = sdIter->second;
-				cout << "Data [" << sdIter->first << "]: "
+				cerr << "Data [" << sdIter->first << "]: "
 				<< sd.dtype << ", " << sd.name << ", "
 				<< sd.val << ", " << sd.isSet << endl;
 			}
@@ -215,7 +231,10 @@ public:
 		string type;
 		ReadString(sdMap, "shader_type", type);
 
-		cout << "Shader: name=" << name << ", type=" << type << endl;
+		if (m_scene->VerboseOutput)
+		{
+			cout << "Shader: name=" << name << ", type=" << type << endl;
+		}
 
 		if (type == "Lambertian")
 		{
@@ -224,8 +243,11 @@ public:
 
 			m_scene->m_shaders.insert(make_pair(name, new CosineShader(m_scene, diffuse)));
 
-			// Print info.
-			cout << "\tdiffuse=" << diffuse << endl;
+			// Print info if verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tdiffuse=" << diffuse << endl;
+			}
 		}
 		else if (type == "BlinnPhong")
 		{
@@ -244,11 +266,14 @@ public:
 			// Add shader to list.
 			m_scene->m_shaders.insert(make_pair(name, new BlinnPhongShader(m_scene, diffuse, specular, phongExp, mirrorCoef)));
 
-			// Print parameters out.
-			cout << "\tDiffuse=" << diffuse << endl;
-			cout << "\tSpecular=" << specular << endl;
-			cout << "\tPhong Exp=" << phongExp << endl;
-			cout << "\tMirror Coef=" << mirrorCoef << endl;
+			// Print parameters out if verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tDiffuse=" << diffuse << endl;
+				cout << "\tSpecular=" << specular << endl;
+				cout << "\tPhong Exp=" << phongExp << endl;
+				cout << "\tMirror Coef=" << mirrorCoef << endl;
+			}
 		}
 		else if (type == "Tile")
 		{
@@ -256,12 +281,12 @@ public:
 		}
 		else
 		{
-			cout << "Shader type \"" << type << "\" is unknown!" << endl;
+			cerr << "Shader type \"" << type << "\" is unknown!" << endl;
 			map<string, SceneDataContainer>::const_iterator sdIter;
 			for (sdIter=sdMap.begin(); sdIter != sdMap.end(); sdIter++)
 			{
 				SceneDataContainer sd = sdIter->second;
-				cout << "Data [" << sdIter->first << "]: "
+				cerr << "Data [" << sdIter->first << "]: "
 				<< sd.dtype << ", " << sd.name << ", "
 				<< sd.val << ", " << sd.isSet << endl;
 			}
@@ -311,7 +336,10 @@ public:
 		string type;
 		ReadString(sdMap, "shape_type", type);
 
-		cout << "Shape: name=" << name << ", type=" << type << endl;
+		if (m_scene->VerboseOutput)
+		{
+			cout << "Shape: name=" << name << ", type=" << type << endl;
+		}
 
 		if (type == "sphere")
 		{
@@ -329,10 +357,13 @@ public:
 			// Add sphere to the list of objects.
 			m_scene->m_objects.push_back(new Sphere(center, radius, shaderRef));
 
-			// Print details.
-			cout << "\tShader: " << shaderName << endl;
-			cout << "\tCenter: " << center << endl;
-			cout << "\tRadius: " << radius << endl;
+			// Print details if verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tShader: " << shaderName << endl;
+				cout << "\tCenter: " << center << endl;
+				cout << "\tRadius: " << radius << endl;
+			}
 		}
 		else if(type == "box")
 		{
@@ -352,20 +383,23 @@ public:
 			// Construct box and add it to the list of objects.
 			m_scene->m_objects.push_back(new Box(minPoint, maxPoint, shaderRef));
 
-			// Print info.
-			cout << "\tShader: " << shaderName << endl;
-			cout << "\tMin point: " << minPoint << endl;
-			cout << "\tMax point: " << maxPoint << endl;
+			// Print info if we are verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tShader: " << shaderName << endl;
+				cout << "\tMin point: " << minPoint << endl;
+				cout << "\tMax point: " << maxPoint << endl;
+			}
 		}
 		else
 		{
 			map<string, SceneDataContainer>::const_iterator sdIter;
 
-			cout << "Unknown shape type: " << type << endl;
+			cerr << "Unknown shape type: " << type << endl;
 			for (sdIter=sdMap.begin(); sdIter != sdMap.end(); sdIter++)
 			{
 				SceneDataContainer sd = sdIter->second;
-				cout << "Unknown Shape [" << sdIter->first << "]: "
+				cerr << "Unknown Shape [" << sdIter->first << "]: "
 					<< sd.dtype << ", " << sd.name << ", "
 					<< sd.val << ", " << sd.isSet << endl;
 			}
@@ -378,8 +412,9 @@ private:
 };
 
 
-Scene::Scene(std::string filename)
+Scene::Scene(std::string filename, bool verbose)
 {
+	VerboseOutput = verbose;
 	m_ambient = Color(0.1, 0.1, 0.1);
     m_camera = NULL;
 

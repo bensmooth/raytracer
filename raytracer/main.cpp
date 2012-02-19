@@ -15,11 +15,11 @@ int64_t GetTickCount()
 {
 	// This clock should never, ever go backwards.
 	timespec time;
-	clock_gettime(CLOCK_MONOTONIC_RAW, &time);
+	clock_gettime(CLOCK_MONOTONIC, &time);
 
 	int64_t result = time.tv_sec * 1000;
 	result += time.tv_nsec /  1000000;
-	
+
 	return (result);
 }
 

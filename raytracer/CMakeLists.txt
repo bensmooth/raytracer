@@ -9,7 +9,7 @@ include_directories(${CMAKE_SOURCE_DIR}/raytracerLib)
 add_definitions("-Werror -Wall -pedantic")
 
 # Set fastest possible code switch for release mode.
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast")
+#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast")
 
 add_executable(raytracer
   main.cpp

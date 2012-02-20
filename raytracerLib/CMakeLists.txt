@@ -25,6 +25,7 @@ add_library(raytracerLib
   CosineShader.cpp CosineShader.h
   ReferenceTileShader.cpp ReferenceTileShader.h
   BlinnPhongShader.cpp BlinnPhongShader.h
+  GlazeShader.cpp GlazeShader.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

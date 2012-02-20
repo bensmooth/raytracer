@@ -15,6 +15,7 @@
 #include "PointLight.h"
 #include "ReferenceTileShader.h"
 #include "BlinnPhongShader.h"
+#include "GlazeShader.h"
 
 using namespace sivelab;
 using namespace std;
@@ -275,6 +276,24 @@ public:
 				cout << "\tDiffuse=" << diffuse << endl;
 				cout << "\tSpecular=" << specular << endl;
 				cout << "\tPhong Exp=" << phongExp << endl;
+				cout << "\tMirror Coef=" << mirrorCoef << endl;
+			}
+		}
+		else if (type == "Glaze")
+		{
+			Vector3D diffuse;
+			ReadVector(sdMap, "shader_diffuse", diffuse);
+
+			double mirrorCoef = 0;
+			ReadDouble(sdMap, "shader_mirrorCoef", mirrorCoef);
+
+			// Add shader to list.
+			m_scene->m_shaders.insert(make_pair(name, new GlazeShader(m_scene, diffuse, mirrorCoef)));
+
+			// Print parameters out if verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tDiffuse=" << diffuse << endl;
 				cout << "\tMirror Coef=" << mirrorCoef << endl;
 			}
 		}

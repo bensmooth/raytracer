@@ -26,6 +26,7 @@ private:
 	 */
 	Color m_diffuse;
 
+protected:
 	/**
 	 * The scene we are associated with.
 	 */

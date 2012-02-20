@@ -13,7 +13,7 @@ using namespace sivelab;
 
 int64_t GetTickCount()
 {
-	// This clock should never, ever go backwards.
+	// This clock will probably not overflow and go backwards.
 	timespec time;
 	clock_gettime(CLOCK_MONOTONIC, &time);
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 	try
 	{
 		int64_t beginTime = GetTickCount();
-		scene = new Scene(args.inputFileName);
+		scene = new Scene(args.inputFileName, args.verbose);
 		cout << "Parsing scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
 	catch (RaytraceException &e)

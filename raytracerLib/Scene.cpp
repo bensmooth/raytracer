@@ -505,12 +505,12 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 }
 
 
-inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT)
+inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT, int depthCount)
 {
 	Intersection intersect;
 	if (CastRay(ray, intersect, maxT) == true)
 	{
-		result = ShadeIntersection(intersect);
+		result = ShadeIntersection(intersect, depthCount);
 		return (true);
 	}
 	else
@@ -531,6 +531,29 @@ bool Scene::CastShadowRay(ILight* light, Vector3D intersectPoint)
 	// Cast ray into scene with max t of 1.0, so that objects beyond the light are not taken into account.
 	Intersection intersection;
 	return (CastRay(shadowRay, intersection, 1.0));
+}
+
+
+Color Scene::CastReflectionRay(const Intersection& intersection, int depthCount)
+{
+	// Terminate if we have bounced around too much.
+	if (depthCount <= 0)
+	{
+		return (Color(0.0, 0.0, 0.0));
+	}
+
+	depthCount--;
+
+	// Calculate the ray we need to shoot for the reflection.
+	Vector3D intersectPoint = intersection.collidedRay.GetPositionAtTime(intersection.t);
+	const Vector3D &normal = intersection.surfaceNormal;
+	Vector3D viewRay = intersection.collidedRay.GetDirection();
+	Vector3D rayDirection = viewRay - 2 * (viewRay.dot(normal)) * normal;
+	Ray reflectedRay(intersectPoint, rayDirection);
+
+	Color rayColor;
+	CastRayAndShade(reflectedRay, rayColor, numeric_limits<double>::max(), depthCount);
+	return (rayColor);
 }
 
 
@@ -565,10 +588,17 @@ bool Scene::CastRay(const Ray& ray, Intersection &result, double maxT)
 }
 
 
-inline Color Scene::ShadeIntersection(Intersection& data)
+inline Color Scene::ShadeIntersection(Intersection& data, int depthCount)
 {
-	// Invoke the object's shader.
-	return (data.object->GetShader()->Shade(data));
+	// Invoke the object's shader if depthCount is greater than 0.
+	if (depthCount > 0)
+	{
+		return (data.object->GetShader()->Shade(data));
+	}
+	else
+	{
+		return (Color(0.0, 0.0, 0.0));
+	}
 }
 
 

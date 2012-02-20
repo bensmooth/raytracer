@@ -63,17 +63,19 @@ public:
 	/**
 	 * Returns the appropriate color for the given intersection data.
 	 * @param data The data to use to get the color of the object at the intersection.
+	 * @param depthCount Used to prevent recursive calls from going on forever.  When >0, does not call shader, and returns black.
 	 */
-	Color ShadeIntersection(Intersection &data);
+	Color ShadeIntersection(Intersection &data, int depthCount = std::numeric_limits<int>::max());
 
 	/**
 	 * Casts the given ray into the scene and returns the color it hit.
 	 * @param ray The ray to cast.
 	 * @param result If this returns true, the color the ray ran into.
 	 * @param maxT The maximum t value that should be considered.
+	 * @param depthCount Used to prevent recursive calls from going on forever.  When >0, does not call shader, and returns black.
 	 * @return If true there was an intersection, or false otherwise.
 	 */
-	bool CastRayAndShade(const Ray &ray, Color &result, double maxT = DBL_MAX);
+	bool CastRayAndShade(const Ray &ray, Color &result, double maxT = DBL_MAX, int depthCount = std::numeric_limits<int>::max());
 
 	/**
 	 * Casts a shadow ray.
@@ -82,6 +84,13 @@ public:
 	 * @return True if we are in shadow, false otherwise.
 	 */
 	bool CastShadowRay(ILight *light, sivelab::Vector3D intersectPoint);
+
+	/**
+	 * Casts an intersection ray.
+	 * @param intersection The intersection that this ray will be bouncing from.
+	 * @param depthCount The number of times we are allowed to reflect.  When it is 0, will return Black.
+	 */
+	Color CastReflectionRay(const Intersection &intersection, int depthCount);
 
 	/**
 	 * Get a constant iterator to the beginning of the list of lights.

@@ -23,7 +23,8 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 	viewDir.normalize();
 	Vector3D intersectPoint = intersection.collidedRay.GetPositionAtTime(intersection.t);
 
-	Color finalColor(0.0, 0.0, 0.0);
+	Color finalDiffuseColor(0.0, 0.0, 0.0);
+	Color finalSpecularColor(0.0, 0.0, 0.0);
 
 	LightList::const_iterator currentLight;
 	for (currentLight = m_scene->GetLightsBegin(); currentLight != m_scene->GetLightsEnd(); currentLight++)
@@ -39,7 +40,7 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 		// Always add the ambient amount of light.
 		Color ambient = m_scene->GetAmbient();
 		ambient.MultiplyColors(m_diffuse);
-		finalColor.AddColors(ambient);
+		finalDiffuseColor.AddColors(ambient);
 
 		// See if we are in shadow.
 		bool inShadow = m_scene->CastShadowRay(*currentLight, intersectPoint);
@@ -57,13 +58,37 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 			// Make sure it is above 0.
 			double specularIntensity = pow(max(0.0, halfDir.dot(normal)), m_phongExp);
 
+			// Calculate the specular color, and add it to the sum total of specular colors.
 			Color specularColor = radiance;
 			specularColor.LinearMult(specularIntensity).MultiplyColors(m_specular);
+			finalSpecularColor.AddColors(specularColor);
 
-			// Sum colors into the final color.
-			finalColor.AddColors(diffuseColor).AddColors(specularColor);
+			// Sum colors into the diffuse color.
+			finalDiffuseColor.AddColors(diffuseColor);
 		}
 	}
+
+	// Calculate the final color.
+	Color finalColor;
+
+	// Calculate color of reflected ray if m_mirrorCoef is not close to zero.
+	if (m_mirrorCoef > EPSILON)
+	{
+		// The surface acts as a mirror.
+		Color reflectedColor = m_scene->CastReflectionRay(intersection, 10);
+		// Combine the reflected color with the diffuse color.
+		finalDiffuseColor.LinearMult(1.0 - m_mirrorCoef);
+		reflectedColor.LinearMult(m_mirrorCoef);
+		finalColor.AddColors(finalDiffuseColor).AddColors(reflectedColor);
+	}
+	else
+	{
+		// The surface does not act like a mirror.
+		finalColor.AddColors(finalDiffuseColor);
+	}
+
+	// Combine the specular color with the result.
+	finalColor.AddColors(finalSpecularColor);
 
 	return (finalColor);
 }

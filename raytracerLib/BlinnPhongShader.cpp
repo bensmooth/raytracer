@@ -75,7 +75,7 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 	if (m_mirrorCoef > EPSILON)
 	{
 		// The surface acts as a mirror.
-		Color reflectedColor = m_scene->CastReflectionRay(intersection, 10);
+		Color reflectedColor = m_scene->CastReflectionRay(intersection);
 		// Combine the reflected color with the diffuse color.
 		finalDiffuseColor.LinearMult(1.0 - m_mirrorCoef);
 		reflectedColor.LinearMult(m_mirrorCoef);

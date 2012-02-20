@@ -54,6 +54,9 @@ void ReadVector(map<string, SceneDataContainer> &map, string fieldName, Vector3D
  */
 void ReadDouble(map<string, SceneDataContainer> &map, string fieldName, double &out)
 {
+	// Initialize out to 0.0 in case we don't find the field.
+	out = 0.0;
+
 	string content;
 	ReadString(map, fieldName, content);
 
@@ -257,10 +260,10 @@ public:
 			Vector3D specular;
 			ReadVector(sdMap, "shader_specular", specular);
 
-			double phongExp;
+			double phongExp = 0;
 			ReadDouble(sdMap, "shader_phongExp", phongExp);
 
-			double mirrorCoef;
+			double mirrorCoef = 0;
 			ReadDouble(sdMap, "shader_mirrorCoef", mirrorCoef);
 
 			// Add shader to list.
@@ -505,12 +508,12 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 }
 
 
-inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT, int depthCount)
+inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT, int allowedReflectionCount)
 {
 	Intersection intersect;
 	if (CastRay(ray, intersect, maxT) == true)
 	{
-		result = ShadeIntersection(intersect, depthCount);
+		result = ShadeIntersection(intersect, allowedReflectionCount);
 		return (true);
 	}
 	else
@@ -534,15 +537,15 @@ bool Scene::CastShadowRay(ILight* light, Vector3D intersectPoint)
 }
 
 
-Color Scene::CastReflectionRay(const Intersection& intersection, int depthCount)
+Color Scene::CastReflectionRay(Intersection& intersection)
 {
 	// Terminate if we have bounced around too much.
-	if (depthCount <= 0)
+	if (intersection.allowedReflectionCount <= 0)
 	{
-		return (Color(0.0, 0.0, 0.0));
+		return (Color(0.5, 0.5, 0.5));
 	}
 
-	depthCount--;
+	intersection.allowedReflectionCount--;
 
 	// Calculate the ray we need to shoot for the reflection.
 	Vector3D intersectPoint = intersection.collidedRay.GetPositionAtTime(intersection.t);
@@ -552,7 +555,7 @@ Color Scene::CastReflectionRay(const Intersection& intersection, int depthCount)
 	Ray reflectedRay(intersectPoint, rayDirection);
 
 	Color rayColor;
-	CastRayAndShade(reflectedRay, rayColor, numeric_limits<double>::max(), depthCount);
+	CastRayAndShade(reflectedRay, rayColor, numeric_limits<double>::max(), intersection.allowedReflectionCount);
 	return (rayColor);
 }
 
@@ -588,17 +591,12 @@ bool Scene::CastRay(const Ray& ray, Intersection &result, double maxT)
 }
 
 
-inline Color Scene::ShadeIntersection(Intersection& data, int depthCount)
+inline Color Scene::ShadeIntersection(Intersection& data, int allowedReflectionCount)
 {
-	// Invoke the object's shader if depthCount is greater than 0.
-	if (depthCount > 0)
-	{
-		return (data.object->GetShader()->Shade(data));
-	}
-	else
-	{
-		return (Color(0.0, 0.0, 0.0));
-	}
+	// Invoke the object's shader.
+	// Set the intersection data's reflection count.
+	data.allowedReflectionCount = allowedReflectionCount;
+	return (data.object->GetShader()->Shade(data));
 }
 
 

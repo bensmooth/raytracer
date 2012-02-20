@@ -1,5 +1,7 @@
 #pragma once
 
+#include <limits>
+
 #include "Vector3D.h"
 #include "Ray.h"
 
@@ -11,6 +13,14 @@ class IObject;
  */
 struct Intersection
 {
+	Intersection()
+	{
+		// Do 7 reflections before giving up.
+		allowedReflectionCount = 7;
+		t = 0.0;
+		object = NULL;
+	}
+
 	/**
 	 * The ray that collided with the object.
 	 */
@@ -32,5 +42,12 @@ struct Intersection
 	 * A reference to the object that was intersected.
 	 */
 	IObject *object;
+
+	/**
+	 * The number of reflections that are left for this particular intersection.
+	 * Scene::CastReflectionRay() will decrement this every time it is called.
+	 * When 0, Scene::CastReflectionRay() will not cast the reflection ray, and instead simply return the background color.
+	 */
+	int allowedReflectionCount;
 };
 

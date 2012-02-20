@@ -1,14 +1,14 @@
 10
 
 dir
-101
+105
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles
 https://wind.d.umn.edu/cssvn/cs5721
 
 
 
-2012-02-16T15:57:15.605901Z
-101
+2012-02-16T17:55:46.135769Z
+105
 willemsn
 
 
@@ -28,40 +28,6 @@ a59038f0-8682-4659-b67c-e465aad734c6
 
 oldSceneFiles
 dir
-
-test_threeSpheres.xml
-file
-
-
-
-
-2012-02-15T05:24:33.329269Z
-9af06e74f32ab1abc7647355ab4c24d6
-2012-02-15T04:55:25.492445Z
-98
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1356
 
 convertObjTortTriList.cpp
 file
@@ -96,9 +62,6 @@ willemsn
 
 
 5205
-
-testImages
-dir
 
 test_oneSphere.xml
 file
@@ -168,16 +131,16 @@ willemsn
 
 858
 
-test_oneBox.xml
+test_simpleSceneTwoSpheres_00.xml
 file
 
 
 
 
-2012-02-07T06:00:29.945492Z
-77d3eb2a3af69fe1792df8c75c2ee19d
-2012-01-26T06:21:41.604273Z
-86
+2012-02-16T16:38:19.627425Z
+3f6760596acafa6ebcc1a9c50056af6e
+2012-02-16T15:45:45.305957Z
+99
 willemsn
 
 
@@ -200,7 +163,7 @@ willemsn
 
 
 
-854
+1569
 
 test_oneBox_01.xml
 file
@@ -236,16 +199,16 @@ willemsn
 
 870
 
-test_simpleSceneTwoSpheres_00.xml
+test_oneBox.xml
 file
 
 
 
 
-2012-02-16T16:38:19.627425Z
-3f6760596acafa6ebcc1a9c50056af6e
-2012-02-16T15:45:45.305957Z
-99
+2012-02-07T06:00:29.945492Z
+77d3eb2a3af69fe1792df8c75c2ee19d
+2012-01-26T06:21:41.604273Z
+86
 willemsn
 
 
@@ -268,7 +231,109 @@ willemsn
 
 
 
-1569
+854
+
+test_simpleSceneTwoSpheres_01.xml
+file
+
+
+
+
+2012-02-20T17:15:17.108876Z
+d876b7b5d2ba966a443a96f1d325341f
+2012-02-16T17:27:10.011966Z
+102
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1767
+
+test_simpleSceneTwoSpheres_02.xml
+file
+
+
+
+
+2012-02-20T17:15:17.108876Z
+5575405c8aab06fb383910f5e7a6a174
+2012-02-16T17:37:41.710561Z
+103
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1694
+
+test_simpleSceneTwoSpheres_03.xml
+file
+
+
+
+
+2012-02-20T17:15:17.108876Z
+75120c8ab98bc23ff0058751d95413a4
+2012-02-16T17:44:05.385890Z
+104
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2061
 
 test_boxesAndSpheres.xml
 file
@@ -305,5 +370,76 @@ willemsn
 1595
 
 objFiles
+dir
+
+test_threeSpheres.xml
+file
+
+
+
+
+2012-02-15T05:24:33.329269Z
+9af06e74f32ab1abc7647355ab4c24d6
+2012-02-15T04:55:25.492445Z
+98
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1356
+
+bneumann_00_2011.xml
+file
+
+
+
+
+2012-02-20T17:15:17.107876Z
+51f3dd043e0a8ea1b755c509c2ff8bcc
+2012-02-16T17:55:46.135769Z
+105
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2369
+
+testImages
 dir
 

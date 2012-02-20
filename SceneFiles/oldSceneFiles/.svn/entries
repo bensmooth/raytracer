@@ -1,7 +1,7 @@
 10
 
 dir
-101
+105
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles/oldSceneFiles
 https://wind.d.umn.edu/cssvn/cs5721
 
@@ -25,40 +25,6 @@ willemsn
 
 
 a59038f0-8682-4659-b67c-e465aad734c6
-
-simpleSceneThreeLightsPhongIdealDielectric.rt
-file
-
-
-
-
-2012-02-07T06:00:27.629490Z
-c8c5e2f7ca099ed0c8f6cdb596fe98ed
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-575
 
 dragons.rt
 file
@@ -93,6 +59,40 @@ willemsn
 
 
 978
+
+simpleSceneThreeLightsPhongIdealDielectric.rt
+file
+
+
+
+
+2012-02-07T06:00:27.629490Z
+c8c5e2f7ca099ed0c8f6cdb596fe98ed
+2012-01-26T06:10:22.960200Z
+84
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+575
 
 sphereInstances.rt
 file
@@ -196,40 +196,6 @@ willemsn
 
 324
 
-test_1KSpheres.rt
-file
-
-
-
-
-2012-02-07T06:00:27.630490Z
-885294707bc5b511914df47edd285bbc
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-104174
-
 test_simpleSceneThreeLightsPhongIdeal.rt
 file
 
@@ -263,6 +229,40 @@ willemsn
 
 
 478
+
+test_1KSpheres.rt
+file
+
+
+
+
+2012-02-07T06:00:27.630490Z
+885294707bc5b511914df47edd285bbc
+2012-01-26T06:10:22.960200Z
+84
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+104174
 
 test_simpleSceneThreeLightsPhong.rt
 file
@@ -298,14 +298,14 @@ willemsn
 
 432
 
-dielectricTest_00.rt
+test_simpleScene.rt
 file
 
 
 
 
-2012-02-07T06:00:27.864490Z
-e8df9b5c86b2ddfa1cf470580dc29700
+2012-02-07T06:00:27.630490Z
+e14e1e473338c217415c214f2441b99f
 2012-01-26T06:10:22.960200Z
 84
 willemsn
@@ -330,7 +330,7 @@ willemsn
 
 
 
-1363
+350
 
 test_1MSpheres.rt
 file
@@ -366,14 +366,14 @@ willemsn
 
 104859890
 
-test_simpleScene.rt
+dielectricTest_00.rt
 file
 
 
 
 
-2012-02-07T06:00:27.630490Z
-e14e1e473338c217415c214f2441b99f
+2012-02-07T06:00:27.864490Z
+e8df9b5c86b2ddfa1cf470580dc29700
 2012-01-26T06:10:22.960200Z
 84
 willemsn
@@ -398,7 +398,7 @@ willemsn
 
 
 
-350
+1363
 
 dielectricTest_01.rt
 file
@@ -434,40 +434,6 @@ willemsn
 
 2685
 
-metallicDragons.rt
-file
-
-
-
-
-2012-02-07T06:00:27.865490Z
-3c81ef168221a006b90fec58c85b8ae1
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1089
-
 dielectricTest_02.rt
 file
 
@@ -501,6 +467,40 @@ willemsn
 
 
 534
+
+metallicDragons.rt
+file
+
+
+
+
+2012-02-07T06:00:27.865490Z
+3c81ef168221a006b90fec58c85b8ae1
+2012-01-26T06:10:22.960200Z
+84
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1089
 
 test_simpleSceneThreeLights.rt
 file

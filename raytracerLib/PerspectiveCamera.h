@@ -3,21 +3,40 @@
 #include "ICamera.h"
 #include "Basis.h"
 
+/**
+ * A camera that uses the perspective projection, and can act as either a jittered or regular sampler.
+ */
 class PerspectiveCamera : public ICamera
 {
 public:
 	/**
 	 * Constructs a perspective camera with the given position, direction, and view plane.
+	 * If samplesPerPixel is one, the camera acts as a regular sampler, otherwise, it acts as a jittered sampler.
+	 * @param positionAndDirection The position and direction of the camera in world space.
+	 * @param viewPlaneDist The distance from the camera to the view plane.
+	 * @param viewPlaneWidth The width of the view plane.
+	 * @param samplesPerPixel The number of samples per pixel.  Must be a perfect square.
+	 * @throws RaytraceException if the number of samples per pixel is not a perfect square.
 	 */
-	PerspectiveCamera(const Ray &positionAndDirection, double viewPlaneDist, double viewPlaneWidth);
+	PerspectiveCamera(const Ray &positionAndDirection, double viewPlaneDist, double viewPlaneWidth, int samplesPerPixel = 1);
 
-    virtual Ray GetPositionAndDirection();
+	virtual Ray GetPositionAndDirection();
 
-    virtual Ray CalculateViewingRay(double imageX, double imageY);
+	virtual RayList CalculateViewingRays(double imageX, double imageY);
 
-    virtual void SetImageDimensions(double width, double height);
+	virtual void SetImageDimensions(double width, double height);
 
 private:
+	/**
+	 * Calculates a single viewing ray starting at the camera exactly through the given image coordinates.
+	 */
+	Ray GetRayThroughPoint(double imageX, double imageY);
+
+	/**
+	 * Gets a random number in the interval [0.0, 1.0].
+	 */
+	double GetRandomOnUnitLine();
+
 	/**
 	 * The camera's location and facing direction.
 	 */
@@ -42,4 +61,9 @@ private:
 	 * The dimensions of the image, in pixels.
 	 */
 	double m_imageWidth, m_imageHeight;
+
+	/**
+	 * The number of samples per pixel.
+	 */
+	int m_samplesPerPixel;
 };

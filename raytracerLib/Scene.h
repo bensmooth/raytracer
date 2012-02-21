@@ -32,10 +32,11 @@ public:
 	/**
 	 * Loads a scene from the given XML file.
 	 * @param filename The filename to load from.
+	 * @param raysPerPixel The number of rays per pixel.  Must be a perfect square.
 	 * @param verbose Set to true if you want lots of information printed out during scene loading.
 	 * @throws RaytraceException If something goes wrong.
 	 */
-	Scene(std::string filename, bool verbose = false);
+	Scene(std::string filename, int raysPerPixel, bool verbose = false);
 
 	/**
 	 * Frees all memory associated with the scene.
@@ -118,6 +119,11 @@ public:
 	friend class ShaderCreator;
 
 private:
+	/**
+	 * Raytraces the given pixel.
+	 */
+	Color RaytracePixel(int x, int y);
+
 	ICamera *m_camera;
 	ObjectList m_objects;
 	LightList m_lights;

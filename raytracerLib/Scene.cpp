@@ -73,9 +73,10 @@ void ReadDouble(map<string, SceneDataContainer> &map, string fieldName, double &
 class CameraCreator : public SceneElementCreator
 {
 public:
-    CameraCreator(Scene *scene)
+	CameraCreator(Scene *scene, int raysPerPixel)
 	{
 		m_scene = scene;
+		m_raysPerPixel = raysPerPixel;
 	}
     ~CameraCreator() {}
 
@@ -145,13 +146,15 @@ public:
 			cout << "\tview direction: " << viewDir << endl;
 			cout << "\tfocal length: " << focalLength << endl;
 			cout << "\timage plane width: " << imagePlaneWidth << endl;
+			cout << "\trays per pixel: " << m_raysPerPixel << endl;
 		}
 
-		m_scene->m_camera = new PerspectiveCamera(Ray(position, viewDir), focalLength, imagePlaneWidth);
+		m_scene->m_camera = new PerspectiveCamera(Ray(position, viewDir), focalLength, imagePlaneWidth, m_raysPerPixel);
     }
 
 private:
-	Scene *m_scene;	
+	Scene *m_scene;
+	int m_raysPerPixel;
 };
 
 
@@ -434,7 +437,7 @@ private:
 };
 
 
-Scene::Scene(std::string filename, bool verbose)
+Scene::Scene(std::string filename, int raysPerPixel, bool verbose)
 {
 	VerboseOutput = verbose;
 	m_ambient = Color(0.1, 0.1, 0.1);
@@ -444,7 +447,7 @@ Scene::Scene(std::string filename, bool verbose)
     XMLSceneParser xmlScene;
 
     // Register object creation handlers with the scene parser.
-    CameraCreator cameraCreator(this);
+    CameraCreator cameraCreator(this, raysPerPixel);
 	ObjectCreator objectCreator(this);
 	LightCreator lightCreator(this);
 	ShaderCreator shaderCreator(this);
@@ -492,6 +495,37 @@ Scene::~Scene()
 }
 
 
+Color Scene::RaytracePixel(int x, int y)
+{
+	// Calculate the rays we need to shoot for this pixel.
+	RayList rayList = m_camera->CalculateViewingRays(x, y);
+
+	int raysPerPixel = rayList.size();
+
+	Color finalColor;
+	for (int i = 0; i < raysPerPixel; i++)
+	{
+		const Ray &ray = rayList[i];
+		// See if ray intersects any objects.
+		Color rayColor;
+		if (CastRayAndShade(ray, rayColor) == false)
+		{
+			// We hit nothing, add in the background color.
+			finalColor.AddColors(Color(0.0, 0.0, 0.0));
+		}
+		else
+		{
+			// We hit something.
+			finalColor.AddColors(rayColor);
+		}
+	}
+
+	// Take average of each ray's color.
+	finalColor.LinearMult(1.0/raysPerPixel);
+	return (finalColor);
+}
+
+
 void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 {
     // This is the image we will be writing to.
@@ -499,23 +533,12 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 
 	m_camera->SetImageDimensions(imageWidth, imageHeight);
 
-    // Get color values for each pixel.
-    for (int imageX = 0; imageX < imageWidth; imageX++)
-    {
-        for (int imageY = 0; imageY < imageHeight; imageY++)
-        {
-            // Calculate ray we need to shoot for this pixel.
-            Ray ray = m_camera->CalculateViewingRay(imageX, imageY);
-
-            // See if ray intersects any objects.
-			Color color;
-			if (CastRayAndShade(ray, color) == false)
-			{
-				// If we hit nothing, assume background is black.
-				color.SetRed(0.0);
-				color.SetGreen(0.0);
-				color.SetBlue(0.0);
-			}
+	// Get color values for each pixel.
+	for (int imageX = 0; imageX < imageWidth; imageX++)
+	{
+		for (int imageY = 0; imageY < imageHeight; imageY++)
+		{
+			Color color = RaytracePixel(imageX, imageY);
 
             // Save color to PNG structure.  Flip Y,  because we are rendering upside down.
             outputImage.set_pixel(imageX, imageHeight -1 - imageY, color.GetImageColor());

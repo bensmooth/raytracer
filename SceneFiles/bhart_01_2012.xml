@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene>
+  <camera name="main" type="perspective">
+    <position>2 5 10</position>
+    <lookatPoint>0 0 0</lookatPoint>
+    <focalLength>1.0</focalLength>
+    <imagePlaneWidth>1.0</imagePlaneWidth>
+  </camera>
+
+  <!-- Basic point light source placed just above the brown box. -->
+  <light type="point">
+    <position>0 4 4</position>
+    <intensity>0.8 0.8 0.8</intensity>
+  </light>
+
+  <light type="point">
+    <position>1.5 4 -0.5</position>
+    <intensity>0.8 0.8 0.8</intensity>
+  </light>
+
+  <!-- Lambertian Shader -->
+  <shader name="chrome" type="BlinnPhong">
+    <diffuse>0 0 1</diffuse>
+    <specular> 1 1 1</specular>
+    <phongExp>32.0</phongExp>
+    <mirrorCoef>1</mirrorCoef>
+  </shader>
+
+  <shader name="Red" type="Lambertian">
+    <diffuse>.8 0 0</diffuse>
+  </shader>
+
+  <shader name="Brown" type="Lambertian">
+    <diffuse>.8 .4 .2</diffuse>
+  </shader>
+
+  <shader name="blue" type="BlinnPhong">
+    <diffuse>0 0 1</diffuse>
+    <specular> 1 1 1</specular>
+    <phongExp>32.0</phongExp>
+    <mirrorCoef>0</mirrorCoef>
+  </shader>
+
+  <shader name="Green" type="BlinnPhong">
+    <diffuse>0 .8 0</diffuse>
+    <specular> 1 1 1</specular>
+    <phongExp>32.0</phongExp>
+    <mirrorCoef>.6</mirrorCoef>
+  </shader>
+
+  <!-- Sphere placed just above the ground. -->
+  <shape name="sphere1" type="sphere">
+    <shader ref="chrome" />
+    <center>-1 1 0</center>
+    <radius>1</radius>
+  </shape>
+
+  <shape name="sphere2" type="sphere">
+    <shader ref="blue" />
+    <center>1.5 0.75 -0.5</center>
+    <radius>0.75</radius>
+  </shape>
+
+  <shape name="background" type="box">
+    <shader ref="Green" />
+    <minPt>-5 0 -2.1</minPt>
+    <maxPt>5 5 -1.9</maxPt>
+  </shape>
+
+  <shape name="floor" type="box">
+    <shader ref="Brown" />
+    <minPt>-10 -0.5 -10</minPt>
+    <maxPt>10 0 10</maxPt>
+  </shape>
+
+  <shape name="underCamera" type="box">
+    <shader ref="Red" />
+    <minPt>-0.5 0 3.5</minPt>
+    <maxPt>0.5 1 4.5</maxPt>
+  </shape>
+</scene>

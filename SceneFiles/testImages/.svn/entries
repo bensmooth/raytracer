@@ -1,14 +1,14 @@
 10
 
 dir
-105
+109
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles/testImages
 https://wind.d.umn.edu/cssvn/cs5721
 
 
 
-2012-02-16T17:55:46.135769Z
-105
+2012-02-22T04:35:25.810349Z
+109
 willemsn
 
 
@@ -25,40 +25,6 @@ willemsn
 
 
 a59038f0-8682-4659-b67c-e465aad734c6
-
-test_boxesAndSpheres.png
-file
-
-
-
-
-2012-02-16T16:38:19.567425Z
-da75c015f18e4cabeaefb73a53e7b057
-2012-02-16T15:49:28.552741Z
-100
-willemsn
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-11604
 
 test_simpleSceneTwoSpheres_03.png
 file
@@ -94,6 +60,40 @@ has-props
 
 6007
 
+khalverson_00_2012.png
+file
+
+
+
+
+2012-02-22T19:55:56.346775Z
+983d6365bd59418823b3885372938dc7
+2012-02-22T04:35:25.810349Z
+109
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10219
+
 test_threeSpheres.png
 file
 
@@ -127,6 +127,74 @@ has-props
 
 
 10323
+
+bhart_00_2012.png
+file
+
+
+
+
+2012-02-22T19:55:56.347775Z
+da75c015f18e4cabeaefb73a53e7b057
+2012-02-22T04:32:38.353323Z
+108
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+11604
+
+bhart_01_2012.png
+file
+
+
+
+
+2012-02-22T19:55:56.347775Z
+3986e56fab0cfad83082f084032ad195
+2012-02-22T04:32:38.353323Z
+108
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+18770
 
 bneumann_00_2011.png
 file

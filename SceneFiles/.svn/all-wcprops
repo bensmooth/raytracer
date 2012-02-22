@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 43
-/cssvn/cs5721/!svn/ver/105/trunk/SceneFiles
+/cssvn/cs5721/!svn/ver/109/trunk/SceneFiles
 END
 test_threeSpheres.xml
 K 25
@@ -14,6 +14,18 @@ K 25
 svn:wc:ra_dav:version-url
 V 68
 /cssvn/cs5721/!svn/ver/33/trunk/SceneFiles/convertObjTortTriList.cpp
+END
+bhart_00_2012.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cssvn/cs5721/!svn/ver/106/trunk/SceneFiles/bhart_00_2012.xml
+END
+bhart_01_2012.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cssvn/cs5721/!svn/ver/107/trunk/SceneFiles/bhart_01_2012.xml
 END
 bneumann_00_2011.xml
 K 25
@@ -63,15 +75,15 @@ svn:wc:ra_dav:version-url
 V 77
 /cssvn/cs5721/!svn/ver/103/trunk/SceneFiles/test_simpleSceneTwoSpheres_02.xml
 END
-test_boxesAndSpheres.xml
-K 25
-svn:wc:ra_dav:version-url
-V 68
-/cssvn/cs5721/!svn/ver/100/trunk/SceneFiles/test_boxesAndSpheres.xml
-END
 test_simpleSceneTwoSpheres_03.xml
 K 25
 svn:wc:ra_dav:version-url
 V 77
 /cssvn/cs5721/!svn/ver/104/trunk/SceneFiles/test_simpleSceneTwoSpheres_03.xml
+END
+khalverson_00_2012.xml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/cssvn/cs5721/!svn/ver/109/trunk/SceneFiles/khalverson_00_2012.xml
 END

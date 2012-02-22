@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Comments can be embedded as well. -->
+
+<scene>
+  <!-- Simple camera placed back from the origin looking in -Z direction -->
+  <camera name="main" type="perspective">
+    <position>4 4 4</position>
+    <lookatPoint>0 0 0</lookatPoint>
+    <focalLength>1.0</focalLength>
+    <imagePlaneWidth>1.0</imagePlaneWidth>
+  </camera>
+
+  <!-- Basic point light source placed just above the camera. -->
+  <light type="point">
+    <position>0 4 0</position>
+    <intensity>0 1.0 0 </intensity>
+  </light>
+
+  <light type="point">
+    <position>0 0 4</position>
+    <intensity>0 0 1.0</intensity>
+  </light>
+
+  <light type="point">
+    <position>4 0 0</position>
+    <intensity>1.0 0 0</intensity>
+  </light>
+
+  <light type="point">
+    <position>4 4 0</position>
+    <intensity>1.0 1.0 0 </intensity>
+  </light>
+
+  <light type="point">
+    <position>0 4 4</position>
+    <intensity>0 1.0 1.0</intensity>
+  </light>
+
+  <light type="point">
+    <position>4 0 4</position>
+    <intensity>1.0 0 1.0</intensity>
+  </light>
+
+  <shader name="White ball" type="Lambertian">
+    <diffuse>.8 .8 .8</diffuse>
+  </shader>
+
+  <!-- Sphere placed just above the ground. -->
+  <shape name="sphere1" type="sphere">
+    <shader ref="White ball" />
+    <center>0 0 0 </center>
+    <radius>2</radius>
+  </shape>
+
+</scene>

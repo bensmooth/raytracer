@@ -10,6 +10,7 @@ else()
 endif()
 
 add_subdirectory(cs5721GraphicsLib)
+add_subdirectory(threadEngine)
 add_subdirectory(raytracerLib)
 add_subdirectory(basisTest)
 add_subdirectory(raytracer)

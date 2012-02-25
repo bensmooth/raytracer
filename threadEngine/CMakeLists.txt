@@ -9,4 +9,12 @@ add_library (ThreadLib
 
 target_link_libraries( ThreadLib ${CMAKE_THREAD_LIBS_INIT} )
 
+
+add_executable(threadTest
+  threadTest.cpp
+)
+
+target_link_libraries( threadTest ThreadLib )
+
+
 add_definitions( "-Wall -Werror -Wextra -Wno-unused-parameter -Wno-sign-compare" )

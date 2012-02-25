@@ -1,9 +1,10 @@
 // Mutex.cpp - written by Ben Hart
 
+#include <stdio.h>
 #include "Mutex.h"
-#include <iostream>
 
-RecMutex::RecMutex()
+
+ThreadEngine::Mutex::Mutex()
 {
 	static int s_idCounter = 0;
 
@@ -15,13 +16,13 @@ RecMutex::RecMutex()
 
 	if (m_debugInfo)
 	{
-		cout << "Mutex " << m_id << " created.\n";
+		printf("Mutex %i created.\n", m_id);
 	}
 
 	// Create the mutex.
 	if (pthread_mutex_init(&m_mutex, NULL) != 0)
 	{
-		cerr << "Error: unable to create mutex!\n";
+		printf("Error: unable to create mutex!\n");
 	}
 
 	// Wipe m_hasLock.
@@ -31,11 +32,11 @@ RecMutex::RecMutex()
 	m_lockCount = 0;
 }
 
-RecMutex::~RecMutex()
+ThreadEngine::Mutex::~Mutex()
 {
 	if (m_debugInfo)
 	{
-		cout << "Mutex " << m_id << " destroyed.\n";
+		printf("Mutex %i destroyed.\n", m_id);
 	}
 
 	// Wipe m_hasLock.
@@ -45,7 +46,7 @@ RecMutex::~RecMutex()
 	pthread_mutex_destroy(&m_mutex);
 }
 
-void RecMutex::Lock()
+void ThreadEngine::Mutex::Lock()
 {
 	// Detect a deadlock condition: the same thread has called lock twice in a row.
 	if (HasLock())
@@ -56,7 +57,7 @@ void RecMutex::Lock()
 		// Simply avoid locking it again to avert a deadlock.
 		if (m_debugInfo)
 		{
-			cout << "Mutex " << m_id << " enter (same thread): lock count is " << m_lockCount << endl;
+			printf("Mutex %i enter (same thread): lock count is %i\n", m_id, m_lockCount);
 		}
 
 		return;
@@ -65,7 +66,7 @@ void RecMutex::Lock()
 	// If we got here, we are not the thead holding the lock.  Wait until that thread gets done.
 	if (pthread_mutex_lock(&m_mutex) != 0)
 	{
-		cerr << "Error: Unable to lock mutex!\n";
+		printf("Error: Unable to lock mutex!\n");
 		return;
 	}
 	// If we got here, we got into the mutex.
@@ -76,16 +77,16 @@ void RecMutex::Lock()
 
 	if (m_debugInfo)
 	{
-		cout << "Mutex " << m_id << " enter: lock count is " << m_lockCount << endl;
+		printf("Mutex %i enter (same thread): lock count is %i\n", m_id, m_lockCount);
 	}
 }
 
-void RecMutex::Unlock()
+void ThreadEngine::Mutex::Unlock()
 {
 	// Make sure we actually have the lock.
 	if (HasLock() == false)
 	{
-		cerr << "Mutex " << m_id << " error: thread that does not own the mutex tried to unlock mutex!\n";
+		printf("Mutex %i error: thread that does not own the mutex tried to unlock mutex!\n", m_id);
 		return;
 	}
 
@@ -94,7 +95,7 @@ void RecMutex::Unlock()
 
 	if (m_debugInfo)
 	{
-		cout << "Mutex " << m_id << " unlock: lock count is " << m_lockCount << endl;
+		printf("Mutex %i exit: lock count is %i\n", m_id, m_lockCount);
 	}
 
 	// Decide if we can unlock the mutex.
@@ -108,7 +109,7 @@ void RecMutex::Unlock()
 
 		if (pthread_mutex_unlock(&m_mutex) != 0)
 		{
-			cerr << "Error: unable to unlock mutex!\n";
+			printf("Error: unable to unlock mutex!\n");
 		}
 	}
 	else if (m_lockCount > 0)
@@ -119,11 +120,11 @@ void RecMutex::Unlock()
 	else
 	{
 		// If we got here, m_lockCount is negative.  This means we called Unlock() too much.
-		cerr << "Mutex " << m_id << " error: we called unlock too many times!\n";
+		printf("Mutex %i error: we called unlock too many times!\n", m_id);
 	}
 }
 
-bool RecMutex::HasLock()
+bool ThreadEngine::Mutex::HasLock()
 {
 	pthread_t callingThread = pthread_self();
 	if (pthread_equal(callingThread, m_hasLock))
@@ -136,13 +137,13 @@ bool RecMutex::HasLock()
 	}
 }
 
-void RecMutex::ResetHasLock()
+void ThreadEngine::Mutex::ResetHasLock()
 {
 	// This is the best way I have found to generate an invalid thread handle.
 	memset(&m_hasLock, 0, sizeof (m_hasLock));
 }
 
-void RecMutex::SetDebug(bool debugging)
+void ThreadEngine::Mutex::SetDebug(bool debugging)
 {
 	m_debugInfo = debugging;
 }

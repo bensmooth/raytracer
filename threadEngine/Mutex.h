@@ -5,7 +5,8 @@
 #include <iostream>
 #include <string.h>
 
-using namespace std;
+namespace ThreadEngine
+{
 
 /**
  * This class represents a recursive mutex.  The recursive part comes from the property
@@ -13,20 +14,20 @@ using namespace std;
  * and that the mutex will not unlock for other threads until Unlock() is called once
  * for each call to Lock().
  */
-class RecMutex
+class Mutex
 {
 public:
 	/**
 	 * Creates the mutex.
 	 * @param noisy Set this to true if you want this object to print debugging messages.
 	 */
-	RecMutex();
+	Mutex();
 
 
 	/**
 	 * Destroys the mutex.  Results are undefined when mutex is still locked!
 	 */
-	~RecMutex();
+	~Mutex();
 
 
 	/**
@@ -95,3 +96,5 @@ private:
 
 	int m_id;
 };
+
+}

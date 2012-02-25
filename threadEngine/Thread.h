@@ -6,8 +6,9 @@
 #pragma once
 
 #include <pthread.h>
+#include <signal.h>
 
-namespace NetworkEngine
+namespace ThreadEngine
 {
 
 /**
@@ -63,6 +64,7 @@ public:
 	 * Sends cancellation signal to the thread.  It will terminate when it reaches a cancellation point.
 	 * To be sure that the thread has been canceled, call Join() after calling Cancel().
 	 * @warn Results undefined if the thread has not yet been started with Start().
+	 * @warn The thread will still be counted as running until a successful Join().
      * @return True if sending cancellation signal successful, false otherwise.
      */
 	bool Cancel();
@@ -81,7 +83,7 @@ private:
 	/**
 	 * Set to true if the thread is running.
 	 */
-	bool m_running;
+	volatile bool m_running;
 };
 
 }

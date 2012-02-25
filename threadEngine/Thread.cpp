@@ -7,33 +7,39 @@
 
 #include "Thread.h"
 
-using namespace NetworkEngine;
-
-Thread::Thread()
+ThreadEngine::Thread::Thread()
 {
 	m_running = false;
 }
 
 
-Thread::~Thread()
+ThreadEngine::Thread::~Thread()
 {
 	Cancel();
 }
 
 
-Thread::Thread(const Thread& orig)
+ThreadEngine::Thread::Thread(const Thread& orig)
 {
 	// Copying a thread doesn't make sense.  Don't do anything.
 }
 
 
-bool Thread::Start(UserFunction userFunction, void *startData)
+bool ThreadEngine::Thread::Start(UserFunction userFunction, void *startData)
 {
-	return (pthread_create(&m_thread, NULL, userFunction, startData) == 0);
+	if (pthread_create(&m_thread, NULL, userFunction, startData) == 0)
+	{
+		m_running = true;
+		return (true);
+	}
+	else
+	{
+		return (false);
+	}
 }
 
 
-bool Thread::Join(void *returnValue)
+bool ThreadEngine::Thread::Join(void *returnValue)
 {
 	if (IsRunning())
 	{
@@ -57,7 +63,7 @@ bool Thread::Join(void *returnValue)
 }
 
 
-bool Thread::Cancel()
+bool ThreadEngine::Thread::Cancel()
 {
 	bool result = true;
 
@@ -70,7 +76,7 @@ bool Thread::Cancel()
 }
 
 
-bool Thread::IsRunning()
+bool ThreadEngine::Thread::IsRunning()
 {
 	return (m_running);
 }

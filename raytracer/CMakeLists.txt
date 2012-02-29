@@ -4,6 +4,8 @@ Project(raytracer)
 
 include_directories(${CMAKE_SOURCE_DIR}/cs5721GraphicsLib/src)
 include_directories(${CMAKE_SOURCE_DIR}/raytracerLib)
+include_directories(${CMAKE_SOURCE_DIR}/threadEngine)
+
 
 # Complain more.
 add_definitions("-Werror -Wall -pedantic")

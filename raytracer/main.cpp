@@ -5,6 +5,7 @@
 #include "handleGraphicsArgs.h"
 #include "Scene.h"
 #include "RaytraceException.h"
+#include "ThreadPool.h"
 
 
 using namespace std;
@@ -69,8 +70,14 @@ int main(int argc, char *argv[])
 	// Try to render the scene.
 	try
 	{
+		// See if we need to autodetect the optimal thread count.
+		if (args.numCpus == -1)
+		{
+			args.numCpus = ThreadEngine::ThreadPool::GetNumberOfProcessors();
+		}
+		cout << "Rendering with " << args.numCpus << " threads..." << endl;
 		int64_t beginTime = GetTickCount();
-		scene->Render(args.outputFileName, args.width, args.height);
+		scene->Render(args.outputFileName, args.width, args.height, args.numCpus);
 		cout << "Rendering scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
 	catch (RaytraceException &e)

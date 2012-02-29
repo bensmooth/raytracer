@@ -48,10 +48,10 @@ public:
 	 * @param outfile The output filename.
 	 * @param imageWidth The width of the image.
 	 * @param imageHeight The height of the image.
+	 * @param threadCount The number of threads to use when rendering the image.  Set to -1 to guess at the number that would be most effecient.
 	 * @throws RaytraceException If something goes wrong.
 	 */
-	void Render(std::string outfile, int imageWidth, int imageHeight);
-
+	void Render(std::string outfile, int imageWidth, int imageHeight, int threadCount);
 
 	/**
 	 * Casts the given ray in the scene.
@@ -124,6 +124,13 @@ private:
 	 */
 	Color RaytracePixel(int x, int y);
 
+	/**
+	 * Same idea as public Render() above.
+	 * Comes in single and multithreaded flavors.
+	 */
+	void RenderSingleThreaded(std::string outfile, int imageWidth, int imageHeight);
+	void RenderMultiThreaded(std::string outfile, int imageWidth, int imageHeight, int threadCount);
+
 	ICamera *m_camera;
 	ObjectList m_objects;
 	LightList m_lights;
@@ -138,5 +145,8 @@ private:
 	 * The default number of reflections that are allowed to happen for each ray.
 	 */
 	static const int DEFAULT_REFLECTION_DEPTH = 5;
+
+	// Multithreaded rendering function.
+	friend void *RenderThread(void *info);
 };
 

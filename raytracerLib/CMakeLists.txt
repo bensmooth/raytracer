@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 
 include_directories(${CMAKE_SOURCE_DIR}/cs5721GraphicsLib/src)
+include_directories(${CMAKE_SOURCE_DIR}/threadEngine)
 
 # Complain more.
 add_definitions("-Werror -Wall -pedantic")
@@ -29,3 +30,4 @@ add_library(raytracerLib
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)
+target_link_libraries(raytracerLib ThreadLib)

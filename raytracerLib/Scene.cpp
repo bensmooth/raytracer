@@ -16,6 +16,8 @@
 #include "ReferenceTileShader.h"
 #include "BlinnPhongShader.h"
 #include "GlazeShader.h"
+#include "ThreadPool.h"
+#include <list>
 
 using namespace sivelab;
 using namespace std;
@@ -526,7 +528,26 @@ Color Scene::RaytracePixel(int x, int y)
 }
 
 
-void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
+void Scene::Render(string outfile, int imageWidth, int imageHeight, int threadCount)
+{
+	// See if we are guessing the number of threads.
+	if (threadCount <= 0)
+	{
+		threadCount = ThreadEngine::ThreadPool::GetNumberOfProcessors();
+	}
+
+	if (threadCount == 1)
+	{
+		RenderSingleThreaded(outfile, imageWidth, imageHeight);
+	}
+	else
+	{
+		RenderMultiThreaded(outfile, imageWidth, imageHeight, threadCount);
+	}
+}
+
+
+void Scene::RenderSingleThreaded(std::string outfile, int imageWidth, int imageHeight)
 {
     // This is the image we will be writing to.
     png::image<png::rgb_pixel> outputImage(imageWidth, imageHeight);
@@ -540,10 +561,114 @@ void Scene::Render(std::string outfile, int imageWidth, int imageHeight)
 		{
 			Color color = RaytracePixel(imageX, imageY);
 
-            // Save color to PNG structure.  Flip Y,  because we are rendering upside down.
-            outputImage.set_pixel(imageX, imageHeight -1 - imageY, color.GetImageColor());
-        }
-    }
+			// Save color to PNG structure.  Flip Y,  because we are rendering upside down.
+			outputImage.set_pixel(imageX, imageHeight -1 - imageY, color.GetImageColor());
+		}
+	}
+
+	// Write out PNG.
+	outputImage.write(outfile);
+}
+
+
+/**
+ * A structure that contains everything needed for a thread to render a portion of an image.
+ */
+struct RenderingThreadInfo
+{
+	/**
+	 * The scene we are rendering.
+	 */
+	Scene *scene;
+
+	/**
+	 * The image that will be written to.
+	 */
+	png::image<png::rgb_pixel> *outputImage;
+	ThreadEngine::Mutex *imageLock;
+
+	/**
+	 * The dimensions of the rectangle required to be rendered by the thread.
+	 */
+	int startX, startY, width, height;
+
+	/**
+	 * The final image height.  Used to flip the image upside down when writing pixels.
+	 */
+	int finalImageHeight;
+};
+
+
+/**
+ * The function that renders a portion of an image.
+ * @param info Pointer to the RenderingThreadInfo structure for this section of image.
+ */
+void *RenderThread(void *info)
+{
+	// Extract our rendering thread information.
+	RenderingThreadInfo *threadInfo = (RenderingThreadInfo*)info;
+	int endX = threadInfo->width + threadInfo->startX;
+	int endY = threadInfo->height + threadInfo->startY;
+
+	// Get color values for each pixel we have been assigned to render.
+	for (int imageX = threadInfo->startX; imageX < endX; imageX++)
+	{
+		for (int imageY = threadInfo->startY; imageY < endY; imageY++)
+		{
+			Color color = threadInfo->scene->RaytracePixel(imageX, imageY);
+
+			// Save color to PNG structure.  Flip Y,  because we are rendering upside down.
+			threadInfo->imageLock->Lock();
+			threadInfo->outputImage->set_pixel(imageX, threadInfo->finalImageHeight -1 - imageY, color.GetImageColor());
+			threadInfo->imageLock->Unlock();
+		}
+	}
+
+	return (NULL);
+}
+
+
+void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight, int threadCount)
+{
+	// The image we will be rendering to.
+	png::image<png::rgb_pixel> outputImage(imageWidth, imageHeight);
+	// The mutex associated with the image.
+	ThreadEngine::Mutex imageMutex;
+
+	// Tell the camera how big the image is.
+	m_camera->SetImageDimensions(imageWidth, imageHeight);
+
+	// The thread pool we will be using to render the scene.
+	ThreadEngine::ThreadPool renderPool(threadCount);
+
+	// Start pool so that jobs will be started immediately on adding them.
+	renderPool.StartProcessing();
+
+	// The list of job information for each image chunk.
+	RenderingThreadInfo *threadInfoList = new RenderingThreadInfo[imageHeight];
+
+	// Divide screen up into chunks.
+	for (int y = 0; y < imageHeight; y++)
+	{
+		RenderingThreadInfo &renderInfo = threadInfoList[y];
+		renderInfo.startX = 0;
+		renderInfo.startY = y;
+		renderInfo.width = imageWidth;
+		renderInfo.height = 1;
+		renderInfo.finalImageHeight = imageHeight;
+		renderInfo.scene = this;
+		renderInfo.outputImage = &outputImage;
+		renderInfo.imageLock = &imageMutex;
+
+		// Add a job to the pool for each chunk.
+		renderPool.AddJob(RenderThread, &threadInfoList[y]);
+	}
+
+	// Wait for all jobs to be completed.
+	renderPool.JoinAll();
+
+	// Free list of renderinfos.
+	delete[] threadInfoList;
 
 	// Write out PNG.
 	outputImage.write(outfile);

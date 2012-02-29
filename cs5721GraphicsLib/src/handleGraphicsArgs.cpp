@@ -27,7 +27,7 @@ using namespace sivelab;
 GraphicsArgs::GraphicsArgs()
   : verbose(false), width(100), height(100), 
     aspectRatio(1.0), useShadow(true), bgColor(0.0, 0.0, 0.0),
-    numCpus(1), rpp(1), inputFileName(""), outputFileName("")
+    numCpus(-1), rpp(1), inputFileName(""), outputFileName("")
 {
 }
 
@@ -39,7 +39,7 @@ void GraphicsArgs::process(int argc, char *argv[])
   argParser.reg("verbose", "turn on verbose output", ArgumentParsing::NONE, 'v');
   argParser.reg("inputfile", "input file name to use", ArgumentParsing::STRING, 'i');
   argParser.reg("outputfile", "output file name to use", ArgumentParsing::STRING, 'o');
-  argParser.reg("numcpus", "num of cores to use", ArgumentParsing::INT, 'n');
+  argParser.reg("numcpus", "num of cores to use (default is autodetect)", ArgumentParsing::INT, 'n');
   argParser.reg("width", "width of image (default is 100)", ArgumentParsing::INT, 'w');
   argParser.reg("height", "height of image (default is 100)", ArgumentParsing::INT, 'h');
   argParser.reg("aspect", "aspect ratio in width/height of image (default is 1)", ArgumentParsing::FLOAT, 'a');

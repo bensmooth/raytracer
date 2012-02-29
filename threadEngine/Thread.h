@@ -55,7 +55,7 @@ public:
 	/**
 	 * Waits for this thread to terminate.
 	 * @warn This function will fail if the thread has not been started.
-	 * @param returnValue The value that the user's function returned.
+	 * @param returnValue If not NULL, will contain the value that the user's function returned.
      * @return True if successfully joined, false otherwise.
      */
 	bool Join(void *returnValue);

@@ -1,7 +1,7 @@
 10
 
 dir
-109
+111
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles
 https://wind.d.umn.edu/cssvn/cs5721
 
@@ -25,6 +25,40 @@ willemsn
 
 
 a59038f0-8682-4659-b67c-e465aad734c6
+
+khalverson_00_2012.xml
+file
+
+
+
+
+2012-02-22T19:55:56.378775Z
+70c509cc61ef00ecda56d75b03a2ebca
+2012-02-22T04:35:25.810349Z
+109
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1334
 
 oldSceneFiles
 dir
@@ -131,16 +165,16 @@ willemsn
 
 858
 
-test_oneBox.xml
+test_simpleSceneTwoSpheres_00.xml
 file
 
 
 
 
-2012-02-07T06:00:29.945492Z
-77d3eb2a3af69fe1792df8c75c2ee19d
-2012-01-26T06:21:41.604273Z
-86
+2012-02-16T16:38:19.627425Z
+3f6760596acafa6ebcc1a9c50056af6e
+2012-02-16T15:45:45.305957Z
+99
 willemsn
 
 
@@ -163,7 +197,7 @@ willemsn
 
 
 
-854
+1569
 
 test_oneBox_01.xml
 file
@@ -199,16 +233,16 @@ willemsn
 
 870
 
-test_simpleSceneTwoSpheres_00.xml
+test_oneBox.xml
 file
 
 
 
 
-2012-02-16T16:38:19.627425Z
-3f6760596acafa6ebcc1a9c50056af6e
-2012-02-16T15:45:45.305957Z
-99
+2012-02-07T06:00:29.945492Z
+77d3eb2a3af69fe1792df8c75c2ee19d
+2012-01-26T06:21:41.604273Z
+86
 willemsn
 
 
@@ -231,7 +265,7 @@ willemsn
 
 
 
-1569
+854
 
 test_simpleSceneTwoSpheres_01.xml
 file
@@ -476,38 +510,4 @@ willemsn
 
 testImages
 dir
-
-khalverson_00_2012.xml
-file
-
-
-
-
-2012-02-22T19:55:56.378775Z
-70c509cc61ef00ecda56d75b03a2ebca
-2012-02-22T04:35:25.810349Z
-109
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1334
 

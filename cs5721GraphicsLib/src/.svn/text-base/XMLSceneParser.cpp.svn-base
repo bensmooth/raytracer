@@ -275,6 +275,15 @@ void XMLSceneParser::parseShape(xmlNode *nPtr, std::map<std::string, SceneDataCo
   retrieveProperty("name", nPtr, nodeData["shape_name"]);
   retrieveProperty("type", nPtr, nodeData["shape_type"]);
   
+  // property that might exist for subdivision level
+  retrieveProperty("subdivision", nPtr, nodeData["shape_subdivision"]);  
+
+  // property that might exist for slices
+  retrieveProperty("slices", nPtr, nodeData["shape_slices"]);  
+
+  // property that might exist for topo - open or closed... open is default for shapes that this applies to
+  retrieveProperty("topo", nPtr, nodeData["shape_topo"]);  
+
   xmlNode *currNodePtr = nPtr->xmlChildrenNode;
   while (currNodePtr != NULL) 
     {
@@ -291,6 +300,15 @@ void XMLSceneParser::parseShape(xmlNode *nPtr, std::map<std::string, SceneDataCo
       // box values
       retrieveElementData("minPt", currNodePtr, nodeData["shape_minPt"]);
       retrieveElementData("maxPt", currNodePtr, nodeData["shape_maxPt"]);
+
+      // cylinder values
+      // Center and radius have already been picked up by the sphere requirements... need height
+      retrieveElementData("height", currNodePtr, nodeData["shape_height"]);      
+
+      // triangle values
+      retrieveElementData("v0", currNodePtr, nodeData["shape_v0"]);      
+      retrieveElementData("v1", currNodePtr, nodeData["shape_v1"]);      
+      retrieveElementData("v2", currNodePtr, nodeData["shape_v2"]);      
       
       currNodePtr = currNodePtr->next;
     }

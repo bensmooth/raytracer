@@ -1,7 +1,7 @@
 10
 
 dir
-109
+111
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles/objFiles
 https://wind.d.umn.edu/cssvn/cs5721
 
@@ -25,40 +25,6 @@ willemsn
 
 
 a59038f0-8682-4659-b67c-e465aad734c6
-
-buddha.obj.gz
-file
-
-
-
-
-2012-02-07T06:00:29.936492Z
-173b171e46f28ef5f8ef242424c895a2
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1353712
 
 dragon.obj.gz
 file
@@ -93,4 +59,38 @@ has-props
 
 
 1342977
+
+buddha.obj.gz
+file
+
+
+
+
+2012-02-07T06:00:29.936492Z
+173b171e46f28ef5f8ef242424c895a2
+2012-01-26T06:10:22.960200Z
+84
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1353712
 

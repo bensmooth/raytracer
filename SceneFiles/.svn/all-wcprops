@@ -3,6 +3,30 @@ svn:wc:ra_dav:version-url
 V 43
 /cssvn/cs5721/!svn/ver/109/trunk/SceneFiles
 END
+test_simpleSceneTwoSpheres_03.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/104/trunk/SceneFiles/test_simpleSceneTwoSpheres_03.xml
+END
+khalverson_00_2012.xml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/cssvn/cs5721/!svn/ver/109/trunk/SceneFiles/khalverson_00_2012.xml
+END
+test_threeSpheres.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/cssvn/cs5721/!svn/ver/98/trunk/SceneFiles/test_threeSpheres.xml
+END
+convertObjTortTriList.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/cssvn/cs5721/!svn/ver/33/trunk/SceneFiles/convertObjTortTriList.cpp
+END
 bhart_00_2012.xml
 K 25
 svn:wc:ra_dav:version-url
@@ -62,28 +86,4 @@ K 25
 svn:wc:ra_dav:version-url
 V 77
 /cssvn/cs5721/!svn/ver/103/trunk/SceneFiles/test_simpleSceneTwoSpheres_02.xml
-END
-test_simpleSceneTwoSpheres_03.xml
-K 25
-svn:wc:ra_dav:version-url
-V 77
-/cssvn/cs5721/!svn/ver/104/trunk/SceneFiles/test_simpleSceneTwoSpheres_03.xml
-END
-khalverson_00_2012.xml
-K 25
-svn:wc:ra_dav:version-url
-V 66
-/cssvn/cs5721/!svn/ver/109/trunk/SceneFiles/khalverson_00_2012.xml
-END
-test_threeSpheres.xml
-K 25
-svn:wc:ra_dav:version-url
-V 64
-/cssvn/cs5721/!svn/ver/98/trunk/SceneFiles/test_threeSpheres.xml
-END
-convertObjTortTriList.cpp
-K 25
-svn:wc:ra_dav:version-url
-V 68
-/cssvn/cs5721/!svn/ver/33/trunk/SceneFiles/convertObjTortTriList.cpp
 END

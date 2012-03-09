@@ -27,6 +27,7 @@ add_library(raytracerLib
   ReferenceTileShader.cpp ReferenceTileShader.h
   BlinnPhongShader.cpp BlinnPhongShader.h
   GlazeShader.cpp GlazeShader.h
+  Cylinder.cpp Cylinder.h
 )
 
 target_link_libraries(raytracerLib cs5721Graphics)

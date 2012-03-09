@@ -1,7 +1,7 @@
 #include "Scene.h"
 
+#include <list>
 #include <png++/image.hpp>
-
 #include "png++/png.hpp"
 #include "Vector3D.h"
 #include "XMLSceneParser.h"
@@ -17,7 +17,7 @@
 #include "BlinnPhongShader.h"
 #include "GlazeShader.h"
 #include "ThreadPool.h"
-#include <list>
+#include "Cylinder.h"
 
 using namespace sivelab;
 using namespace std;
@@ -392,6 +392,34 @@ public:
 				cout << "\tRadius: " << radius << endl;
 			}
 		}
+		else if (type == "cylinder")
+		{
+			Vector3D center;
+			ReadVector(sdMap, "shape_center", center);
+
+			double radius;
+			ReadDouble(sdMap, "shape_radius", radius);
+
+			double height;
+			ReadDouble(sdMap, "shape_height", height);
+
+			// Associate this object with the correct shader.
+			string shaderName;
+			ReadString(sdMap, "shader_ref", shaderName);
+			IShader *shaderRef = ResolveShaderRef(name, shaderName);
+
+			// Add sphere to the list of objects.
+			m_scene->m_objects.push_back(new Cylinder(shaderRef, center, height, radius));
+
+			// Print details if verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tShader: " << shaderName << endl;
+				cout << "\tCenter: " << center << endl;
+				cout << "\tRadius: " << radius << endl;
+				cout << "\tHeight: " << height << endl;
+			}
+		}
 		else if(type == "box")
 		{
 			// Read shader.
@@ -736,7 +764,7 @@ bool Scene::CastRay(const Ray& ray, Intersection &result, double maxT)
 		Intersection currentIntersect;
 		if (m_objects.at(i)->Intersect(ray, currentIntersect) == true)
 		{
-			// If this intersection is closer to the camera, this intersection is the one we care about.
+			// If this intersection is closer to the camera, and in front of it, this intersection is the one we care about.
 			if ((currentIntersect.t < closestIntersect.t) && (currentIntersect.t > 0))
 			{
 				closestIntersect = currentIntersect;

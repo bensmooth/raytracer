@@ -28,7 +28,17 @@ add_library(raytracerLib
   BlinnPhongShader.cpp BlinnPhongShader.h
   GlazeShader.cpp GlazeShader.h
   Cylinder.cpp Cylinder.h
+  Perlin.c Perlin.h
+  PerlinShader.cpp PerlinShader.h
+  ColorGradient.cpp ColorGradient.h
 )
+
+add_executable(perlinTest
+  PerlinTest.c
+)
+
+set(CMAKE_C_FLAGS "-std=gnu99")
 
 target_link_libraries(raytracerLib cs5721Graphics)
 target_link_libraries(raytracerLib ThreadLib)
+target_link_libraries(perlinTest raytracerLib)

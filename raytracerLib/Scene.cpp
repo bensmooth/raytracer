@@ -18,6 +18,7 @@
 #include "GlazeShader.h"
 #include "ThreadPool.h"
 #include "Cylinder.h"
+#include "PerlinShader.h"
 
 using namespace sivelab;
 using namespace std;
@@ -305,6 +306,10 @@ public:
 		else if (type == "Tile")
 		{
 			m_scene->m_shaders.insert(make_pair(name, new ReferenceTileShader()));
+		}
+		else if (type == "Perlin")
+		{
+			m_scene->m_shaders.insert(make_pair(name, new PerlinShader(m_scene)));
 		}
 		else
 		{

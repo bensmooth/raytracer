@@ -17,6 +17,11 @@ public:
 	 */
 	BlinnPhongShader(Scene *scene, const Color &diffuse, const Color &specular, double phongExp, double mirrorCoef);
 
+	/**
+	 * Sets the value of the mirror coeficient.
+	 */
+	void SetMirrorCoef(double mirrorCoef);
+
 	virtual ~BlinnPhongShader() { }
 
 	virtual Color Shade(Intersection& intersection);

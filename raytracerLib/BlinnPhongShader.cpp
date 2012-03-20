@@ -93,3 +93,9 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 	return (finalColor);
 }
 
+
+void BlinnPhongShader::SetMirrorCoef(double mirrorCoef)
+{
+	m_mirrorCoef = mirrorCoef;
+}
+

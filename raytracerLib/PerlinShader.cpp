@@ -65,7 +65,7 @@ Color PerlinShader::Marble(Intersection& intersection)
 	ColorGradient gradient(Color((uint8_t)17, 8, 1), Color((uint8_t)180, 154, 141));
 
 	// Calculate and normalize noise.
-	double noise = PerlinNoise3D(intersectPoint[0], intersectPoint[1], intersectPoint[2], 2.0, 3.0, 8);
+	double noise = PerlinNoise3D(intersectPoint[0], intersectPoint[1], intersectPoint[2], 2.0, 3.0, 5);
 	noise /= 0.7;
 
 	// Take sine of noise and a coordinate to get some periodicity.
@@ -75,12 +75,11 @@ Color PerlinShader::Marble(Intersection& intersection)
 	noise = (noise + 1.0) / 2.0;
 
 	// Calculate the reflective part of the scene.
-	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, 0.0);
+	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, 0.05);
 	Color diffuse = blinnPhong.Shade(intersection);
 
 	// Combine the blinnPhong color and the noise color.
 	diffuse.AddColors(gradient.Sample(noise));
-//	diffuse.LinearMult(0.5);
 	return (diffuse);
 }
 

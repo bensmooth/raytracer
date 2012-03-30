@@ -31,10 +31,15 @@ add_library(raytracerLib
   Perlin.c Perlin.h
   PerlinShader.cpp PerlinShader.h
   ColorGradient.cpp ColorGradient.h
+  Matrix.cpp Matrix.h
 )
 
 add_executable(perlinTest
   PerlinTest.c
+)
+
+add_executable(matrixTest
+  MatrixTest.cpp
 )
 
 set(CMAKE_C_FLAGS "-std=gnu99")
@@ -42,3 +47,4 @@ set(CMAKE_C_FLAGS "-std=gnu99")
 target_link_libraries(raytracerLib cs5721Graphics)
 target_link_libraries(raytracerLib ThreadLib)
 target_link_libraries(perlinTest raytracerLib)
+target_link_libraries(matrixTest raytracerLib)

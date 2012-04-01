@@ -41,6 +41,14 @@ public:
 	MatrixRow(double v0, double v1, double v2, double v3);
 	MatrixRow(double const values[MATRIX_COLS]);
 
+
+	/**
+	 * Returns the first nonzero value in the row.
+	 * Returns 0.0 if all of the entries in the row are zero.
+	 */
+	double FindFirstNonzeroValue() const;
+
+
 	/**
 	 * Constructs a string representation of the row.
 	 */
@@ -87,6 +95,11 @@ public:
 	MatrixRow &operator/=(double c);
 
 private:
+	/**
+	 * If any value in the row is within an epsilon of an integer, it is set to that integer.
+	 */
+	void SnapToInts();
+
 	double m_columns[MATRIX_COLS];
 };
 
@@ -162,6 +175,11 @@ struct RowOperation
 	 */
 	static RowOperation Add(int destRow, int sourceRow, double scalar);
 
+
+	/**
+	 * Gets a string representation of the operation.
+	 */
+	std::string ToString();
 
 private:
 	/**

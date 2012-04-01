@@ -53,6 +53,21 @@ MatrixRow::MatrixRow(const double values[MATRIX_COLS])
 }
 
 
+double MatrixRow::FindFirstNonzeroValue() const
+{
+	for (int i = 0; i < MATRIX_COLS; i++)
+	{
+		if (!EQUAL(m_columns[i], 0.0))
+		{
+			return (m_columns[i]);
+		}
+	}
+
+	// If we got here, the entire row is zero.
+	return (0.0);
+}
+
+
 std::string MatrixRow::ToString() const
 {
 	char buffer[128];
@@ -104,7 +119,10 @@ MatrixRow MatrixRow::operator+(const MatrixRow& other) const
 		cols[i] = m_columns[i] + other.m_columns[i];
 	}
 
-	return (cols);
+	MatrixRow result(cols);
+	result.SnapToInts();
+
+	return (result);
 }
 
 
@@ -124,7 +142,10 @@ MatrixRow MatrixRow::operator-(const MatrixRow& other) const
 		cols[i] = m_columns[i] - other.m_columns[i];
 	}
 
-	return (cols);
+	MatrixRow result(cols);
+	result.SnapToInts();
+
+	return (result);
 }
 
 
@@ -156,7 +177,10 @@ MatrixRow MatrixRow::operator*(double c) const
 		cols[i] = m_columns[i] * c;
 	}
 
-	return (cols);
+	MatrixRow result(cols);
+	result.SnapToInts();
+
+	return (result);
 }
 
 
@@ -176,7 +200,10 @@ MatrixRow MatrixRow::operator/(double c) const
 		cols[i] = m_columns[i] / c;
 	}
 
-	return (cols);
+	MatrixRow result(cols);
+	result.SnapToInts();
+
+	return (result);
 }
 
 
@@ -185,6 +212,20 @@ MatrixRow& MatrixRow::operator/=(double c)
 	*this = *this / c;
 
 	return (*this);
+}
+
+
+void MatrixRow::SnapToInts()
+{
+	for (int col = 0; col < MATRIX_COLS; col++)
+	{
+		int closestInt = (int)round(m_columns[col]);
+
+		if (EQUAL((double)closestInt, m_columns[col]))
+		{
+			m_columns[col] = closestInt;
+		}
+	}
 }
 
 
@@ -231,6 +272,33 @@ RowOperation RowOperation::Add(int destRow, int sourceRow, double scalar)
 	return (rowOp);
 }
 
+
+string RowOperation::ToString()
+{
+	const int bufferLength = 64;
+	char buffer[bufferLength];
+	switch (type)
+	{
+		case RowSwap:
+		{
+			snprintf(buffer, bufferLength, "R%i<==>R%i", targetRow+1, swapInfo.otherRow+1);
+		} break;
+		case RowScale:
+		{
+			snprintf(buffer, bufferLength, "R%i *= %f", targetRow+1, scaleInfo.scalar);
+		} break;
+		case RowAdd:
+		{
+			snprintf(buffer, bufferLength, "R%i += %f * R%i", targetRow+1, addInfo.scalar, addInfo.sourceRow+1);
+		} break;
+		default:
+		{
+			throw RaytraceException("Unknown row operation type.");
+		} break;
+	}
+
+	return (buffer);
+}
 
 
 Matrix::Matrix()
@@ -425,8 +493,9 @@ void Matrix::RowReduce(bool reducedEchelon, queue<RowOperation> *operationsTaken
 			}
 		}
 
+		double &pivotValue = self[pivotRow][pivotCol];
+
 		// Add the pivot row to other rows and produce all zeroes in the pivot column.
-		double pivotValue = self[pivotRow][pivotCol];
 		for (int row = topRow + 1; row < MATRIX_ROWS; row++)
 		{
 			// This is the value we are trying to cancel out.
@@ -456,6 +525,25 @@ void Matrix::RowReduce(bool reducedEchelon, queue<RowOperation> *operationsTaken
 	if (reducedEchelon)
 	{
 		// Reduce the matrix to reduced echelon form.
+	}
+
+	// Scale each row so that the leading value is 1.0.
+	for (int row = 0; row < MATRIX_ROWS; row++)
+	{
+		double scaleValue = self[row].FindFirstNonzeroValue();
+
+		// Skip rows that are all zero.
+		if (EQUAL(scaleValue, 0.0))
+		{
+			continue;
+		}
+
+		RowOperation scaleOp = RowOperation::Scale(row, 1.0/scaleValue);
+		ApplyOperation(scaleOp);
+		if (operationsTaken != NULL)
+		{
+			operationsTaken->push(scaleOp);
+		}
 	}
 }
 

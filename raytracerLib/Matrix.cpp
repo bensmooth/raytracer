@@ -215,6 +215,27 @@ MatrixRow& MatrixRow::operator/=(double c)
 }
 
 
+bool MatrixRow::operator==(const MatrixRow& other) const
+{
+	for (int col = 0; col < MATRIX_COLS; col++)
+	{
+		if (!EQUAL(m_columns[col], other.m_columns[col]))
+		{
+			return false;
+		}
+	}
+
+	// If we got here, we are equal.
+	return true;
+}
+
+
+bool MatrixRow::operator!=(const MatrixRow& other) const
+{
+	return !(*this == other);
+}
+
+
 void MatrixRow::SnapToInts()
 {
 	for (int col = 0; col < MATRIX_COLS; col++)
@@ -226,12 +247,6 @@ void MatrixRow::SnapToInts()
 			m_columns[col] = closestInt;
 		}
 	}
-}
-
-
-RowOperation::RowOperation()
-{
-	// Do nothing.
 }
 
 
@@ -399,15 +414,67 @@ Matrix Matrix::Transpose() const
 
 double Matrix::Determinant() const
 {
-	return (0.0);
+	// First, row reduce the matrix down to echelon form, keeping track of the operations that were applied.
+	Matrix rowReduced = *this;
+	queue<RowOperation> opsDone;
+	rowReduced.RowReduce(false, &opsDone);
+
+	// Calculate the scalar that needs to be applied to the determinant.
+	double scalar = 1.0;
+	while (!opsDone.empty())
+	{
+		RowOperation &op = opsDone.front();
+		if (op.type == RowOperation::RowSwap)
+		{
+			scalar *= -1.0;
+		}
+		else if (op.type == RowOperation::RowScale)
+		{
+			scalar /= op.scaleInfo.scalar;
+		}
+		opsDone.pop();
+	}
+
+	// Since the matrix is now in upper triangular form, the determinant is the product of the entries in the diagonal.
+	double det = 1.0;
+	for (int i = 0; i < MATRIX_ROWS; i++)
+	{
+		det *= rowReduced[i][i];
+	}
+
+	// Combine the determinant of the row reduced matrix with the scalar we obtained
+	// from the row reduction operations we performed on the matrix to get it there.
+	return (scalar * det);
 }
 
 
-Matrix Matrix::Inverse() const
+bool Matrix::Inverse(Matrix &outInverse) const
 {
-	Matrix result;
+	// Make a local copy of ourself, so that we can row reduce it without modifying ourself.
+	Matrix temp = *this;
 
-	return (result);
+	// First, row reduce the matrix to reduced echelon form.
+	queue<RowOperation> rowOps;
+	temp.RowReduce(true, &rowOps);
+
+	// If the matrix is not equal to the identity matrix, this matrix is not invertible.
+	Matrix result;
+	result.ConstructIdentity();
+	if (temp != result)
+	{
+		return (false);
+	}
+
+	// Apply the operations that were needed to reduce the matrix to the identity matrix.
+	while (rowOps.empty() == false)
+	{
+		result.ApplyOperation(rowOps.front());
+		rowOps.pop();
+	}
+
+	// If we got here, we were successful.
+	outInverse = result;
+	return (true);
 }
 
 
@@ -445,24 +512,58 @@ void Matrix::ApplyOperation(RowOperation& op)
 }
 
 
+bool Matrix::EliminateWithPivot(RowOperation& opNeeded, int pivotRow, int pivotCol, int targetRow) const
+{
+	const Matrix &self = *this;
+
+	// This is the value we are trying to cancel out.
+	double valueToBeCancelled = self[targetRow][pivotCol];
+
+	// The value of the pivot.
+	double pivotValue = self[pivotRow][pivotCol];
+
+	// If the pivot or the value to be cancelled is zero, we can't do anything.
+	if (EQUAL(valueToBeCancelled, 0.0) || EQUAL(pivotValue, 0.0))
+	{
+		return (false);
+	}
+
+	// This is the scalar that needs to be applied to the current row in order to zero it out.
+	double replacementScalar = -valueToBeCancelled/pivotValue;
+
+	opNeeded = RowOperation::Add(targetRow, pivotRow, replacementScalar);
+	return (true);
+}
+
+
 // Internally used to produce a matrix in reduced echelon form.
 void EchelonForm(Matrix &self, queue<RowOperation> *operationsTaken)
 {
 	// Starting at the bottom, create zeroes above each pivot.
-	for (int pivotRow = MATRIX_ROWS - 1; pivotRow >= 0; pivotRow++)
+	for (int pivotRow = MATRIX_ROWS - 1; pivotRow >= 0; pivotRow--)
 	{
-		// Get the pivot value for this row.
+		// Find the location of the pivot value for this row.
 		int pivotCol = self[pivotRow].FindFirstNonzeroValue();
 		if (pivotCol == -1)
 		{
 			// This row is entirely zero.  Skip it.
 			continue;
 		}
-		double pivotValue = self[pivotRow][pivotCol];
 
 		// Go through each row above the pivot, and make zeros in the pivot column.
 		for (int row = 0; row < pivotRow; row++)
 		{
+			RowOperation addOp;
+			if (self.EliminateWithPivot(addOp, pivotRow, pivotCol, row) == false)
+			{
+				// If we got here, the row already has a zero in it.
+				continue;
+			}
+			self.ApplyOperation(addOp);
+			if (operationsTaken != NULL)
+			{
+				operationsTaken->push(addOp);
+			}
 		}
 	}
 }
@@ -516,24 +617,15 @@ void Matrix::RowReduce(bool reducedEchelon, queue<RowOperation> *operationsTaken
 			}
 		}
 
-		double &pivotValue = self[pivotRow][pivotCol];
-
 		// Add the pivot row to other rows and produce all zeroes in the pivot column.
 		for (int row = topRow + 1; row < MATRIX_ROWS; row++)
 		{
-			// This is the value we are trying to cancel out.
-			double &valueToBeCancelled = self[row][pivotCol];
-
-			// Skip this row if it is already 0.
-			if (EQUAL(valueToBeCancelled, 0.0))
+			RowOperation addOp;
+			if (EliminateWithPivot(addOp, pivotRow, pivotCol, row) == false)
 			{
+				// If we got here, the row already has a zero in it.
 				continue;
 			}
-
-			// This is the scalar that needs to be applied to the current row in order to zero it out.
-			double replacementScalar = -valueToBeCancelled/pivotValue;
-
-			RowOperation addOp = RowOperation::Add(row, pivotRow, replacementScalar);
 			ApplyOperation(addOp);
 			if (operationsTaken != NULL)
 			{
@@ -687,5 +779,24 @@ Matrix& Matrix::operator*=(const Matrix& other)
 	*this = operator*(other);
 
 	return (*this);
+}
+
+
+bool Matrix::operator==(const Matrix& other) const
+{
+	for (int row = 0; row < MATRIX_ROWS; row++)
+	{
+		if (m_rows[row] != other.m_rows[row])
+		{
+			return (false);
+		}
+	}
+	return (true);
+}
+
+
+bool Matrix::operator!=(const Matrix& other) const
+{
+	return !(*this == other);
 }
 

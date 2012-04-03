@@ -25,9 +25,25 @@ int main()
 	Matrix ab = a*b;
 	cout << ab.ToString() << endl;
 
+	Matrix aInv;
+	if (a.Inverse(aInv) == true)
+	{
+		cout << "A inverse:" << endl;
+		cout << aInv.ToString() << endl;
+	}
+	else
+	{
+		cout << "A is not invertable." << endl;
+	}
+
+	cout << "A*Ainv" << endl;
+	cout << (a*aInv).ToString() << endl;
+
+	cout << "det A: " << a.Determinant() << endl;
+
 	cout << "A row-reduced:" << endl;
 	queue<RowOperation> rowOps;
-	a.RowReduce(false, &rowOps);
+	a.RowReduce(true, &rowOps);
 	cout << a.ToString() << endl;
 
 	cout << "Operations:" << endl;

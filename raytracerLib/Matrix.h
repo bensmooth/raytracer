@@ -94,6 +94,12 @@ public:
 	MatrixRow operator/(double c) const;
 	MatrixRow &operator/=(double c);
 
+	/**
+	 * Equality testing.
+	 */
+	bool operator==(const MatrixRow &other) const;
+	bool operator!=(const MatrixRow &other) const;
+
 private:
 	/**
 	 * If any value in the row is within an epsilon of an integer, it is set to that integer.
@@ -180,12 +186,6 @@ struct RowOperation
 	 * Gets a string representation of the operation.
 	 */
 	std::string ToString();
-
-private:
-	/**
-	 * Disallow construction by client code.
-	 */
-	RowOperation();
 };
 
 
@@ -236,9 +236,11 @@ public:
 	double Determinant() const;
 
 	/**
-	 * Constructs the inverse of this matrix.
+	 * Finds the inverse of this matrix.
+	 * @param outInverse If true is returned, this will contain the inverse of the matrix.
+	 * @return Returns true if this matrix is invertible, false otherwise.
 	 */
-	Matrix Inverse() const;
+	bool Inverse(Matrix &outInverse) const;
 
 	/**
 	 * Does row reduction operations on the matrix.
@@ -252,6 +254,15 @@ public:
 	 */
 	void ApplyOperation(RowOperation &op);
 
+	/**
+	 * Trys to find the add operation needed to reduce the given column in the given row to zero with the given pivot row.
+	 * @param opNeeded If true is returned, this will contain the operation needed to zero out the given row and column with the pivot.
+	 * @param pivotRow The row the pivot is in.
+	 * @param pivotCol The column the pivot is in.
+	 * @param targetRow The row to produce a zero in.
+	 * @return True if the operation in opNeeded will successfully zero out [targetRow][pivotCol], false if either the pivot value or row to zero is already zero.
+	 */
+	bool EliminateWithPivot(RowOperation &opNeeded, int pivotRow, int pivotCol, int targetRow) const;
 
 	/**
 	 * Returns true if the given column is entirely zero.
@@ -260,12 +271,10 @@ public:
 	 */
 	bool IsColumnZero(int column, int startRow = 0);
 
-
 	/**
 	 * Returns true if the given row is entirely zero.
 	 */
 	bool IsRowZero(int row);
-
 
 	/**
 	 * Constructs a string representation of the matrix.
@@ -289,6 +298,11 @@ public:
 	Matrix operator*(const Matrix &other) const;
 	Matrix &operator*=(const Matrix &other);
 
+	/**
+	 * Equality testing.
+	 */
+	bool operator==(const Matrix &other) const;
+	bool operator!=(const Matrix &other) const;
 
 private:
 	MatrixRow m_rows[MATRIX_ROWS];

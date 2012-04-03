@@ -4,13 +4,13 @@
 #include "Perlin.h"
 
 
-inline double LinearInterpolate(double a, double b, double t)
+double LinearInterpolate(double a, double b, double t)
 {
 	return (a + t * (b - a));
 }
 
 
-inline double CosineInterpolate(double a, double b, double t)
+double CosineInterpolate(double a, double b, double t)
 {
 	double ft = t * M_PI;
 	double f = (1 - cos(ft)) * .5;
@@ -20,7 +20,10 @@ inline double CosineInterpolate(double a, double b, double t)
 
 
 // Defining our own interpolation function.
-#define lerp(t, a, b) (CosineInterpolate(a, b, t))
+double lerp(double t, double a, double b)
+{
+	return CosineInterpolate(a, b, t);
+}
 
 
 // Perlin's code until end.

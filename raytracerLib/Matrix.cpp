@@ -53,18 +53,18 @@ MatrixRow::MatrixRow(const double values[MATRIX_COLS])
 }
 
 
-double MatrixRow::FindFirstNonzeroValue() const
+int MatrixRow::FindFirstNonzeroValue() const
 {
 	for (int i = 0; i < MATRIX_COLS; i++)
 	{
 		if (!EQUAL(m_columns[i], 0.0))
 		{
-			return (m_columns[i]);
+			return (i);
 		}
 	}
 
 	// If we got here, the entire row is zero.
-	return (0.0);
+	return (-1);
 }
 
 
@@ -445,6 +445,29 @@ void Matrix::ApplyOperation(RowOperation& op)
 }
 
 
+// Internally used to produce a matrix in reduced echelon form.
+void EchelonForm(Matrix &self, queue<RowOperation> *operationsTaken)
+{
+	// Starting at the bottom, create zeroes above each pivot.
+	for (int pivotRow = MATRIX_ROWS - 1; pivotRow >= 0; pivotRow++)
+	{
+		// Get the pivot value for this row.
+		int pivotCol = self[pivotRow].FindFirstNonzeroValue();
+		if (pivotCol == -1)
+		{
+			// This row is entirely zero.  Skip it.
+			continue;
+		}
+		double pivotValue = self[pivotRow][pivotCol];
+
+		// Go through each row above the pivot, and make zeros in the pivot column.
+		for (int row = 0; row < pivotRow; row++)
+		{
+		}
+	}
+}
+
+
 void Matrix::RowReduce(bool reducedEchelon, queue<RowOperation> *operationsTaken)
 {
 	// Allow easier access to the [] operator.
@@ -522,18 +545,23 @@ void Matrix::RowReduce(bool reducedEchelon, queue<RowOperation> *operationsTaken
 	}
 
 	// If we got here, the matrix is in echelon form.
+	// Reduce the matrix to reduced echelon form if asked to.
 	if (reducedEchelon)
 	{
-		// Reduce the matrix to reduced echelon form.
+		EchelonForm(self, operationsTaken);
 	}
 
 	// Scale each row so that the leading value is 1.0.
 	for (int row = 0; row < MATRIX_ROWS; row++)
 	{
-		double scaleValue = self[row].FindFirstNonzeroValue();
-
-		// Skip rows that are all zero.
-		if (EQUAL(scaleValue, 0.0))
+		int firstNonZeroIndex = self[row].FindFirstNonzeroValue();
+		// Skip rows that are all zero or already lead with ones.
+		if (firstNonZeroIndex == -1)
+		{
+			continue;
+		}
+		double scaleValue = self[row][firstNonZeroIndex];
+		if (EQUAL(scaleValue, 1.0))
 		{
 			continue;
 		}

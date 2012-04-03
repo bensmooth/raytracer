@@ -43,10 +43,10 @@ public:
 
 
 	/**
-	 * Returns the first nonzero value in the row.
-	 * Returns 0.0 if all of the entries in the row are zero.
+	 * Returns the column of the first nonzero value in the row.
+	 * Returns -1 if all of the entries in the row are zero.
 	 */
-	double FindFirstNonzeroValue() const;
+	int FindFirstNonzeroValue() const;
 
 
 	/**

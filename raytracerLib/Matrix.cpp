@@ -782,6 +782,32 @@ Matrix& Matrix::operator*=(const Matrix& other)
 }
 
 
+Vector4D Matrix::operator*(const Vector4D& other) const
+{
+	const Matrix &self = *this;
+
+	double vector[MATRIX_COLS];
+	vector[0] = other.vector3d[0];
+	vector[1] = other.vector3d[1];
+	vector[2] = other.vector3d[2];
+	vector[3] = other.w;
+
+	double result[MATRIX_COLS];
+
+	// Perform the multiplication with other as a column vector.
+	for (int row = 0; row < MATRIX_ROWS; row++)
+	{
+		result[row] = 0.0;
+		for (int col = 0; col < MATRIX_COLS; col++)
+		{
+			result[row] += vector[col] * self[row][col];
+		}
+	}
+
+	return (result);
+}
+
+
 bool Matrix::operator==(const Matrix& other) const
 {
 	for (int row = 0; row < MATRIX_ROWS; row++)

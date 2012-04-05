@@ -43,8 +43,9 @@ int main()
 
 	cout << "A row-reduced:" << endl;
 	queue<RowOperation> rowOps;
-	a.RowReduce(true, &rowOps);
-	cout << a.ToString() << endl;
+	Matrix arr = a;
+	arr.RowReduce(true, &rowOps);
+	cout << arr.ToString() << endl;
 
 	cout << "Operations:" << endl;
 	while (rowOps.empty() == false)
@@ -52,6 +53,17 @@ int main()
 		cout << rowOps.front().ToString() << endl;
 		rowOps.pop();
 	}
+
+
+	cout << "Vector4 x:" << endl;
+	Vector4D x(-2.0, 6.0, 11.0, 17.0);
+	cout << x.ToString() << endl;
+
+	cout << "A*x:" << endl;
+	cout << (a*x).ToString() << endl;
+
+	cout << "x*A:" << endl;
+	cout << (x*a).ToString() << endl;
 
 	return (0);
 }

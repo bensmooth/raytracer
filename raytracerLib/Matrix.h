@@ -2,6 +2,7 @@
 
 #include <string>
 #include <queue>
+#include "Vector4D.h"
 
 /**
  * The number of rows in a Matrix.
@@ -297,6 +298,11 @@ public:
 	 */
 	Matrix operator*(const Matrix &other) const;
 	Matrix &operator*=(const Matrix &other);
+
+	/**
+	 * Multiplies the matrix with a column vector.
+	 */
+	Vector4D operator*(const Vector4D &other) const;
 
 	/**
 	 * Equality testing.

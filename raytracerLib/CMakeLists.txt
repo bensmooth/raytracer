@@ -32,6 +32,7 @@ add_library(raytracerLib
   PerlinShader.cpp PerlinShader.h
   ColorGradient.cpp ColorGradient.h
   Matrix.cpp Matrix.h
+  Vector4D.cpp Vector4D.h
 )
 
 add_executable(perlinTest

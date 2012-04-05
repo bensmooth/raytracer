@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Comments can be embedded as well. -->
+<scene bgColor="0.5 0.5 0.6">
+
+  <!-- Simple camera placed back from the origin looking in -Z direction -->
+  <camera name="main" type="perspective">
+    <position>0 8.0 15.0</position>
+    <lookatPoint>0 0 0</lookatPoint>
+    <focalLength>0.35</focalLength>
+    <imagePlaneWidth>0.5</imagePlaneWidth>
+  </camera>
+
+  <light type="area">
+    <position>0.0 10.0 0.0</position>
+    <intensity>1.0 1.0 1.0</intensity>
+    <normal>0.0 -1.0 0.0</normal>
+    <width>10.0</width>
+    <length>10.0</length>
+  </light>
+
+  <light type="area">
+    <position>0.0 4.0 10.0</position>
+    <intensity>0.7 0.7 0.7</intensity>
+    <normal>0.0 0.0 -1.0</normal>
+    <width>2.0</width>
+    <length>2.0</length>
+  </light>
+
+  <!-- Lambertian Shader -->
+  <shader name="greenMat" type="Lambertian">
+    <diffuse>0 1 0</diffuse>
+  </shader>
+
+  <shader name="redPlastic" type="BlinnPhong">
+    <diffuse>1 0 0</diffuse>
+    <specular>1 1 1</specular>
+    <phongExp>32.0</phongExp>
+  </shader>
+
+  <shader name="redGlaze" type="Glaze">
+    <diffuse>1 0 0</diffuse>
+    <mirrorCoef>0.45</mirrorCoef>
+  </shader>
+
+
+  <texture name="calibrationTex" type="image">
+    <sourcefile>images/textureMapCalibration.png</sourcefile>
+  </texture>
+  <shader name="greyTextured" type="Lambertian">
+    <diffuse>1.0 1.0 1.0</diffuse>
+    <diffusetex>calibrationTex</diffusetex>
+  </shader>
+  <shape name="ground" type="box">
+    <shader ref="greyTextured" />
+    <minPt>-10.0 -0.5 -10.0</minPt>
+    <maxPt>10.0 0.0 10.0</maxPt>
+  </shape>
+
+  <instance name="bunnyModel" type="mesh">
+    <file>objFiles/bunny.obj</file>
+    <transform name="xform1">
+      <translate>0 2.0 -5</translate>
+      <scale>2 2 2</scale>
+      <rotate axis="Y">180</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+    <shader ref="greenMat"/>
+  </instance> 
+
+  <shape name="bunny0" type="instance" id="bunnyModel">
+    <transform name="xform1">
+      <translate>-5 2.0 5</translate>
+      <scale>2 2 2</scale>
+      <rotate axis="Y">180</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+    <shader ref="redGlaze"/>
+  </shape> 
+
+  <shape name="bunny1" type="instance" id="bunnyModel">
+    <transform name="xform1">
+      <translate>0 2.0 5</translate>
+      <scale>2 2 2</scale>
+      <rotate axis="Y">180</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+    <shader ref="greenMat"/>
+  </shape> 
+
+  <shape name="bunny1" type="instance" id="bunnyModel">
+    <transform name="xform1">
+      <translate>5 2.0 5</translate>
+      <scale>2 2 2</scale>
+      <rotate axis="Y">180</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+    <shader ref="greenMat"/>
+  </shape> 
+
+</scene>

@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstdio>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <string>
 #include <algorithm>
@@ -50,6 +51,8 @@ namespace sivelab
     void parseScene(xmlNode *nPtr);
     void parseCamera(xmlNode *nPtr, std::map<std::string, SceneDataContainer> &nodeData);
     void parseLight(xmlNode *nPtr, std::map<std::string, SceneDataContainer> &nodeData);
+    void parseTexture(xmlNode *nPtr, std::map<std::string, SceneDataContainer> &nodeData);
+    void parseTransform(xmlNode *nPtr, std::map<std::string, SceneDataContainer> &nodeData);
     void parseShader(xmlNode *nPtr, std::map<std::string, SceneDataContainer> &nodeData);
     void parseShape(xmlNode *nPtr, std::map<std::string, SceneDataContainer> &nodeData);
 

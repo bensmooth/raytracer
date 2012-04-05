@@ -1,14 +1,14 @@
 10
 
 dir
-111
+158
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles/oldSceneFiles
 https://wind.d.umn.edu/cssvn/cs5721
 
 
 
-2012-01-26T06:10:22.960200Z
-84
+2012-04-02T02:25:44.922934Z
+155
 willemsn
 
 
@@ -26,14 +26,14 @@ willemsn
 
 a59038f0-8682-4659-b67c-e465aad734c6
 
-phongExp.rt
+test_glossyFloor.rt
 file
 
 
 
 
 2012-02-07T06:00:27.867490Z
-45ff5bfc63b5e30c24b2a147a81d1a8d
+35d05a49509c7c4bd4ae711bf4bca75e
 2012-01-26T06:10:22.960200Z
 84
 willemsn
@@ -58,7 +58,7 @@ willemsn
 
 
 
-714
+758
 
 glossinessIdeal.rt
 file
@@ -94,6 +94,40 @@ willemsn
 
 1966
 
+phongExp.rt
+file
+
+
+
+
+2012-02-07T06:00:27.867490Z
+45ff5bfc63b5e30c24b2a147a81d1a8d
+2012-01-26T06:10:22.960200Z
+84
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+714
+
 glossiness.rt
 file
 
@@ -128,14 +162,14 @@ willemsn
 
 1976
 
-simpleSceneThreeLightsPhongIdealTextured.rt
+simpleSceneThreeLightsPhongIdealDielectric.rt
 file
 
 
 
 
-2012-02-07T06:00:27.868490Z
-f9d01c9effe31debfd6387f7d17d3693
+2012-02-07T06:00:27.629490Z
+c8c5e2f7ca099ed0c8f6cdb596fe98ed
 2012-01-26T06:10:22.960200Z
 84
 willemsn
@@ -160,7 +194,7 @@ willemsn
 
 
 
-781
+575
 
 dragons.rt
 file
@@ -195,40 +229,6 @@ willemsn
 
 
 978
-
-simpleSceneThreeLightsPhongIdealDielectric.rt
-file
-
-
-
-
-2012-02-07T06:00:27.629490Z
-c8c5e2f7ca099ed0c8f6cdb596fe98ed
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-575
 
 sphereInstances.rt
 file
@@ -331,176 +331,6 @@ willemsn
 
 
 324
-
-test_simpleSceneThreeLightsPhongIdeal.rt
-file
-
-
-
-
-2012-02-07T06:00:27.629490Z
-e435e1a83065e274d965af4d2202c622
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-478
-
-test_1KSpheres.rt
-file
-
-
-
-
-2012-02-07T06:00:27.630490Z
-885294707bc5b511914df47edd285bbc
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-104174
-
-test_simpleSceneThreeLightsPhong.rt
-file
-
-
-
-
-2012-02-07T06:00:27.630490Z
-0f3ff72a3df5797493f12bcd99135b16
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-432
-
-test_simpleScene.rt
-file
-
-
-
-
-2012-02-07T06:00:27.630490Z
-e14e1e473338c217415c214f2441b99f
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-350
-
-test_1MSpheres.rt
-file
-
-
-
-
-2012-02-07T06:00:27.864490Z
-95d63209bac05ca83e7f6b18eaec02d1
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-104859890
 
 dielectricTest_00.rt
 file
@@ -637,40 +467,6 @@ willemsn
 
 
 1089
-
-test_simpleSceneThreeLights.rt
-file
-
-
-
-
-2012-02-07T06:00:27.865490Z
-2bb84fcd7e554a33071283570d5a61ec
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-412
 
 dielectricTest_03.rt
 file
@@ -875,106 +671,4 @@ willemsn
 
 
 827
-
-bneumann_scene00.rt
-file
-
-
-
-
-2012-02-07T06:00:27.867490Z
-72bf5d587ad6bcc801710703685c6ddf
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-727
-
-bneumann_scene01.rt
-file
-
-
-
-
-2012-02-07T06:00:27.867490Z
-c983a8fe9f35f632fa22c909c1dc90f0
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-655
-
-test_glossyFloor.rt
-file
-
-
-
-
-2012-02-07T06:00:27.867490Z
-35d05a49509c7c4bd4ae711bf4bca75e
-2012-01-26T06:10:22.960200Z
-84
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-758
 

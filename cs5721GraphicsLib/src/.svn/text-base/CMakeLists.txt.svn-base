@@ -1,6 +1,7 @@
 add_library (cs5721Graphics
   ArgumentParsing.cpp ArgumentParsing.h
   handleGraphicsArgs.cpp handleGraphicsArgs.h
+  model_obj.cpp model_obj.h
   Random.cpp Random.h
   SceneDataContainer.h
   Timer.cpp Timer.h

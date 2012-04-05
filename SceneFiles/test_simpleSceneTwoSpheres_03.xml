@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--  Comments can be embedded as well. -->
-<scene>
+<scene bgColor="1 0 0" envmapPrefix="data/reef_">
   <!-- Simple camera placed back from the origin looking in -Z direction -->
   <camera name="main" type="perspective">
     <position>0 3.0 4.0</position>

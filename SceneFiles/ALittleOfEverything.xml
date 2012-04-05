@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--  A scene with a little bit of everything.
+      Namely, 
+  -->
+<scene bgColor="0.5 0.5 0.6" envmapPrefix="data/reef_">
+
+  <!-- Simple camera placed back from the origin looking in -Z direction -->
+  <camera name="main" type="perspective">
+    <position>0 8.0 15.0</position>
+    <lookatPoint>0 0 0</lookatPoint>
+    <focalLength>0.35</focalLength>
+    <imagePlaneWidth>0.5</imagePlaneWidth>
+  </camera>
+
+  <!-- -->
+  <!-- Lights -->
+  <!-- -->
+  <light type="area">
+    <position>0.0 10.0 0.0</position>
+    <intensity>1.0 1.0 1.0</intensity>
+    <normal>0.0 -1.0 0.0</normal>
+    <width>10.0</width>
+    <length>10.0</length>
+  </light>
+
+  <light type="point">
+    <position>0.0 4.0 10.0</position>
+    <intensity>0.7 0.7 0.7</intensity>
+  </light>
+
+  <!-- Lambertian Shaders -->
+  <shader name="redMat" type="Lambertian">
+    <diffuse>1 0 0</diffuse>
+  </shader>
+  <shader name="greenMat" type="Lambertian">
+    <diffuse>0 1 0</diffuse>
+  </shader>
+  <shader name="blueMat" type="Lambertian">
+    <diffuse>0 0 1</diffuse>
+  </shader>
+  <shader name="yellowMat" type="Lambertian">
+    <diffuse>1 1 0</diffuse>
+  </shader>
+  <shader name="cyanMat" type="Lambertian">
+    <diffuse>0 1 1</diffuse>
+  </shader>
+  <shader name="magentaMat" type="Lambertian">
+    <diffuse>1 0 1</diffuse>
+  </shader>
+
+  <!-- BlinnPhong Shaders -->
+  <shader name="redPlastic" type="BlinnPhong">
+    <diffuse>1 0 0</diffuse>
+    <specular>1 1 1</specular>
+    <phongExp>32.0</phongExp>
+  </shader>
+  <shader name="chrome" type="BlinnPhong">
+    <diffuse>1 1 1</diffuse>
+    <specular>1 1 1</specular>
+    <phongExp>32.0</phongExp>
+    <mirrorCoef>1.0</mirrorCoef>
+  </shader>
+
+  <!-- Glaze Shaders -->
+  <shader name="redGlaze" type="Glaze">
+    <diffuse>1 0 0</diffuse>
+    <mirrorCoef>0.45</mirrorCoef>
+  </shader>
+  <shader name="purpleGlaze" type="Glaze">
+    <diffuse>0.2941 0.1882 0.5529</diffuse>
+    <mirrorCoef>0.40</mirrorCoef>
+  </shader>
+  <shader name="greyGlaze" type="Glaze">
+    <diffuse>0.7 0.7 0.7</diffuse>
+    <mirrorCoef>0.60</mirrorCoef>
+  </shader>
+
+  <!-- Dielectric Shaders -->
+
+
+
+  <!-- Textures -->
+  <texture name="calibrationTex" type="image">
+    <sourcefile>images/textureMapCalibration.png</sourcefile>
+  </texture>
+  <texture name="JupiterTex" type="image">
+    <!-- created by Björn Jónsson, http://www.mmedia.is/~bjj/ -->
+    <sourcefile>images/jupiter_css.png</sourcefile>
+  </texture>
+  <shader name="greyTextured" type="Lambertian">
+    <diffuse>1.0 1.0 1.0</diffuse>
+    <diffusetex>calibrationTex</diffusetex>
+  </shader>
+  <shader name="JupiterMap" type="Lambertian">
+    <diffuse>1.0 1.0 1.0</diffuse>
+    <diffusetex>JupiterTex</diffusetex>
+  </shader>
+
+  <!-- Various Objects with different shaders -->
+  <shape name="ground" type="box">
+    <shader ref="greyTextured" />
+    <minPt>-10.0 -0.5 -10.0</minPt>
+    <maxPt>10.0 0.0 10.0</maxPt>
+  </shape>
+
+  <shape name="Jupiter" type="sphere">
+    <shader ref="JupiterMap"/>
+    <center>0.0 4.0 -5.0</center>
+    <radius>4.0</radius>
+  </shape>
+
+  <shape name="calibSphere0" type="sphere">
+    <shader ref="chrome"/>
+    <center>-5.0 2.0 0.0</center>
+    <radius>1.8</radius>
+  </shape>
+
+  <shape name="calibSphere1" type="sphere">
+    <shader ref="greyTextured"/>
+    <center>5.0 2.0 0.0</center>
+    <radius>1.8</radius>
+  </shape>
+
+  <instance name="bunnyModel" type="mesh">
+    <file>objFiles/bunny.obj</file>
+    <shader ref="greenMat"/>
+  </instance> 
+
+  <instance name="AlModel" type="mesh">
+    <file>objFiles/al.obj</file>
+    <shader ref="redPlastic"/>
+  </instance> 
+
+  <shape name="al0" type="instance" id="AlModel">
+    <transform name="xform1">
+      <translate>-2.5 2.0 8.5</translate>
+      <scale>0.5 0.5 0.5</scale>
+    </transform>
+  </shape> 
+  <shape name="al1" type="instance" id="AlModel">
+    <transform name="xform1">
+      <translate>2.5 2.0 8.5</translate>
+      <scale>0.5 0.5 0.5</scale>
+    </transform>
+    <shader ref="purpleGlaze"/>
+  </shape> 
+
+
+  <shape name="bunny0" type="instance" id="bunnyModel">
+    <transform name="xform1">
+      <translate>-5 2.0 5</translate>
+      <scale>2 2 2</scale>
+      <rotate axis="Y">180</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+    <shader ref="redGlaze"/>
+  </shape> 
+
+  <shape name="bunny1" type="instance" id="bunnyModel">
+    <transform name="xform1">
+      <translate>0 2.0 5</translate>
+      <scale>2 2 2</scale>
+      <rotate axis="Y">90</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+    <shader ref="greenMat"/>
+  </shape> 
+
+  <shape name="bunny1" type="instance" id="bunnyModel">
+    <transform name="xform1">
+      <translate>5 2.0 5</translate>
+      <scale>2 2 2</scale>
+      <rotate axis="Y">90</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+    <shader ref="yellowMat"/>
+  </shape> 
+
+  <shape name="pedestal0" type="box">
+    <shader ref="greyGlaze" />
+    <minPt>-5.5.0 0.0 -7.5</minPt>
+    <maxPt>-4.5 7.2 -6.5</maxPt>
+  </shape>
+  <shape name="pedestal1" type="box">
+    <shader ref="greyGlaze" />
+    <minPt>4.5.0 0.0 -7.5</minPt>
+    <maxPt>5.5 7.2 -6.5</maxPt>
+  </shape>
+
+<!-- add in box instances... 
+  <shape name="pededstal0" type="instance" id="pedestal">
+    <transform>
+      <translate>-2.5 2.5 -8.0</translate>
+      <rotate axis="Y">45.0</rotate>
+      <scale>1 5 1</scale>
+    </transform>
+  </shape>
+-->
+<!--
+  <shape name="pededstal1" type="instance" id="pedestal">
+    <transform>
+      <translate>2.5 2.5 -8.0</translate>
+      <rotate axis="Y">45.0</rotate>
+      <scale>1 5 1</scale>
+    </transform>
+  </shape>
+-->
+
+</scene>

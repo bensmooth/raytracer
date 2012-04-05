@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<scene bgColor="0.5 0.5 0.5">
+
+  <!-- Simple camera placed back from the origin looking in -Z direction -->
+  <camera name="main" type="perspective">
+    <position>0 3.0 8.0</position>
+    <viewDir>0.0 -1.0 -3.0</viewDir>
+    <focalLength>0.50</focalLength>
+    <imagePlaneWidth>0.5</imagePlaneWidth>
+  </camera>
+
+  <light type="point">
+    <position>-10.0 10.0 1.0</position>
+    <intensity>1.0 1.0 1.0</intensity>
+  </light>
+
+  <light type="point">
+    <position>10.0 8.0 1.0</position>
+    <intensity>0.8 0.8 0.8</intensity>
+  </light>
+
+  <!-- Ground plane -->
+  <shader name="greyMat" type="Lambertian">
+    <diffuse>0.5 0.5 0.5</diffuse>
+  </shader>
+  <shape name="ground" type="box">
+    <shader ref="greyMat" />
+    <minPt>-50.0 -0.5 -50.0</minPt>
+    <maxPt>50.0 0.0 50.0</maxPt>
+  </shape>
+
+  <shader name="blueMat" type="Lambertian">
+    <diffuse>0.4 0.4 1.0</diffuse>
+  </shader>
+  <shader name="redBlinnPhong" type="BlinnPhong">
+    <diffuse>0.8 0.2 0.2</diffuse>
+    <specular>1 1 1</specular>
+    <phongExp>128.0</phongExp>
+  </shader>
+  <shader name="greenBlinnPhong" type="BlinnPhong">
+    <diffuse>0.2 0.8 0.2</diffuse>
+    <specular>1 1 1</specular>
+    <phongExp>128.0</phongExp>
+  </shader>
+  <shader name="blueBlinnPhong" type="BlinnPhong">
+    <diffuse>0.2 0.2 0.8</diffuse>
+    <specular>1 1 1</specular>
+    <phongExp>128.0</phongExp>
+  </shader>
+
+  <instance name="bunnyModel" type="mesh">
+    <file>objFiles/bunny.obj</file>
+    <shader ref="blueMat"/>
+  </instance>
+
+  <shape name="b1" type="instance" id="bunnyModel">
+    <transform name="xform1">
+      <translate>0 2 1</translate>
+      <scale>2 2 2</scale> 
+      <rotate axis="Y">120</rotate>
+      <rotate axis="Z">90</rotate>
+    </transform>
+  </shape> 
+
+</scene>
+
+<!--  <light type="area">
+    <position>-10.0 10.0 1.0</position>
+    <intensity>1.0 1.0 1.0</intensity>
+    <normal>0.0 -1.0 0.0</normal>
+    <width>4.0</width>
+    <length>4.0</length>
+  </light>
+
+  <light type="area">
+    <position>0.0 4.0 2.0</position>
+    <intensity>1.0 1.0 1.0</intensity>
+    <normal>0.0 0.0 -1.0</normal>
+    <width>2.0</width>
+    <length>2.0</length>
+  </light> -->
+
+<!--  <texture name="calibrationTex" type="image">
+    <sourcefile>images/textureMapCalibration.png</sourcefile>
+  </texture> 
+
+  <shader name="greyTextured" type="Lambertian">
+    <diffuse>1.0 1.0 1.0</diffuse>
+    <diffusetex>calibrationTex</diffusetex>
+  </shader>
+
+  <shape name="ground" type="box">
+    <shader ref="greyTextured" />
+    <minPt>-50.0 -0.5 -50.0</minPt>
+    <maxPt>50.0 0.0 50.0</maxPt>
+  </shape> -->

@@ -55,6 +55,23 @@ void XMLSceneParser::f_parse()
   xmlNode *cur_node = m_rootElement;
   if ((!xmlStrcmp(cur_node->name, (const xmlChar *)"scene")))
     {
+      std::map<std::string, SceneDataContainer> nodeData;
+
+      // property for determining background
+      retrieveProperty("bgColor", cur_node, nodeData["scene_bgcolor"]);  
+      retrieveProperty("envmapPrefix", cur_node, nodeData["scene_envmapprefix"]);  
+
+      // Scene prop creation/initialization
+      SceneElementCreator *creator = m_elemCallbackMap["sceneprops"];
+      if (creator)
+	{
+	  creator->m_otype = SceneElementCreator::SCENEPROPS;
+	  creator->instance( nodeData );      
+	}
+      else
+	std::cerr << "Warning!!!! No Scene Property (sceneprops) creator callback provided." << std::endl;
+
+
       parseScene(cur_node);
     }
 }
@@ -106,9 +123,29 @@ void XMLSceneParser::parseScene(xmlNode *nPtr)
 	  // f_printNodeMapData(nodeData, "camData");
 
 	  SceneElementCreator *creator = m_elemCallbackMap["camera"];
-	  creator->m_otype = SceneElementCreator::CAMERA;
-	  creator->instance( nodeData );
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::CAMERA;
+	      creator->instance( nodeData );
+	    }
+	  else 
+	    std::cerr << "Warning!!!! No camera creator callback provided!" << std::endl;
 	}
+
+      if (matchesNodeName(currNodePtr->name, "transform"))
+	{
+	  parseTransform(currNodePtr, nodeData);
+
+	  SceneElementCreator *creator = m_elemCallbackMap["transform"];
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::TRANSFORM;
+	      creator->instance( nodeData );
+	    }
+	  else 
+	    std::cerr << "Warning!!!! No transform creator callback provided!" << std::endl;
+	}
+
 
       if (matchesNodeName(currNodePtr->name, "light"))
 	{
@@ -116,8 +153,13 @@ void XMLSceneParser::parseScene(xmlNode *nPtr)
 	  // f_printNodeMapData(nodeData, "lightData");
 
 	  SceneElementCreator *creator = m_elemCallbackMap["light"];
-	  creator->m_otype = SceneElementCreator::LIGHT;
-	  creator->instance( nodeData );
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::LIGHT;
+	      creator->instance( nodeData );
+	    }
+	  else 
+	    std::cerr << "Warning!!!! No light creator callback provided!" << std::endl;
 	}
 
       if (matchesNodeName(currNodePtr->name, "shader"))
@@ -126,8 +168,27 @@ void XMLSceneParser::parseScene(xmlNode *nPtr)
 	  // f_printNodeMapData(nodeData, "shaderData");
 
 	  SceneElementCreator *creator = m_elemCallbackMap["shader"];
-	  creator->m_otype = SceneElementCreator::SHADER;
-	  creator->instance( nodeData );
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::SHADER;
+	      creator->instance( nodeData );
+	    }
+	  else 
+	    std::cerr << "Warning!!!! No shader creator callback provided!" << std::endl;
+	}
+
+      if (matchesNodeName(currNodePtr->name, "texture"))
+	{
+	  parseTexture(currNodePtr, nodeData);
+
+	  SceneElementCreator *creator = m_elemCallbackMap["texture"];
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::TEXTURE;
+	      creator->instance( nodeData );
+	    }
+	  else 
+	    std::cerr << "Warning!!!! No texture creator callback provided!" << std::endl;
 	}
 
       if (matchesNodeName(currNodePtr->name, "shape"))
@@ -136,9 +197,45 @@ void XMLSceneParser::parseScene(xmlNode *nPtr)
 	  // f_printNodeMapData(nodeData, "shapeData");
 
 	  SceneElementCreator *creator = m_elemCallbackMap["shape"];
-	  creator->m_otype = SceneElementCreator::SHAPE;
-	  creator->instance( nodeData );
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::SHAPE;
+	      creator->instance( nodeData );
+	    }
+	  else 
+	    std::cerr << "Warning!!!! No shape creator callback provided!" << std::endl;
 	}
+
+      if (matchesNodeName(currNodePtr->name, "instance"))
+	{
+	  parseShape(currNodePtr, nodeData);
+	  // f_printNodeMapData(nodeData, "shapeData");
+
+	  SceneElementCreator *creator = m_elemCallbackMap["instance"];
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::INSTANCE;
+	      creator->instance( nodeData );
+	    }
+	  else 
+	    std::cerr << "Warning!!!! No instance creator callback provided!" << std::endl;
+	}
+
+#if 0
+      // shouldn't be here...
+      if (matchesNodeName(currNodePtr->name, "texture"))
+	{
+	  parseShader(currNodePtr, nodeData);
+	  // f_printNodeMapData(nodeData, "shaderData");
+
+	  SceneElementCreator *creator = m_elemCallbackMap["shader"];
+	  if (creator)
+	    {
+	      creator->m_otype = SceneElementCreator::SHADER;
+	      creator->instance( nodeData );
+	    }
+	}
+#endif
       
       currNodePtr = currNodePtr->next;
     }
@@ -191,6 +288,8 @@ void XMLSceneParser::parseCamera(xmlNode *nPtr, std::map<std::string, SceneDataC
   return;
 }
 
+
+
 void XMLSceneParser::parseLight(xmlNode *nPtr, std::map<std::string, SceneDataContainer>& nodeData)
 {
   //
@@ -200,6 +299,9 @@ void XMLSceneParser::parseLight(xmlNode *nPtr, std::map<std::string, SceneDataCo
 
   nodeData["light_position"] = SceneDataContainer::emptyElem("position");
   nodeData["light_intensity"] = SceneDataContainer::emptyElem("intensity");
+  nodeData["light_normal"] = SceneDataContainer::emptyElem("normal");
+  nodeData["light_width"] = SceneDataContainer::emptyElem("width");
+  nodeData["light_length"] = SceneDataContainer::emptyElem("length");
 
   //
   // Attempt to set the correct values in the properties and elements
@@ -214,7 +316,147 @@ void XMLSceneParser::parseLight(xmlNode *nPtr, std::map<std::string, SceneDataCo
 
       // Light Intensity
       retrieveElementData("intensity", currNodePtr, nodeData["light_intensity"]);
+
+      // Light Normal
+      retrieveElementData("normal", currNodePtr, nodeData["light_normal"]);
+
+      // Light length
+      retrieveElementData("length", currNodePtr, nodeData["light_length"]);
+
+      // Light width
+      retrieveElementData("width", currNodePtr, nodeData["light_width"]);
       
+      currNodePtr = currNodePtr->next;
+    }
+
+  return;
+}
+
+void XMLSceneParser::parseTransform(xmlNode *nPtr, std::map<std::string, SceneDataContainer>& nodeData)
+{
+  //
+  // register scene data components for camera
+  //
+  nodeData["transform_name"] = SceneDataContainer::emptyProp("name");
+
+  //
+  // Attempt to set the correct values in the properties and elements
+  //
+  retrieveProperty("name", nPtr, nodeData["transform_name"]);
+
+  xmlNode *currNodePtr = nPtr->xmlChildrenNode;
+  int xformCount = 0;
+  while (currNodePtr != NULL) 
+    {
+      std::ostringstream ndataName;
+
+      ndataName << "transform_" << std::setfill('0') << std::setw(3) << xformCount << '_';
+
+      // If the element tag matches and it wasn't previously set, so
+      // replace the contents appropriately in the SceneDataContainer, d
+      if (matchesNodeName(currNodePtr->name, "translate"))
+	{
+	  xmlChar *key = xmlNodeListGetString(m_doc, currNodePtr->xmlChildrenNode, 1);
+
+	  ndataName << "translate";
+	  nodeData[ndataName.str()] = SceneDataContainer::emptyElem("translate");
+	      
+	  SceneDataContainer &d = nodeData[ndataName.str()];
+	  d.val = (const char *)key;
+	  d.isSet = true;
+
+	  xformCount++;
+
+	  xmlFree(key);
+	}
+
+      else if (matchesNodeName(currNodePtr->name, "rotate"))
+	{
+	  xmlChar *key = xmlNodeListGetString(m_doc, currNodePtr->xmlChildrenNode, 1);
+
+	  xmlChar *propName = xmlGetProp(currNodePtr, (const xmlChar*)"axis");
+
+	  if ((char)*propName == 'X')
+	    {
+	      ndataName << "rotateX";
+	      nodeData[ndataName.str()] = SceneDataContainer::emptyElem("rotateX");
+	      
+	      SceneDataContainer &d = nodeData[ndataName.str()];
+	      d.val = (const char *)key;
+	      d.isSet = true;
+
+	      xformCount++;
+	    }
+	  else if ((char)*propName == 'Y')
+	    {
+	      ndataName << "rotateY";
+	      nodeData[ndataName.str()] = SceneDataContainer::emptyElem("rotateY");
+	      
+	      SceneDataContainer &d = nodeData[ndataName.str()];
+	      d.val = (const char *)key;
+	      d.isSet = true;
+
+	      xformCount++;
+	    }
+	  else if ((char)*propName == 'Z')
+	    {
+	      ndataName << "rotateZ";
+	      nodeData[ndataName.str()] = SceneDataContainer::emptyElem("rotateZ");
+	      
+	      SceneDataContainer &d = nodeData[ndataName.str()];
+	      d.val = (const char *)key;
+	      d.isSet = true;
+
+	      xformCount++;
+	    }
+
+	  xmlFree(propName);
+	  xmlFree(key);
+	}
+
+      else if (matchesNodeName(currNodePtr->name, "scale"))
+	{
+	  xmlChar *key = xmlNodeListGetString(m_doc, currNodePtr->xmlChildrenNode, 1);
+
+	  ndataName << "scale";
+	  nodeData[ndataName.str()] = SceneDataContainer::emptyElem("scale");
+	      
+	  SceneDataContainer &d = nodeData[ndataName.str()];
+	  d.val = (const char *)key;
+	  d.isSet = true;
+
+	  xformCount++;
+
+	  xmlFree(key);
+	}
+
+      currNodePtr = currNodePtr->next;
+    }
+
+  return;
+}
+
+
+void XMLSceneParser::parseTexture(xmlNode *nPtr, std::map<std::string, SceneDataContainer>& nodeData)
+{
+  //
+  // register scene data components for camera
+  //
+  nodeData["texture_type"] = SceneDataContainer::emptyProp("type");
+  nodeData["texture_name"] = SceneDataContainer::emptyProp("name");
+  nodeData["texture_sourcefile"] = SceneDataContainer::emptyElem("sourcefile");
+
+  //
+  // Attempt to set the correct values in the properties and elements
+  //
+  retrieveProperty("type", nPtr, nodeData["texture_type"]);
+  retrieveProperty("name", nPtr, nodeData["texture_name"]);
+
+  xmlNode *currNodePtr = nPtr->xmlChildrenNode;
+  while (currNodePtr != NULL) 
+    {
+      // Texture source file
+      retrieveElementData("sourcefile", currNodePtr, nodeData["texture_sourcefile"]);
       currNodePtr = currNodePtr->next;
     }
 
@@ -231,6 +473,7 @@ void XMLSceneParser::parseShader(xmlNode *nPtr, std::map<std::string, SceneDataC
   nodeData["shader_type"] = SceneDataContainer::emptyProp("type");
 
   nodeData["shader_diffuse"] = SceneDataContainer::emptyElem("diffuse");
+  nodeData["shader_diffusetex"] = SceneDataContainer::emptyElem("diffusetex");
   nodeData["shader_specular"] = SceneDataContainer::emptyElem("specular");
   nodeData["shader_phongExp"] = SceneDataContainer::emptyElem("phongExp");
   nodeData["shader_mirrorCoef"] = SceneDataContainer::emptyElem("mirrorCoef");
@@ -246,6 +489,7 @@ void XMLSceneParser::parseShader(xmlNode *nPtr, std::map<std::string, SceneDataC
   while (currNodePtr != NULL) 
     {
       retrieveElementData("diffuse", currNodePtr, nodeData["shader_diffuse"]);
+      retrieveElementData("diffusetex", currNodePtr, nodeData["shader_diffusetex"]);
       retrieveElementData("specular", currNodePtr, nodeData["shader_specular"]);
       retrieveElementData("phongExp", currNodePtr, nodeData["shader_phongExp"]);
       retrieveElementData("mirrorCoef", currNodePtr, nodeData["shader_mirrorCoef"]);
@@ -263,17 +507,26 @@ void XMLSceneParser::parseShape(xmlNode *nPtr, std::map<std::string, SceneDataCo
   //
   nodeData["shape_name"] = SceneDataContainer::emptyProp("name");
   nodeData["shape_type"] = SceneDataContainer::emptyProp("type");
+  nodeData["shape_id"] = SceneDataContainer::emptyProp("id");
+  nodeData["shape_subdivision"] = SceneDataContainer::emptyProp("subdivision");
+  nodeData["shape_slices"] = SceneDataContainer::emptyProp("slices");
+  nodeData["shape_topo"] = SceneDataContainer::emptyProp("topo");
   
   nodeData["shape_center"] = SceneDataContainer::emptyElem("center");
   nodeData["shape_radius"] = SceneDataContainer::emptyElem("radius");
   nodeData["shape_minPt"] = SceneDataContainer::emptyElem("minPt");
   nodeData["shape_maxPt"] = SceneDataContainer::emptyElem("maxPt");
+  nodeData["shape_height"] = SceneDataContainer::emptyElem("height");
+  nodeData["shape_v0"] = SceneDataContainer::emptyElem("v0");
+  nodeData["shape_v1"] = SceneDataContainer::emptyElem("v1");
+  nodeData["shape_v2"] = SceneDataContainer::emptyElem("v2");
 
   //
   // Attempt to set the correct values in the properties and elements
   //
   retrieveProperty("name", nPtr, nodeData["shape_name"]);
   retrieveProperty("type", nPtr, nodeData["shape_type"]);
+  retrieveProperty("id", nPtr, nodeData["shape_id"]);
   
   // property that might exist for subdivision level
   retrieveProperty("subdivision", nPtr, nodeData["shape_subdivision"]);  
@@ -293,6 +546,12 @@ void XMLSceneParser::parseShape(xmlNode *nPtr, std::map<std::string, SceneDataCo
 	  parseShader(currNodePtr, nodeData);
 	}
 
+      // transform information
+      if (matchesNodeName(currNodePtr->name, "transform"))
+	{
+	  parseTransform(currNodePtr, nodeData);
+	}
+
       // sphere values
       retrieveElementData("center", currNodePtr, nodeData["shape_center"]);
       retrieveElementData("radius", currNodePtr, nodeData["shape_radius"]);
@@ -308,8 +567,13 @@ void XMLSceneParser::parseShape(xmlNode *nPtr, std::map<std::string, SceneDataCo
       // triangle values
       retrieveElementData("v0", currNodePtr, nodeData["shape_v0"]);      
       retrieveElementData("v1", currNodePtr, nodeData["shape_v1"]);      
-      retrieveElementData("v2", currNodePtr, nodeData["shape_v2"]);      
-      
+      retrieveElementData("v2", currNodePtr, nodeData["shape_v2"]);
+
+      // mesh values
+      retrieveElementData("file", currNodePtr, nodeData["shape_file"]);
+
+      // add in support to parse the texture elements
+
       currNodePtr = currNodePtr->next;
     }
 

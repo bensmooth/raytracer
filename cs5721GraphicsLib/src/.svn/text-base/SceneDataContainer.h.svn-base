@@ -43,10 +43,14 @@ namespace sivelab
   public:
     enum SceneObjectType
       {
+	SCENEPROPS,
 	CAMERA,
 	LIGHT,
 	SHADER,
 	SHAPE,
+	TEXTURE,
+	TRANSFORM,
+	INSTANCE,
 	UNKNOWN_TYPE
       };
 

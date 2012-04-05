@@ -1,14 +1,14 @@
 10
 
 dir
-111
+158
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles
 https://wind.d.umn.edu/cssvn/cs5721
 
 
 
-2012-02-22T04:35:25.810349Z
-109
+2012-04-03T20:05:35.062591Z
+158
 willemsn
 
 
@@ -26,17 +26,18 @@ willemsn
 
 a59038f0-8682-4659-b67c-e465aad734c6
 
-khalverson_00_2012.xml
+spheres_1M.xml.gz
 file
 
 
 
 
-2012-02-22T19:55:56.378775Z
-70c509cc61ef00ecda56d75b03a2ebca
-2012-02-22T04:35:25.810349Z
-109
+2012-04-05T07:20:09.291465Z
+3d20fcd739302523ff2458209713cd13
+2012-03-29T19:04:15.468978Z
+137
 willemsn
+has-props
 
 
 
@@ -57,45 +58,7 @@ willemsn
 
 
 
-
-1334
-
-oldSceneFiles
-dir
-
-convertObjTortTriList.cpp
-file
-
-
-
-
-2012-02-07T06:00:29.945492Z
-30fe2cb8dc1aeae67fcdfecef8e7297c
-2011-03-24T16:32:45.718859Z
-33
-willemsn
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-5205
+14975968
 
 test_oneSphere.xml
 file
@@ -165,16 +128,16 @@ willemsn
 
 858
 
-test_simpleSceneTwoSpheres_00.xml
+ALittleOfEverything.xml
 file
 
 
 
 
-2012-02-16T16:38:19.627425Z
-3f6760596acafa6ebcc1a9c50056af6e
-2012-02-16T15:45:45.305957Z
-99
+2012-04-05T07:20:09.291465Z
+45c308ba6bd51e66767383cc1ced90f3
+2012-03-30T16:12:33.825035Z
+148
 willemsn
 
 
@@ -197,7 +160,41 @@ willemsn
 
 
 
-1569
+5603
+
+test_oneBox.xml
+file
+
+
+
+
+2012-02-07T06:00:29.945492Z
+77d3eb2a3af69fe1792df8c75c2ee19d
+2012-01-26T06:21:41.604273Z
+86
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+854
 
 test_oneBox_01.xml
 file
@@ -233,16 +230,16 @@ willemsn
 
 870
 
-test_oneBox.xml
+test_simpleSceneTwoSpheres_00.xml
 file
 
 
 
 
-2012-02-07T06:00:29.945492Z
-77d3eb2a3af69fe1792df8c75c2ee19d
-2012-01-26T06:21:41.604273Z
-86
+2012-02-16T16:38:19.627425Z
+3f6760596acafa6ebcc1a9c50056af6e
+2012-02-16T15:45:45.305957Z
+99
 willemsn
 
 
@@ -265,7 +262,7 @@ willemsn
 
 
 
-854
+1569
 
 test_simpleSceneTwoSpheres_01.xml
 file
@@ -335,16 +332,16 @@ willemsn
 
 1694
 
-test_simpleSceneTwoSpheres_03.xml
+rowOfBunnys.xml
 file
 
 
 
 
-2012-02-20T17:15:17.108876Z
-75120c8ab98bc23ff0058751d95413a4
-2012-02-16T17:44:05.385890Z
-104
+2012-04-05T07:20:09.292465Z
+dabd4411755f05df2084a400f5ad69a1
+2012-04-02T03:35:40.019039Z
+156
 willemsn
 
 
@@ -367,7 +364,41 @@ willemsn
 
 
 
-2061
+4037
+
+test_simpleSceneTwoSpheres_03.xml
+file
+
+
+
+
+2012-04-05T07:20:09.292465Z
+1c8a09777a2ac5890608fca6148735a9
+2012-03-09T19:31:28.931419Z
+112
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2103
 
 objFiles
 dir
@@ -474,6 +505,40 @@ willemsn
 
 1993
 
+spheres_1K.xml
+file
+
+
+
+
+2012-04-05T07:20:09.293465Z
+cb0a807df2de8208f63313ad8855bb14
+2012-03-29T20:20:59.995856Z
+142
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+228678
+
 bneumann_00_2011.xml
 file
 
@@ -508,6 +573,250 @@ willemsn
 
 2369
 
+bunny.obj
+file
+
+
+
+
+2012-04-05T07:20:09.300465Z
+fe6cd2272e51fcaf6ab038636a3cdf7e
+2012-04-03T20:05:35.062591Z
+158
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2397075
+
 testImages
 dir
+
+images
+dir
+
+objTest_00.xml
+file
+
+
+
+
+2012-04-05T07:20:09.300465Z
+f803cc4186e78ed0312b2de0c92c25ce
+2012-03-29T14:36:38.786200Z
+135
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2608
+
+objTest_01.xml
+file
+
+
+
+
+2012-04-05T07:20:09.300465Z
+9c29bf90410017a21d322dbf1aee722c
+2012-03-30T03:08:46.212138Z
+145
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2739
+
+threeEggs.xml
+file
+
+
+
+
+2012-04-05T07:20:09.300465Z
+9562874d357b7393d7412bd994873dd3
+2012-03-29T13:52:38.565901Z
+133
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3571
+
+khalverson_00_2012.xml
+file
+
+
+
+
+2012-02-22T19:55:56.378775Z
+70c509cc61ef00ecda56d75b03a2ebca
+2012-02-22T04:35:25.810349Z
+109
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1334
+
+oldSceneFiles
+dir
+
+convertObjTortTriList.cpp
+file
+
+
+
+
+2012-02-07T06:00:29.945492Z
+30fe2cb8dc1aeae67fcdfecef8e7297c
+2011-03-24T16:32:45.718859Z
+33
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5205
+
+threeEggs_ss.xml
+file
+
+
+
+
+2012-04-05T07:20:09.251465Z
+f7606086161080dcc5f7c505c2a7e391
+2012-03-30T01:36:35.169089Z
+144
+willemsn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3605
 

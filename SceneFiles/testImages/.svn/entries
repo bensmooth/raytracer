@@ -1,14 +1,14 @@
 10
 
 dir
-111
+158
 https://wind.d.umn.edu/cssvn/cs5721/trunk/SceneFiles/testImages
 https://wind.d.umn.edu/cssvn/cs5721
 
 
 
-2012-02-22T04:35:25.810349Z
-109
+2012-04-02T03:42:48.415812Z
+157
 willemsn
 
 
@@ -25,40 +25,6 @@ willemsn
 
 
 a59038f0-8682-4659-b67c-e465aad734c6
-
-test_simpleSceneTwoSpheres_02.png
-file
-
-
-
-
-2012-02-20T17:15:16.348875Z
-0e0e0b8853af32c1cc6545e3f0803bfa
-2012-02-16T17:37:41.710561Z
-103
-willemsn
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-8589
 
 test_simpleSceneTwoSpheres_03.png
 file
@@ -93,40 +59,6 @@ has-props
 
 
 6007
-
-khalverson_00_2012.png
-file
-
-
-
-
-2012-02-22T19:55:56.346775Z
-983d6365bd59418823b3885372938dc7
-2012-02-22T04:35:25.810349Z
-109
-willemsn
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-10219
 
 test_threeSpheres.png
 file
@@ -196,16 +128,16 @@ has-props
 
 11604
 
-bhart_01_2012.png
+spheres_1K.png
 file
 
 
 
 
-2012-02-22T19:55:56.347775Z
-3986e56fab0cfad83082f084032ad195
-2012-02-22T04:32:38.353323Z
-108
+2012-04-05T07:20:05.579441Z
+e10e59f7385704b37e7a8d4bccd78009
+2012-03-29T20:22:11.798496Z
+143
 willemsn
 has-props
 
@@ -228,7 +160,41 @@ has-props
 
 
 
-18770
+44505
+
+bhart_01_2012.png
+file
+
+
+
+
+2012-04-05T07:20:05.577441Z
+2888eb9add8f4bf59023b00c6d20f891
+2012-03-29T14:03:04.727584Z
+134
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+22850
 
 bneumann_00_2011.png
 file
@@ -263,6 +229,210 @@ has-props
 
 
 12051
+
+objTest_00.png
+file
+
+
+
+
+2012-04-05T07:20:05.580441Z
+877a7b19323b0559b190ab7966981f38
+2012-03-29T14:36:38.786200Z
+135
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+17391
+
+objTest_01.png
+file
+
+
+
+
+2012-04-05T07:20:05.581441Z
+91bd70440bb16ecb9025c03945b0e762
+2012-03-30T03:08:46.212138Z
+145
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+25072
+
+threeEggs.png
+file
+
+
+
+
+2012-04-05T07:20:05.582441Z
+16f2a1d83e0bdf5c7053e2bb94cbf3db
+2012-03-29T13:52:38.565901Z
+133
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12600
+
+khalverson_00_2012.png
+file
+
+
+
+
+2012-02-22T19:55:56.346775Z
+983d6365bd59418823b3885372938dc7
+2012-02-22T04:35:25.810349Z
+109
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10219
+
+rowOfBunnys_Depth.png
+file
+
+
+
+
+2012-04-05T07:20:05.582441Z
+0df5af18a200a3381c817bec9b23acf3
+2012-04-02T03:42:48.415812Z
+157
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+24999
+
+threeEggs_ss.png
+file
+
+
+
+
+2012-04-05T07:20:05.584441Z
+5a327ef17247af85bed3825b2c36eef6
+2012-03-30T01:36:35.169089Z
+144
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14094
 
 test_oneSphere.png
 file
@@ -332,16 +502,16 @@ has-props
 
 1221
 
-test_oneBox_01.png
+ALittleOfEverything.png
 file
 
 
 
 
-2012-02-16T16:38:19.568425Z
-0960403faa8130d77e6b6098b39be7a6
-2012-02-16T15:57:15.605901Z
-101
+2012-04-05T07:20:05.588441Z
+6398ce1fba540a3de6253f5e5a31ba71
+2012-03-30T16:15:26.413866Z
+150
 willemsn
 has-props
 
@@ -364,7 +534,7 @@ has-props
 
 
 
-2478
+66238
 
 test_simpleSceneTwoSpheres_00.png
 file
@@ -400,6 +570,40 @@ has-props
 
 6975
 
+test_oneBox_01.png
+file
+
+
+
+
+2012-02-16T16:38:19.568425Z
+0960403faa8130d77e6b6098b39be7a6
+2012-02-16T15:57:15.605901Z
+101
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2478
+
 test_simpleSceneTwoSpheres_01.png
 file
 
@@ -433,4 +637,72 @@ has-props
 
 
 8482
+
+test_simpleSceneTwoSpheres_02.png
+file
+
+
+
+
+2012-02-20T17:15:16.348875Z
+0e0e0b8853af32c1cc6545e3f0803bfa
+2012-02-16T17:37:41.710561Z
+103
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8589
+
+rowOfBunnys.png
+file
+
+
+
+
+2012-04-05T07:20:05.588441Z
+b3b4041632db9846e5a39d76b056e134
+2012-04-02T03:42:48.415812Z
+157
+willemsn
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+18961
 

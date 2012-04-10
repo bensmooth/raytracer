@@ -33,19 +33,27 @@ add_library(raytracerLib
   ColorGradient.cpp ColorGradient.h
   Matrix.cpp Matrix.h
   Vector4D.cpp Vector4D.h
+  BBox.cpp BBox.h
 )
+target_link_libraries(raytracerLib cs5721Graphics)
+target_link_libraries(raytracerLib ThreadLib)
+
 
 add_executable(perlinTest
   PerlinTest.c
 )
+target_link_libraries(perlinTest raytracerLib)
+set(CMAKE_C_FLAGS "-std=gnu99")
+
 
 add_executable(matrixTest
   MatrixTest.cpp
 )
-
-set(CMAKE_C_FLAGS "-std=gnu99")
-
-target_link_libraries(raytracerLib cs5721Graphics)
-target_link_libraries(raytracerLib ThreadLib)
-target_link_libraries(perlinTest raytracerLib)
 target_link_libraries(matrixTest raytracerLib)
+
+
+add_executable(bboxTest
+  BBoxTest.cpp
+)
+target_link_libraries(bboxTest raytracerLib)
+

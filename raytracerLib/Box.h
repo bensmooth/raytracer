@@ -3,6 +3,7 @@
 #include "IObject.h"
 #include "Vector3D.h"
 #include "Triangle.h"
+#include "BBox.h"
 
 /**
  * This is an axis-aligned box.
@@ -20,6 +21,8 @@ public:
 	virtual IShader* GetShader();
 
 	virtual bool Intersect(const Ray& ray, Intersection& result);
+
+	virtual BBox GetBoundingBox();
 
 	/**
 	 * Sets the min and max points of the box.
@@ -42,5 +45,10 @@ private:
 	 * The triangles that make up the box.
 	 */
 	Triangle *m_triangles[TRIANGLES_IN_A_BOX];
+
+	/**
+	 * The bounding box.
+	 */
+	BBox m_bbox;
 };
 

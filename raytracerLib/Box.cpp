@@ -1,6 +1,8 @@
 #include <limits>
+#include <string.h>
 
 #include "Box.h"
+#include "BBox.h"
 
 using namespace sivelab;
 
@@ -30,8 +32,20 @@ IShader* Box::GetShader()
 }
 
 
+BBox Box::GetBoundingBox()
+{
+	return (m_bbox);
+}
+
+
 bool Box::Intersect(const Ray& ray, Intersection& result)
 {
+	// See if the ray even hits at all.
+	if (m_bbox.Intersects(ray) == false)
+	{
+		return (false);
+	}
+
 	// We need to test for more than one interestion.
 	double maxDouble = std::numeric_limits<double>::max();
 	result.t = maxDouble;
@@ -64,6 +78,10 @@ bool Box::Intersect(const Ray& ray, Intersection& result)
 
 void Box::ConstructBox(const sivelab::Vector3D& minPoint, const sivelab::Vector3D& maxPoint)
 {
+	// Save minimum and maximum points into bounding box.
+	m_bbox.minPt = minPoint;
+	m_bbox.maxPt = maxPoint;
+
 	// Free all triangles.
 	for (int i = 0; i < TRIANGLES_IN_A_BOX; i++)
 	{

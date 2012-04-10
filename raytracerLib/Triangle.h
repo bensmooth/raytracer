@@ -16,6 +16,8 @@ public:
 
 	virtual bool Intersect(const Ray& ray, Intersection& result);
 
+	virtual BBox GetBoundingBox();
+
 	/**
 	 * The number of vertices in a triangle.
 	 */

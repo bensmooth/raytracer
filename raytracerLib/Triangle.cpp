@@ -1,4 +1,6 @@
 #include "Triangle.h"
+#include <vector>
+#include "BBox.h"
 
 
 Triangle::Triangle(const sivelab::Vector3D& v1, const sivelab::Vector3D& v2, const sivelab::Vector3D& v3, IShader *shader)
@@ -18,6 +20,21 @@ Triangle::Triangle(const sivelab::Vector3D& v1, const sivelab::Vector3D& v2, con
 IShader* Triangle::GetShader()
 {
 	return m_shader;
+}
+
+
+BBox Triangle::GetBoundingBox()
+{
+	std::vector<sivelab::Vector3D> points;
+	points.resize(VERTEX_COUNT);
+
+	// Add each point in the triangle to the list of points.
+	for (int i = 0; i < VERTEX_COUNT; i++)
+	{
+		points[i] = m_vertices[i];
+	}
+
+	return (BBox::MakeFromPoints(points));
 }
 
 

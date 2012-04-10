@@ -3,6 +3,7 @@
 #include "Sphere.h"
 #include "Vector3D.h"
 #include "Ray.h"
+#include "BBox.h"
 
 using namespace sivelab;
 
@@ -17,6 +18,22 @@ Sphere::Sphere(sivelab::Vector3D& center, double radius, IShader* shader)
 IShader* Sphere::GetShader()
 {
 	return (m_shader);
+}
+
+
+BBox Sphere::GetBoundingBox()
+{
+	BBox bbox;
+
+	bbox.minPt[0] = m_center[0] - m_radius;
+	bbox.minPt[1] = m_center[1] - m_radius;
+	bbox.minPt[2] = m_center[2] - m_radius;
+
+	bbox.maxPt[0] = m_center[0] + m_radius;
+	bbox.maxPt[1] = m_center[1] + m_radius;
+	bbox.maxPt[2] = m_center[2] + m_radius;
+
+	return (bbox);
 }
 
 

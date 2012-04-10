@@ -1,10 +1,10 @@
 #pragma once
 
-#include "IShader.h"
-
+// Forward declarations.
+class IShader;
 struct Ray;
-
 struct Intersection;
+struct BBox;
 
 
 class IObject
@@ -26,5 +26,11 @@ public:
 	 * Gets the shader associated with this object.
 	 */
 	virtual IShader *GetShader() = 0;
+
+
+	/**
+	 * Gets a bounding box that contains the entirity of the object.
+	 */
+	virtual BBox GetBoundingBox() = 0;
 };
 

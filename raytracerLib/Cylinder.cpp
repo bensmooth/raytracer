@@ -2,6 +2,7 @@
 #include "Ray.h"
 #include "Intersection.h"
 #include "Scene.h"
+#include "BBox.h"
 
 
 Cylinder::Cylinder(IShader* shader, sivelab::Vector3D center, double height, double radius)
@@ -21,6 +22,26 @@ Cylinder::~Cylinder()
 IShader *Cylinder::GetShader()
 {
 	return (m_shader);
+}
+
+
+BBox Cylinder::GetBoundingBox()
+{
+	BBox bbox;
+
+	// Calculate minimum and maximum x.
+	bbox.minPt[0] = m_center[0] - m_radius;
+	bbox.maxPt[0] = m_center[0] + m_radius;
+
+	// Calculate minimum and maximum y.
+	bbox.minPt[1] = m_center[1] - m_height / 2.0;
+	bbox.maxPt[1] = m_center[1] + m_height / 2.0;
+
+	// Calculate minimum and maximum z.
+	bbox.minPt[2] = m_center[2] - m_radius;
+	bbox.maxPt[2] = m_center[2] + m_radius;
+
+	return (bbox);
 }
 
 

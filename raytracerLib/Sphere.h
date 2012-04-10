@@ -15,9 +15,11 @@ public:
 	 */
 	Sphere(sivelab::Vector3D &center, double radius, IShader *shader);
 
-    virtual IShader* GetShader();
+	virtual IShader* GetShader();
 
-    virtual bool Intersect(const Ray& ray, Intersection& result);
+	virtual bool Intersect(const Ray& ray, Intersection& result);
+
+	virtual BBox GetBoundingBox();
 
 private:
 	sivelab::Vector3D m_center;

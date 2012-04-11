@@ -33,10 +33,11 @@ public:
 	 * Loads a scene from the given XML file.
 	 * @param filename The filename to load from.
 	 * @param raysPerPixel The number of rays per pixel.  Must be a perfect square.
+	 * @param useBvh Set to true to use a BVH structure.
 	 * @param verbose Set to true if you want lots of information printed out during scene loading.
 	 * @throws RaytraceException If something goes wrong.
 	 */
-	Scene(std::string filename, int raysPerPixel, bool verbose = false);
+	Scene(std::string filename, int raysPerPixel, bool useBvh, bool verbose);
 
 	/**
 	 * Frees all memory associated with the scene.

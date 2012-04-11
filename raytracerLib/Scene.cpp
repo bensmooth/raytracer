@@ -19,6 +19,7 @@
 #include "ThreadPool.h"
 #include "Cylinder.h"
 #include "PerlinShader.h"
+#include "BVHNode.h"
 
 using namespace sivelab;
 using namespace std;
@@ -472,7 +473,7 @@ private:
 };
 
 
-Scene::Scene(std::string filename, int raysPerPixel, bool verbose)
+Scene::Scene(std::string filename, int raysPerPixel, bool useBvh, bool verbose)
 {
 	VerboseOutput = verbose;
 	m_ambient = Color(0.1, 0.1, 0.1);
@@ -486,18 +487,28 @@ Scene::Scene(std::string filename, int raysPerPixel, bool verbose)
 	ObjectCreator objectCreator(this);
 	LightCreator lightCreator(this);
 	ShaderCreator shaderCreator(this);
-    xmlScene.registerCallback("camera", &cameraCreator);
-    xmlScene.registerCallback("light", &lightCreator);
-    xmlScene.registerCallback("shader", &shaderCreator);
-    xmlScene.registerCallback("shape", &objectCreator);
+	xmlScene.registerCallback("camera", &cameraCreator);
+	xmlScene.registerCallback("light", &lightCreator);
+	xmlScene.registerCallback("shader", &shaderCreator);
+	xmlScene.registerCallback("shape", &objectCreator);
 
-    xmlScene.parseFile(filename);
+	xmlScene.parseFile(filename);
 
-    // Make sure they set a camera.
-    if (m_camera == NULL)
-    {
-        throw RaytraceException("Camera not set!");
-    }
+	// Make sure they set a camera.
+	if (m_camera == NULL)
+	{
+		throw RaytraceException("Camera not set!");
+	}
+
+	// If they wanted to use a BVH, build it up.
+	if (useBvh)
+	{
+		BVHNode *root = BVHNode::ConstructBVH(m_objects);
+
+		// All objects are now in the BVH, so we can clear out the list of objects.
+		m_objects.resize(1);
+		m_objects[0] = root;
+	}
 }
 
 

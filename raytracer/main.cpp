@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	try
 	{
 		int64_t beginTime = GetTickCount();
-		scene = new Scene(args.inputFileName, args.rpp, args.verbose);
+		scene = new Scene(args.inputFileName, args.rpp, true, args.verbose);
 		cout << "Parsing scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
 	catch (RaytraceException &e)

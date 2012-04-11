@@ -19,11 +19,17 @@ struct BBox
 	 * Constructs a bounding box that contains the given set of boxes.
 	 */
 	static BBox Combine(const std::vector<BBox> &boxes);
+	static BBox Combine(const BBox &a, const BBox &b);
 
 	/**
 	 * Returns true if the ray intersects the bounding box.
 	 */
 	bool Intersects(const Ray &ray) const;
+
+	/**
+	 * Returns the center of the bbox.
+	 */
+	sivelab::Vector3D GetCenter();
 
 	/**
 	 * The minimum and maximum points of the box.

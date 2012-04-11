@@ -63,6 +63,29 @@ BBox BBox::Combine(const vector<BBox> &boxes)
 }
 
 
+BBox BBox::Combine(const BBox& a, const BBox& b)
+{
+	vector<Vector3D> points;
+
+	// 2 points per box.
+	points.resize(4);
+	points[0] = a.minPt;
+	points[1] = a.maxPt;
+	points[2] = b.minPt;
+	points[3] = b.maxPt;
+
+	return(MakeFromPoints(points));
+}
+
+
+Vector3D BBox::GetCenter()
+{
+	Vector3D result = minPt + maxPt;
+	result /= 2.0;
+	return (result);
+}
+
+
 bool BBox::Intersects(const Ray& ray) const
 {
 	const Vector3D &rayOrig = ray.GetPosition();

@@ -55,7 +55,8 @@ bool Box::Intersect(const Ray& ray, Intersection& result)
 	{
 		if (m_triangles[i]->Intersect(ray, intersect) == true)
 		{
-			if (intersect.t < result.t)
+			// Discard entries with collisions in the past.
+			if ((intersect.t < result.t) && (intersect.t > 0.0))
 			{
 				result = intersect;
 			}

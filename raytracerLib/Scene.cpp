@@ -765,6 +765,9 @@ Color Scene::CastReflectionRay(Intersection& intersection)
 	Vector3D rayDirection = viewRay - 2 * (viewRay.dot(normal)) * normal;
 	Ray reflectedRay(intersectPoint, rayDirection);
 
+	// Step reflectedRay out of any object it may be inside of.
+	reflectedRay.SetPosition(reflectedRay.GetPositionAtTime(EPSILON));
+
 	Color rayColor;
 	CastRayAndShade(reflectedRay, rayColor, numeric_limits<double>::max(), intersection.allowedReflectionCount);
 	return (rayColor);

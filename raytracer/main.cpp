@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 	try
 	{
 		// See if we need to autodetect the optimal thread count.
-		if (args.numCpus == -1)
+		if (args.numCpus <= 0)
 		{
 			args.numCpus = ThreadEngine::ThreadPool::GetNumberOfProcessors();
 		}

@@ -29,7 +29,7 @@ GraphicsArgs::GraphicsArgs()
     aspectRatio(1.0), useShadow(true), bgColor(0.0, 0.0, 0.0),
     useDepthOfField(false),
     depthOfFieldDistance(0),
-    numCpus(1), rpp(1), splitMethod("objectMedian"),
+    numCpus(-1), rpp(1), splitMethod("objectMedian"),
     inputFileName(""), outputFileName("")
 {
 }

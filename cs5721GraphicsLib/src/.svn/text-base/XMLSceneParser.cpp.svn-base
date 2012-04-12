@@ -477,6 +477,7 @@ void XMLSceneParser::parseShader(xmlNode *nPtr, std::map<std::string, SceneDataC
   nodeData["shader_specular"] = SceneDataContainer::emptyElem("specular");
   nodeData["shader_phongExp"] = SceneDataContainer::emptyElem("phongExp");
   nodeData["shader_mirrorCoef"] = SceneDataContainer::emptyElem("mirrorCoef");
+  nodeData["shader_roughness"] = SceneDataContainer::emptyElem("roughness");
 
   //
   // Attempt to set the correct values in the properties and elements
@@ -493,6 +494,7 @@ void XMLSceneParser::parseShader(xmlNode *nPtr, std::map<std::string, SceneDataC
       retrieveElementData("specular", currNodePtr, nodeData["shader_specular"]);
       retrieveElementData("phongExp", currNodePtr, nodeData["shader_phongExp"]);
       retrieveElementData("mirrorCoef", currNodePtr, nodeData["shader_mirrorCoef"]);
+      retrieveElementData("roughness", currNodePtr, nodeData["shader_roughness"]);
       
       currNodePtr = currNodePtr->next;
     }

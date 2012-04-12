@@ -1,17 +1,17 @@
 K 25
 svn:wc:ra_dav:version-url
 V 50
-/cssvn/cs5721/!svn/ver/149/trunk/cs5721GraphicsLib
-END
-COPYING.txt
-K 25
-svn:wc:ra_dav:version-url
-V 60
-/cssvn/cs5721/!svn/ver/2/trunk/cs5721GraphicsLib/COPYING.txt
+/cssvn/cs5721/!svn/ver/164/trunk/cs5721GraphicsLib
 END
 CMakeLists.txt
 K 25
 svn:wc:ra_dav:version-url
 V 64
 /cssvn/cs5721/!svn/ver/79/trunk/cs5721GraphicsLib/CMakeLists.txt
+END
+COPYING.txt
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/cssvn/cs5721/!svn/ver/2/trunk/cs5721GraphicsLib/COPYING.txt
 END

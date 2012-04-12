@@ -45,11 +45,15 @@ namespace sivelab {
     float aspectRatio;
     bool useShadow;
     Vector3D bgColor;
+    
+    bool useDepthOfField;
+    float depthOfFieldDistance;
 
     int numCpus;
 
     int rpp;
     
+    std::string splitMethod;
     
     std::string inputFileName;
     std::string outputFileName;

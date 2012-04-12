@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene bgColor="0.5 0.5 0.5">
+
+  <!-- Simple camera placed back from the origin looking in -Z direction -->
+  <camera name="main" type="perspective">
+    <position>0 3.0 6.0</position>
+    <viewDir>0.0 -1.0 -3.0</viewDir>
+    <focalLength>0.40</focalLength>
+    <imagePlaneWidth>0.5</imagePlaneWidth>
+  </camera>
+
+  <light type="area">
+    <position>0.0 10.0 0.0</position>
+    <intensity>1.0 1.0 1.0</intensity>
+    <normal>0 -1 0</normal>
+    <width>8</width>
+    <length>8</length>
+  </light>
+
+  <!-- Ground plane -->
+  <shader name="greyMat" type="Lambertian">
+    <diffuse>0.5 0.5 0.5</diffuse>
+  </shader>
+  <shape name="ground" type="box">
+    <shader ref="greyMat" />
+    <minPt>-50.0 -0.5 -50.0</minPt>
+    <maxPt>50.0 0.0 50.0</maxPt>
+  </shape>
+
+  <!-- Spheres -->
+  <shader name="darkBlue" type="Lambertian">
+    <diffuse>0.4 0.4 1.</diffuse>
+  </shader>
+  <shape name="s1" type="sphere">
+    <shader ref="darkBlue"/>
+    <center>0.0 2.0 0.0</center>
+    <radius>1</radius>
+  </shape>
+
+</scene>
+

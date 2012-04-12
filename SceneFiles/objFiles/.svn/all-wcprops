@@ -1,19 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 52
-/cssvn/cs5721/!svn/ver/116/trunk/SceneFiles/objFiles
-END
-buddha.obj.gz
-K 25
-svn:wc:ra_dav:version-url
-V 65
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/objFiles/buddha.obj.gz
-END
-dragon.obj.gz
-K 25
-svn:wc:ra_dav:version-url
-V 65
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/objFiles/dragon.obj.gz
+/cssvn/cs5721/!svn/ver/163/trunk/SceneFiles/objFiles
 END
 bunny.obj
 K 25
@@ -27,6 +15,12 @@ svn:wc:ra_dav:version-url
 V 59
 /cssvn/cs5721/!svn/ver/115/trunk/SceneFiles/objFiles/al.obj
 END
+teapot.obj
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/cssvn/cs5721/!svn/ver/163/trunk/SceneFiles/objFiles/teapot.obj
+END
 al.mtl
 K 25
 svn:wc:ra_dav:version-url
@@ -38,4 +32,16 @@ K 25
 svn:wc:ra_dav:version-url
 V 68
 /cssvn/cs5721/!svn/ver/116/trunk/SceneFiles/objFiles/icosahedron.obj
+END
+buddha.obj.gz
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/objFiles/buddha.obj.gz
+END
+dragon.obj.gz
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/objFiles/dragon.obj.gz
 END

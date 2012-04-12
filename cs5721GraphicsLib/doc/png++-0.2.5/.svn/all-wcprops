@@ -3,12 +3,6 @@ svn:wc:ra_dav:version-url
 V 65
 /cssvn/cs5721/!svn/ver/55/trunk/cs5721GraphicsLib/doc/png++-0.2.5
 END
-BUGS
-K 25
-svn:wc:ra_dav:version-url
-V 70
-/cssvn/cs5721/!svn/ver/55/trunk/cs5721GraphicsLib/doc/png++-0.2.5/BUGS
-END
 AUTHORS
 K 25
 svn:wc:ra_dav:version-url
@@ -56,4 +50,10 @@ K 25
 svn:wc:ra_dav:version-url
 V 72
 /cssvn/cs5721/!svn/ver/55/trunk/cs5721GraphicsLib/doc/png++-0.2.5/README
+END
+BUGS
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/cssvn/cs5721/!svn/ver/55/trunk/cs5721GraphicsLib/doc/png++-0.2.5/BUGS
 END

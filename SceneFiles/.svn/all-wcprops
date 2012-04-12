@@ -1,13 +1,103 @@
 K 25
 svn:wc:ra_dav:version-url
 V 43
-/cssvn/cs5721/!svn/ver/158/trunk/SceneFiles
+/cssvn/cs5721/!svn/ver/168/trunk/SceneFiles
 END
-bhart_01_2012.xml
+threeEggs_ss.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/cssvn/cs5721/!svn/ver/144/trunk/SceneFiles/threeEggs_ss.xml
+END
+spheres_1M.xml.gz
 K 25
 svn:wc:ra_dav:version-url
 V 61
-/cssvn/cs5721/!svn/ver/107/trunk/SceneFiles/bhart_01_2012.xml
+/cssvn/cs5721/!svn/ver/137/trunk/SceneFiles/spheres_1M.xml.gz
+END
+test_oneSphere.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cssvn/cs5721/!svn/ver/95/trunk/SceneFiles/test_oneSphere.xml
+END
+ALittleOfEverything.xml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/cssvn/cs5721/!svn/ver/148/trunk/SceneFiles/ALittleOfEverything.xml
+END
+test_oneBox_00.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/cssvn/cs5721/!svn/ver/101/trunk/SceneFiles/test_oneBox_00.xml
+END
+glossinessTest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/cssvn/cs5721/!svn/ver/162/trunk/SceneFiles/glossinessTest.xml
+END
+test_oneBox.xml
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/cssvn/cs5721/!svn/ver/86/trunk/SceneFiles/test_oneBox.xml
+END
+test_oneBox_01.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/cssvn/cs5721/!svn/ver/101/trunk/SceneFiles/test_oneBox_01.xml
+END
+test_simpleSceneTwoSpheres_00.xml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/cssvn/cs5721/!svn/ver/99/trunk/SceneFiles/test_simpleSceneTwoSpheres_00.xml
+END
+test_simpleSceneTwoSpheres_01.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/102/trunk/SceneFiles/test_simpleSceneTwoSpheres_01.xml
+END
+rowOfBunnys.xml
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/cssvn/cs5721/!svn/ver/156/trunk/SceneFiles/rowOfBunnys.xml
+END
+test_simpleSceneTwoSpheres_02.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/103/trunk/SceneFiles/test_simpleSceneTwoSpheres_02.xml
+END
+test_simpleSceneTwoSpheres_03.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/112/trunk/SceneFiles/test_simpleSceneTwoSpheres_03.xml
+END
+test_threeSpheres.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/cssvn/cs5721/!svn/ver/98/trunk/SceneFiles/test_threeSpheres.xml
+END
+areaLightTest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cssvn/cs5721/!svn/ver/165/trunk/SceneFiles/areaLightTest.xml
+END
+bhart_00_2012.xml
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/cssvn/cs5721/!svn/ver/106/trunk/SceneFiles/bhart_00_2012.xml
 END
 spheres_1K.xml
 K 25
@@ -15,17 +105,23 @@ svn:wc:ra_dav:version-url
 V 58
 /cssvn/cs5721/!svn/ver/142/trunk/SceneFiles/spheres_1K.xml
 END
-bneumann_00_2011.xml
+bhart_01_2012.xml
 K 25
 svn:wc:ra_dav:version-url
-V 64
-/cssvn/cs5721/!svn/ver/105/trunk/SceneFiles/bneumann_00_2011.xml
+V 61
+/cssvn/cs5721/!svn/ver/107/trunk/SceneFiles/bhart_01_2012.xml
 END
 bunny.obj
 K 25
 svn:wc:ra_dav:version-url
 V 53
 /cssvn/cs5721/!svn/ver/158/trunk/SceneFiles/bunny.obj
+END
+bneumann_00_2011.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/cssvn/cs5721/!svn/ver/105/trunk/SceneFiles/bneumann_00_2011.xml
 END
 objTest_00.xml
 K 25
@@ -56,88 +152,4 @@ K 25
 svn:wc:ra_dav:version-url
 V 68
 /cssvn/cs5721/!svn/ver/33/trunk/SceneFiles/convertObjTortTriList.cpp
-END
-threeEggs_ss.xml
-K 25
-svn:wc:ra_dav:version-url
-V 60
-/cssvn/cs5721/!svn/ver/144/trunk/SceneFiles/threeEggs_ss.xml
-END
-spheres_1M.xml.gz
-K 25
-svn:wc:ra_dav:version-url
-V 61
-/cssvn/cs5721/!svn/ver/137/trunk/SceneFiles/spheres_1M.xml.gz
-END
-test_oneSphere.xml
-K 25
-svn:wc:ra_dav:version-url
-V 61
-/cssvn/cs5721/!svn/ver/95/trunk/SceneFiles/test_oneSphere.xml
-END
-test_oneBox_00.xml
-K 25
-svn:wc:ra_dav:version-url
-V 62
-/cssvn/cs5721/!svn/ver/101/trunk/SceneFiles/test_oneBox_00.xml
-END
-ALittleOfEverything.xml
-K 25
-svn:wc:ra_dav:version-url
-V 67
-/cssvn/cs5721/!svn/ver/148/trunk/SceneFiles/ALittleOfEverything.xml
-END
-test_simpleSceneTwoSpheres_00.xml
-K 25
-svn:wc:ra_dav:version-url
-V 76
-/cssvn/cs5721/!svn/ver/99/trunk/SceneFiles/test_simpleSceneTwoSpheres_00.xml
-END
-test_oneBox_01.xml
-K 25
-svn:wc:ra_dav:version-url
-V 62
-/cssvn/cs5721/!svn/ver/101/trunk/SceneFiles/test_oneBox_01.xml
-END
-test_oneBox.xml
-K 25
-svn:wc:ra_dav:version-url
-V 58
-/cssvn/cs5721/!svn/ver/86/trunk/SceneFiles/test_oneBox.xml
-END
-test_simpleSceneTwoSpheres_01.xml
-K 25
-svn:wc:ra_dav:version-url
-V 77
-/cssvn/cs5721/!svn/ver/102/trunk/SceneFiles/test_simpleSceneTwoSpheres_01.xml
-END
-test_simpleSceneTwoSpheres_02.xml
-K 25
-svn:wc:ra_dav:version-url
-V 77
-/cssvn/cs5721/!svn/ver/103/trunk/SceneFiles/test_simpleSceneTwoSpheres_02.xml
-END
-rowOfBunnys.xml
-K 25
-svn:wc:ra_dav:version-url
-V 59
-/cssvn/cs5721/!svn/ver/156/trunk/SceneFiles/rowOfBunnys.xml
-END
-test_simpleSceneTwoSpheres_03.xml
-K 25
-svn:wc:ra_dav:version-url
-V 77
-/cssvn/cs5721/!svn/ver/112/trunk/SceneFiles/test_simpleSceneTwoSpheres_03.xml
-END
-test_threeSpheres.xml
-K 25
-svn:wc:ra_dav:version-url
-V 64
-/cssvn/cs5721/!svn/ver/98/trunk/SceneFiles/test_threeSpheres.xml
-END
-bhart_00_2012.xml
-K 25
-svn:wc:ra_dav:version-url
-V 61
-/cssvn/cs5721/!svn/ver/106/trunk/SceneFiles/bhart_00_2012.xml
 END

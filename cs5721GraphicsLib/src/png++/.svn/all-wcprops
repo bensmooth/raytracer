@@ -3,42 +3,6 @@ svn:wc:ra_dav:version-url
 V 59
 /cssvn/cs5721/!svn/ver/77/trunk/cs5721GraphicsLib/src/png++
 END
-error.hpp
-K 25
-svn:wc:ra_dav:version-url
-V 69
-/cssvn/cs5721/!svn/ver/77/trunk/cs5721GraphicsLib/src/png++/error.hpp
-END
-convert_color_space.hpp
-K 25
-svn:wc:ra_dav:version-url
-V 83
-/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/convert_color_space.hpp
-END
-info.hpp
-K 25
-svn:wc:ra_dav:version-url
-V 68
-/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/info.hpp
-END
-consumer.hpp
-K 25
-svn:wc:ra_dav:version-url
-V 72
-/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/consumer.hpp
-END
-image_info.hpp
-K 25
-svn:wc:ra_dav:version-url
-V 74
-/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/image_info.hpp
-END
-palette.hpp
-K 25
-svn:wc:ra_dav:version-url
-V 71
-/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/palette.hpp
-END
 io_base.hpp
 K 25
 svn:wc:ra_dav:version-url
@@ -170,4 +134,40 @@ K 25
 svn:wc:ra_dav:version-url
 V 72
 /cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/ga_pixel.hpp
+END
+error.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/cssvn/cs5721/!svn/ver/77/trunk/cs5721GraphicsLib/src/png++/error.hpp
+END
+convert_color_space.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/convert_color_space.hpp
+END
+info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/info.hpp
+END
+consumer.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/consumer.hpp
+END
+image_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/image_info.hpp
+END
+palette.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/cssvn/cs5721/!svn/ver/69/trunk/cs5721GraphicsLib/src/png++/palette.hpp
 END

@@ -1,19 +1,31 @@
 K 25
 svn:wc:ra_dav:version-url
 V 57
-/cssvn/cs5721/!svn/ver/155/trunk/SceneFiles/oldSceneFiles
+/cssvn/cs5721/!svn/ver/168/trunk/SceneFiles/oldSceneFiles
 END
-dielectricTest_02.rt
+dielectricTest_00.rt
 K 25
 svn:wc:ra_dav:version-url
 V 77
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_02.rt
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_00.rt
+END
+dielectricTest_01.rt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_01.rt
 END
 metallicDragons.rt
 K 25
 svn:wc:ra_dav:version-url
 V 75
 /cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/metallicDragons.rt
+END
+dielectricTest_02.rt
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_02.rt
 END
 dielectricTest_03.rt
 K 25
@@ -32,12 +44,6 @@ K 25
 svn:wc:ra_dav:version-url
 V 86
 /cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_threeInstancedDragons.rt
-END
-threeEggs.rt
-K 25
-svn:wc:ra_dav:version-url
-V 69
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/threeEggs.rt
 END
 test_simpleSceneThreeLightsPhongIdealDielectric2.rt
 K 25
@@ -69,11 +75,11 @@ svn:wc:ra_dav:version-url
 V 75
 /cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/glossinessIdeal.rt
 END
-glossiness.rt
+simpleSceneThreeLightsPhongIdealDielectric.rt
 K 25
 svn:wc:ra_dav:version-url
-V 70
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/glossiness.rt
+V 102
+/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/simpleSceneThreeLightsPhongIdealDielectric.rt
 END
 dragons.rt
 K 25
@@ -81,39 +87,9 @@ svn:wc:ra_dav:version-url
 V 67
 /cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dragons.rt
 END
-simpleSceneThreeLightsPhongIdealDielectric.rt
-K 25
-svn:wc:ra_dav:version-url
-V 102
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/simpleSceneThreeLightsPhongIdealDielectric.rt
-END
 sphereInstances.rt
 K 25
 svn:wc:ra_dav:version-url
 V 75
 /cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/sphereInstances.rt
-END
-test_AreaLight00.rt
-K 25
-svn:wc:ra_dav:version-url
-V 76
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_AreaLight00.rt
-END
-test_AreaLight01.rt
-K 25
-svn:wc:ra_dav:version-url
-V 76
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/test_AreaLight01.rt
-END
-dielectricTest_00.rt
-K 25
-svn:wc:ra_dav:version-url
-V 77
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_00.rt
-END
-dielectricTest_01.rt
-K 25
-svn:wc:ra_dav:version-url
-V 77
-/cssvn/cs5721/!svn/ver/84/trunk/SceneFiles/oldSceneFiles/dielectricTest_01.rt
 END

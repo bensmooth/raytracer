@@ -16,7 +16,7 @@ InstanceObject::InstanceObject(Matrix transf, IObject* original, IShader* shader
 
 	// Transform the points that make up the original object's bounding box.
 	m_bbox = original->GetBoundingBox();
-	m_bbox = m_bbox.Transform(m_invTrans);
+	m_bbox = m_bbox.Transform(transf);
 
 	// Copy in references to original object and shader.
 	m_original = original;

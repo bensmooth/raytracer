@@ -3,6 +3,7 @@
 #include <string>
 #include <queue>
 #include "Vector4D.h"
+#include "Ray.h"
 
 /**
  * The number of rows in a Matrix.
@@ -303,6 +304,11 @@ public:
 	 * Multiplies the matrix with a column vector.
 	 */
 	Vector4D operator*(const Vector4D &other) const;
+
+	/**
+	 * Applies the transformation in this matrix to the ray.
+	 */
+	Ray operator*(const Ray &ray) const;
 
 	/**
 	 * Equality testing.

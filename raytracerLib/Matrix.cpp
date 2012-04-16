@@ -808,6 +808,20 @@ Vector4D Matrix::operator*(const Vector4D& other) const
 }
 
 
+Ray Matrix::operator*(const Ray& ray) const
+{
+	// Extract position and direction.
+	Vector4D rayPos(ray.GetPosition(), true);
+	Vector4D rayDir(ray.GetDirection(), false);
+
+	// Multiply matrix with position and direction vectors.
+	rayPos = operator*(rayPos);
+	rayDir = operator*(rayDir);
+
+	return (Ray(rayPos.vector3d, rayDir.vector3d));
+}
+
+
 bool Matrix::operator==(const Matrix& other) const
 {
 	for (int row = 0; row < MATRIX_ROWS; row++)

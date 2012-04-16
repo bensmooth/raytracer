@@ -818,9 +818,9 @@ void *RenderThread(void *info)
 			Color color = threadInfo->scene->RaytracePixel(imageX, imageY);
 
 			// Save color to PNG structure.  Flip Y,  because we are rendering upside down.
-			threadInfo->imageLock->Lock();
+			//threadInfo->imageLock->Lock();
 			threadInfo->outputImage->set_pixel(imageX, threadInfo->finalImageHeight -1 - imageY, color.GetImageColor());
-			threadInfo->imageLock->Unlock();
+			//threadInfo->imageLock->Unlock();
 		}
 	}
 

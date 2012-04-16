@@ -17,6 +17,11 @@ Triangle::Triangle(const sivelab::Vector3D& v1, const sivelab::Vector3D& v2, con
 }
 
 
+Triangle::Triangle(float verts[3], float norms[3], IShader* shader)
+{
+}
+
+
 IShader* Triangle::GetShader()
 {
 	return m_shader;

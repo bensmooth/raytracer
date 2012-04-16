@@ -36,6 +36,7 @@ add_library(raytracerLib
   BBox.cpp BBox.h
   BVHNode.cpp BVHNode.h
   Instance.cpp Instance.h
+  Mesh.cpp Mesh.h
 )
 target_link_libraries(raytracerLib cs5721Graphics)
 target_link_libraries(raytracerLib ThreadLib)

@@ -11,6 +11,7 @@ public:
 	 * Constructs a triangle from the given points.
 	 */
 	Triangle(const sivelab::Vector3D &v1, const sivelab::Vector3D &v2, const sivelab::Vector3D &v3, IShader *shader);
+	Triangle(float verts[3], float norms[3], IShader *shader);
 
 	virtual IShader* GetShader();
 
@@ -30,9 +31,9 @@ private:
 	sivelab::Vector3D m_vertices[VERTEX_COUNT];
 
 	/**
-	 * The normal of the vertex.
+	 * The normal for each vertex.
 	 */
-	sivelab::Vector3D m_normal;
+	sivelab::Vector3D m_normal[VERTEX_COUNT];
 
 	/**
 	 * The shader associated with this object.

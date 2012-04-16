@@ -35,6 +35,7 @@ add_library(raytracerLib
   Vector4D.cpp Vector4D.h
   BBox.cpp BBox.h
   BVHNode.cpp BVHNode.h
+  Instance.cpp Instance.h
 )
 target_link_libraries(raytracerLib cs5721Graphics)
 target_link_libraries(raytracerLib ThreadLib)

@@ -12,6 +12,7 @@
 #include "RaytraceException.h"
 
 typedef std::map<std::string, IShader*> ShaderMap;
+typedef std::map<std::string, IObject*> InstanceableMap;
 typedef std::vector<IObject*> ObjectList;
 typedef std::vector<ILight*> LightList;
 
@@ -136,6 +137,7 @@ private:
 	ObjectList m_objects;
 	LightList m_lights;
 	ShaderMap m_shaders;
+	InstanceableMap m_instances;
 
 	/**
 	 * The amount of ambient light in the scene.

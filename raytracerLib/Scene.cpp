@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include <list>
+#include <cmath>
 #include <png++/image.hpp>
 #include "png++/png.hpp"
 #include "Vector3D.h"
@@ -20,6 +21,13 @@
 #include "Cylinder.h"
 #include "PerlinShader.h"
 #include "BVHNode.h"
+#include "Matrix.h"
+#include "Instance.h"
+
+/**
+ * Converts degrees to radians.
+ */
+#define DEG_TO_RADS(degs) ((degs)*(M_PI/180.0))
 
 using namespace sivelab;
 using namespace std;
@@ -27,16 +35,33 @@ using namespace std;
 
 /**
  * Reads a string from the given map, under the given field.  Assumes that the field is required.
+ * @param map The map of keys and scenedata objects.
+ * @param fieldName The name of the field the string is under.
+ * @param out On success, will contain the string read from the given fieldName.
+ * @param required Set to true to throw an exception if the field is not found.
+ * @remarks If field is not required, and is not found, "null" is placed in out.
  */
-void ReadString(map<string, SceneDataContainer> &map, string fieldName, string &out)
+void ReadString(map<string, SceneDataContainer> &map, string fieldName, string &out, bool required = true)
 {
 	std::map<string, SceneDataContainer>::iterator sdIter = map.find(fieldName);
 	if (sdIter == map.end())
 	{
-		throw RaytraceException("Missing required field \"" + fieldName + "\" in scene file!");
+		// We didn't find it.
+		if (required)
+		{
+			throw RaytraceException("Missing required field \"" + fieldName + "\" in scene file!");
+		}
+		else
+		{
+			// Field is not required, and we didn't find it.
+			out = "null";
+		}
 	}
-
-	out = sdIter->second.val;
+	else
+	{
+		// We found it.
+		out = sdIter->second.val;
+	}
 }
 
 
@@ -342,9 +367,7 @@ public:
 		m_scene = scene;
 	}
 
-
-    ~ObjectCreator() {}
-
+	~ObjectCreator() {}
 
 	/**
 	 * Resolves the given reference to the shader, throwing an exception if no shader with the given ref has been defined.
@@ -361,20 +384,133 @@ public:
 	}
 
 
-    void instance(std::map<std::string, SceneDataContainer> &sdMap)
-    {
+	/**
+	* Resolves the given reference to the instance, throwing an exception if no instance with the given ref has been defined.
+	*/
+	IObject *ResolveInstanceRef(string objectName, string instName)
+	{
+		InstanceableMap::iterator instanceIter = m_scene->m_instances.find(instName);
+		if (instanceIter == m_scene->m_instances.end())
+		{
+			throw RaytraceException("Unable to find the instance ref \"" + instName + "\" for object \"" + objectName + "\" in the list of instanceable object!");
+		}
+
+		return (instanceIter->second);
+	}
+
+
+	void instance(std::map<std::string, SceneDataContainer> &sdMap)
+	{
+		// This is set to true if this object is to be added to the list of
+		// instanceable objects instead of the list of objects in the scene.
+		bool isInstanceable = (m_otype == INSTANCE);
+
 		string name;
 		ReadString(sdMap, "shape_name", name);
 
 		string type;
 		ReadString(sdMap, "shape_type", type);
 
+		IObject *toAdd = NULL;
+
 		if (m_scene->VerboseOutput)
 		{
 			cout << "Shape: name=" << name << ", type=" << type << endl;
 		}
 
-		if (type == "sphere")
+		if (type == "instance")
+		{
+			std::string tname;
+			map<string, SceneDataContainer>::iterator sdIter = sdMap.find("transform_name");
+			// See if the instance even has transformations.
+			if (sdIter->second.isSet)
+			{
+				stringstream buf;
+				tname = sdIter->second.val;
+
+				// The final resultant matrix.
+				Matrix transformation;
+				transformation.ConstructIdentity();
+
+				// Build up transformation matrix.
+				for (sdIter = sdMap.begin(); sdIter != sdMap.end(); sdIter++)
+				{
+					// The current transformation operation.
+					Matrix currentTrans;
+					if (sdIter->second.name == "translate")
+					{
+						sivelab::Vector3D trans;
+						buf.str(sdIter->second.val);
+						buf >> trans;
+						buf.clear();
+						currentTrans.ConstructTranslate(trans[0], trans[1], trans[2]);
+					}
+					else if (sdIter->second.name == "rotateX")
+					{
+						float rot;
+						buf.str(sdIter->second.val);
+						buf >> rot;
+						buf.clear();
+						currentTrans.ConstructRotation(DEG_TO_RADS(rot), 0.0, 0.0);
+					}
+					else if (sdIter->second.name == "rotateY")
+					{
+						float rot;
+						buf.str(sdIter->second.val);
+						buf >> rot;
+						buf.clear();
+						currentTrans.ConstructRotation(0.0, DEG_TO_RADS(rot), 0.0);
+					}
+					else if (sdIter->second.name == "rotateZ")
+					{
+						float rot;
+						buf.str(sdIter->second.val);
+						buf >> rot;
+						buf.clear();
+						currentTrans.ConstructRotation(0.0, 0.0, DEG_TO_RADS(rot));
+					}
+					else if (sdIter->second.name == "scale")
+					{
+						sivelab::Vector3D scale;
+						buf.str(sdIter->second.val);
+						buf >> scale;
+						buf.clear();
+						currentTrans.ConstructScale(scale[0], scale[1], scale[2]);
+					}
+					else
+					{
+						// This is not a transformation element.
+						continue;
+					}
+					transformation *= currentTrans;
+				}
+
+				// Read the original object name.
+				string instName;
+				ReadString(sdMap, "shape_id", instName);
+
+				// Extract object to be instanced from the map of instanceable objects.
+				IObject *original = ResolveInstanceRef(name, instName);
+
+				// Associate this instance with the correct shader.
+				string shaderName;
+				ReadString(sdMap, "shader_ref", shaderName, false);
+				// If shader name is set to NULL, set the shader to NULL, so that the base object's shader is used.
+				IShader *shaderRef;
+				if (shaderName == "null" || shaderName == "NULL")
+				{
+					shaderRef = NULL;
+				}
+				else
+				{
+					// Don't use the base object's shader.
+					shaderRef = ResolveShaderRef(name, shaderName);
+				}
+
+				toAdd = new InstanceObject(transformation, original, shaderRef);
+			}
+		}
+		else if (type == "sphere")
 		{
 			Vector3D center;
 			ReadVector(sdMap, "shape_center", center);
@@ -388,7 +524,7 @@ public:
 			IShader *shaderRef = ResolveShaderRef(name, shaderName);
 
 			// Add sphere to the list of objects.
-			m_scene->m_objects.push_back(new Sphere(center, radius, shaderRef));
+			toAdd = new Sphere(center, radius, shaderRef);
 
 			// Print details if verbose.
 			if (m_scene->VerboseOutput)
@@ -415,7 +551,7 @@ public:
 			IShader *shaderRef = ResolveShaderRef(name, shaderName);
 
 			// Add sphere to the list of objects.
-			m_scene->m_objects.push_back(new Cylinder(shaderRef, center, height, radius));
+			toAdd = new Cylinder(shaderRef, center, height, radius);
 
 			// Print details if verbose.
 			if (m_scene->VerboseOutput)
@@ -442,7 +578,7 @@ public:
 			ReadVector(sdMap, "shape_maxPt", maxPoint);
 
 			// Construct box and add it to the list of objects.
-			m_scene->m_objects.push_back(new Box(minPoint, maxPoint, shaderRef));
+			toAdd = new Box(minPoint, maxPoint, shaderRef);
 
 			// Print info if we are verbose.
 			if (m_scene->VerboseOutput)
@@ -465,11 +601,30 @@ public:
 					<< sd.val << ", " << sd.isSet << endl;
 			}
 		}
+
+		// Ensure we set the object to add.
+		if (toAdd == NULL)
+		{
+			cout << "Warning, shape: name=" << name << ", type=" << type << " not loaded!" << endl;
+		}
+		else
+		{
+			// Decide which list we should add this object to.
+			if (isInstanceable)
+			{
+				// It was an instanceable object.
+				m_scene->m_instances.insert(make_pair(name, toAdd));
+			}
+			else
+			{
+				// It was a regular object.
+				m_scene->m_objects.push_back(toAdd);
+			}
+		}
     }
 
 private:
 	Scene *m_scene;	
-	
 };
 
 
@@ -491,6 +646,7 @@ Scene::Scene(std::string filename, int raysPerPixel, bool useBvh, bool verbose)
 	xmlScene.registerCallback("light", &lightCreator);
 	xmlScene.registerCallback("shader", &shaderCreator);
 	xmlScene.registerCallback("shape", &objectCreator);
+	xmlScene.registerCallback("instance", &objectCreator);
 
 	xmlScene.parseFile(filename);
 

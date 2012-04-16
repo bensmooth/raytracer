@@ -3,6 +3,8 @@
 #include "BBox.h"
 #include "Ray.h"
 #include "Scene.h"
+#include "Vector4D.h"
+#include "Matrix.h"
 
 using namespace std;
 using namespace sivelab;
@@ -83,6 +85,37 @@ Vector3D BBox::GetCenter()
 	Vector3D result = minPt + maxPt;
 	result /= 2.0;
 	return (result);
+}
+
+
+BBox BBox::Transform(const Matrix& t) const
+{
+	// Extract the 8 points that compose the box.
+	vector<Vector3D> vertices;
+
+	// Bottom four.
+	vertices.push_back(Vector3D(minPt[0], minPt[1], minPt[2]));
+	vertices.push_back(Vector3D(minPt[0], minPt[1], maxPt[2]));
+	vertices.push_back(Vector3D(maxPt[0], minPt[1], maxPt[2]));
+	vertices.push_back(Vector3D(maxPt[0], minPt[1], minPt[2]));
+
+	// Top four.
+	vertices.push_back(Vector3D(minPt[0], maxPt[1], minPt[2]));
+	vertices.push_back(Vector3D(minPt[0], maxPt[1], maxPt[2]));
+	vertices.push_back(Vector3D(maxPt[0], maxPt[1], maxPt[2]));
+	vertices.push_back(Vector3D(maxPt[0], maxPt[1], minPt[2]));
+
+	// Apply the transformation matrix to each point.
+	for (size_t i = 0; i < vertices.size(); i++)
+	{
+		// The 4D homogenious coordinate that will be transformed as a position.
+		Vector4D transformed(vertices[i], true);
+		transformed = t * transformed;
+		vertices[i] = transformed.vector3d;
+	}
+
+	// Construct the new bbox with the transformed points.
+	return (MakeFromPoints(vertices));
 }
 
 

@@ -3,6 +3,7 @@
 #include "Vector3D.h"
 #include <vector>
 
+class Matrix;
 class Ray;
 
 /**
@@ -25,6 +26,11 @@ struct BBox
 	 * Returns true if the ray intersects the bounding box.
 	 */
 	bool Intersects(const Ray &ray) const;
+
+	/**
+	 * Transforms the bbox with the given transformation matrix.
+	 */
+	BBox Transform(const Matrix &t) const;
 
 	/**
 	 * Returns the center of the bbox.

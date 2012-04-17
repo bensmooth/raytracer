@@ -2,6 +2,7 @@
 
 #include <list>
 #include <cmath>
+#include <boost/filesystem.hpp>
 #include <png++/image.hpp>
 #include "png++/png.hpp"
 #include "Vector3D.h"
@@ -23,6 +24,7 @@
 #include "BVHNode.h"
 #include "Matrix.h"
 #include "Instance.h"
+#include "Mesh.h"
 
 /**
  * Converts degrees to radians.
@@ -428,9 +430,7 @@ public:
 				stringstream buf;
 				tname = sdIter->second.val;
 
-				// The final resultant matrix.
-				Matrix transformation;
-				transformation.ConstructIdentity();
+				stack<Matrix> transfStack;
 
 				// Build up transformation matrix.
 				for (sdIter = sdMap.begin(); sdIter != sdMap.end(); sdIter++)
@@ -451,7 +451,7 @@ public:
 						buf.str(sdIter->second.val);
 						buf >> rot;
 						buf.clear();
-						currentTrans.ConstructRotation(DEG_TO_RADS(rot), 0.0, 0.0);
+						currentTrans.ConstructRotationX(DEG_TO_RADS(rot));
 					}
 					else if (sdIter->second.name == "rotateY")
 					{
@@ -459,7 +459,7 @@ public:
 						buf.str(sdIter->second.val);
 						buf >> rot;
 						buf.clear();
-						currentTrans.ConstructRotation(0.0, DEG_TO_RADS(rot), 0.0);
+						currentTrans.ConstructRotationY(DEG_TO_RADS(rot));
 					}
 					else if (sdIter->second.name == "rotateZ")
 					{
@@ -467,7 +467,7 @@ public:
 						buf.str(sdIter->second.val);
 						buf >> rot;
 						buf.clear();
-						currentTrans.ConstructRotation(0.0, 0.0, DEG_TO_RADS(rot));
+						currentTrans.ConstructRotationZ(DEG_TO_RADS(rot));
 					}
 					else if (sdIter->second.name == "scale")
 					{
@@ -482,7 +482,16 @@ public:
 						// This is not a transformation element.
 						continue;
 					}
-					transformation *= currentTrans;
+					transfStack.push(currentTrans);
+				}
+
+				// Build the final resultant matrix.
+				Matrix transformation;
+				transformation.ConstructIdentity();
+				while (!transfStack.empty())
+				{
+					transformation = transfStack.top() * transformation;
+					transfStack.pop();
 				}
 
 				// Read the original object name.
@@ -509,6 +518,19 @@ public:
 
 				toAdd = new InstanceObject(transformation, original, shaderRef);
 			}
+		}
+		else if (type == "mesh")
+		{
+			string filename;
+			ReadString(sdMap, "shape_file", filename);
+
+			// Associate this object with the correct shader.
+			string shaderName;
+			ReadString(sdMap, "shader_ref", shaderName);
+			IShader *shaderRef = ResolveShaderRef(name, shaderName);
+
+			// Load the object file relative to the location of the scene file.
+			toAdd = new Mesh(m_scene->m_sceneFileDirectory + filename, shaderRef);
 		}
 		else if (type == "sphere")
 		{
@@ -632,16 +654,23 @@ Scene::Scene(std::string filename, int raysPerPixel, bool useBvh, bool verbose)
 {
 	VerboseOutput = verbose;
 	m_ambient = Color(0.1, 0.1, 0.1);
-    m_camera = NULL;
+	m_camera = NULL;
 
-    // Parse the XML scene file.
-    XMLSceneParser xmlScene;
+	// Extract the path to the scene file for use in loading other included files like textures or meshes.
+	boost::filesystem::path pathToSceneFile(filename.c_str());
+	m_sceneFileDirectory = pathToSceneFile.branch_path().string() + '/';
 
-    // Register object creation handlers with the scene parser.
-    CameraCreator cameraCreator(this, raysPerPixel);
+	if (verbose)
+	{
+		cout << "Scene file directory is: " << m_sceneFileDirectory << endl;
+	}
+
+	// Register object creation handlers with the scene parser.
+	CameraCreator cameraCreator(this, raysPerPixel);
 	ObjectCreator objectCreator(this);
 	LightCreator lightCreator(this);
 	ShaderCreator shaderCreator(this);
+	XMLSceneParser xmlScene;
 	xmlScene.registerCallback("camera", &cameraCreator);
 	xmlScene.registerCallback("light", &lightCreator);
 	xmlScene.registerCallback("shader", &shaderCreator);
@@ -685,6 +714,14 @@ Scene::~Scene()
 	{
 		delete m_lights[i];
 		m_lights[i] = NULL;
+	}
+
+	// Delete all instanceable objects.
+	InstanceableMap::iterator instanceIter;
+	for (instanceIter = m_instances.begin(); instanceIter != m_instances.end(); instanceIter++)
+	{
+		delete instanceIter->second;
+		instanceIter->second = NULL;
 	}
 
 	// Delete all shaders.

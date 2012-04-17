@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+
 include_directories(${CMAKE_SOURCE_DIR}/cs5721GraphicsLib/src)
 include_directories(${CMAKE_SOURCE_DIR}/threadEngine)
 
@@ -40,6 +42,7 @@ add_library(raytracerLib
 )
 target_link_libraries(raytracerLib cs5721Graphics)
 target_link_libraries(raytracerLib ThreadLib)
+target_link_libraries(raytracerLib ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 
 
 add_executable(perlinTest

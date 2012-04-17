@@ -145,6 +145,12 @@ private:
 	Color m_ambient;
 
 	/**
+	 * The path to the directory that contains the scene file.
+	 * Contains the trailing '/'
+	 */
+	std::string m_sceneFileDirectory;
+
+	/**
 	 * The default number of reflections that are allowed to happen for each ray.
 	 */
 	static const int DEFAULT_REFLECTION_DEPTH = 5;

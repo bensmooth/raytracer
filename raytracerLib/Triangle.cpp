@@ -10,15 +10,25 @@ Triangle::Triangle(const sivelab::Vector3D& v1, const sivelab::Vector3D& v2, con
 	m_vertices[2] = v3;
 
 	// Calculate the normal.  Valid for CCW vertex ordering.
-	m_normal = (v2 - v1).cross(v3 - v1);
-	m_normal.normalize();
+	sivelab::Vector3D normal = (v2 - v1).cross(v3 - v1);
+	normal.normalize();
+	m_normal[0] = normal;
+	m_normal[1] = normal;
+	m_normal[2] = normal;
 
 	m_shader = shader;
 }
 
 
-Triangle::Triangle(float verts[3], float norms[3], IShader* shader)
+Triangle::Triangle(sivelab::Vector3D vertices[3], sivelab::Vector3D normals[3], IShader* shader)
 {
+	m_shader = shader;
+
+	for (int i = 0; i < VERTEX_COUNT; i++)
+	{
+		m_vertices[i] = vertices[i];
+		m_normal[i] = normals[i];
+	}
 }
 
 
@@ -41,6 +51,20 @@ BBox Triangle::GetBoundingBox()
 
 	return (BBox::MakeFromPoints(points));
 }
+
+
+/**
+ * Calculates the distance between two points.
+ */
+double GetDist(const sivelab::Vector3D &v0, const sivelab::Vector3D &v1)
+{
+	double dx = v0[0] - v1[0];
+	double dy = v0[1] - v1[1];
+	double dz = v0[2] - v1[2];
+
+	return sqrt(dx*dx + dy*dy + dz*dz);
+}
+
 
 
 bool Triangle::Intersect(const Ray& ray, Intersection& result)
@@ -100,7 +124,17 @@ bool Triangle::Intersect(const Ray& ray, Intersection& result)
 	result.collidedRay = ray;
 	result.t = t;
 	result.object = this;
-	result.surfaceNormal = m_normal;
+
+	// Interpolate between all three normals.
+	sivelab::Vector3D intersectPoint = ray.GetPositionAtTime(t);
+	result.surfaceNormal.set(0.0, 0.0, 0.0);
+	for (int i = 0; i < VERTEX_COUNT; i++)
+	{
+		// Calculate distance between this vertex and the intersection point.
+		double dist = GetDist(intersectPoint, m_vertices[i]);
+		result.surfaceNormal += m_normal[i] * (1.0/dist);
+	}
+	result.surfaceNormal.normalize();
 
 	return (true);
 }

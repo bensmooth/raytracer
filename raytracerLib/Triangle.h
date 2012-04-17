@@ -11,7 +11,7 @@ public:
 	 * Constructs a triangle from the given points.
 	 */
 	Triangle(const sivelab::Vector3D &v1, const sivelab::Vector3D &v2, const sivelab::Vector3D &v3, IShader *shader);
-	Triangle(float verts[3], float norms[3], IShader *shader);
+	Triangle(sivelab::Vector3D vertices[3], sivelab::Vector3D normals[3], IShader *shader);
 
 	virtual IShader* GetShader();
 

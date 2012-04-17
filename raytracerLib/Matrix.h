@@ -221,6 +221,9 @@ public:
 	 * Fills the matrix with a rotation transformation with the given angles for each axis.
 	 */
 	void ConstructRotation(double x, double y, double z);
+	void ConstructRotationX(double x);
+	void ConstructRotationY(double y);
+	void ConstructRotationZ(double z);
 
 	/**
 	 * Constructs a scale transformation matrix with the given scaling factors for each coordinate.
@@ -257,7 +260,7 @@ public:
 	void ApplyOperation(RowOperation &op);
 
 	/**
-	 * Trys to find the add operation needed to reduce the given column in the given row to zero with the given pivot row.
+	 * Tries to find the add operation needed to reduce the given column in the given row to zero with the given pivot row.
 	 * @param opNeeded If true is returned, this will contain the operation needed to zero out the given row and column with the pivot.
 	 * @param pivotRow The row the pivot is in.
 	 * @param pivotCol The column the pivot is in.

@@ -385,6 +385,39 @@ void Matrix::ConstructRotation(double x, double y, double z)
 }
 
 
+void Matrix::ConstructRotationX(double x)
+{
+	ConstructIdentity();
+
+	m_rows[1][1] = cos(x);
+	m_rows[1][2] = -sin(x);
+	m_rows[2][1] = sin(x);
+	m_rows[2][2] = cos(x);
+}
+
+
+void Matrix::ConstructRotationY(double y)
+{
+	ConstructIdentity();
+
+	m_rows[0][0] = cos(y);
+	m_rows[0][2] = sin(y);
+	m_rows[2][0] = -sin(y);
+	m_rows[2][2] = cos(y);
+}
+
+
+void Matrix::ConstructRotationZ(double z)
+{
+	ConstructIdentity();
+
+	m_rows[0][0] = cos(z);
+	m_rows[0][1] = -sin(z);
+	m_rows[0][1] = sin(z);
+	m_rows[1][1] = cos(z);
+}
+
+
 void Matrix::ConstructScale(double x, double y, double z)
 {
 	ConstructIdentity();

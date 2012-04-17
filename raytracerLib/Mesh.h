@@ -19,7 +19,7 @@ public:
 	virtual bool Intersect(const Ray& ray, Intersection& result);
 
 private:
-	std::vector<Triangle> m_trilist;
+	IObject *m_bvh;
 
 	IShader *m_shader;
 };

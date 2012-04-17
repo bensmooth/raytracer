@@ -413,7 +413,7 @@ void Matrix::ConstructRotationZ(double z)
 
 	m_rows[0][0] = cos(z);
 	m_rows[0][1] = -sin(z);
-	m_rows[0][1] = sin(z);
+	m_rows[1][0] = sin(z);
 	m_rows[1][1] = cos(z);
 }
 

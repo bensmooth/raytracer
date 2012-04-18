@@ -39,6 +39,7 @@ add_library(raytracerLib
   BVHNode.cpp BVHNode.h
   Instance.cpp Instance.h
   Mesh.cpp Mesh.h
+  JitteredSampler.cpp JitteredSampler.h
 )
 target_link_libraries(raytracerLib cs5721Graphics)
 target_link_libraries(raytracerLib ThreadLib)

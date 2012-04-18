@@ -3,6 +3,7 @@
 #include "PerspectiveCamera.h"
 #include "Vector3D.h"
 #include "RaytraceException.h"
+#include "JitteredSampler.h"
 
 using namespace sivelab;
 
@@ -20,7 +21,7 @@ PerspectiveCamera::PerspectiveCamera(const Ray& positionAndDirection, double vie
 	if ((sqrtSamplesPerPixel * sqrtSamplesPerPixel) != m_samplesPerPixel)
 	{
 		char buffer[128];
-		sprintf(buffer, "Unable to construct jittered sampling: %i is not a perfect square!", m_samplesPerPixel);
+		sprintf(buffer, "Unable to construct jittered samples: %i is not a perfect square!", m_samplesPerPixel);
 		throw RaytraceException(buffer);
 	}
 }
@@ -36,12 +37,6 @@ void PerspectiveCamera::SetImageDimensions(double width, double height)
 Ray PerspectiveCamera::GetPositionAndDirection()
 {
 	return (m_positionAndDirection);
-}
-
-
-double PerspectiveCamera::GetRandomOnUnitLine()
-{
-	return ((double)rand()/(double)RAND_MAX);
 }
 
 
@@ -78,24 +73,15 @@ RayList PerspectiveCamera::CalculateViewingRays(double imageX, double imageY)
 		return (rayList);
 	}
 
-	// Generate some jittered rays.
-	// Divide the pixel up into a grid of equally-sized squares.
-	// Calculate the number of grid squares for both the width and the height of the pixel.
-	int gridUnitsPerSide = (int)sqrt(m_samplesPerPixel);
+	// Generate some jittered rays to shoot through the pixel.
+	JitteredSampler sampleGenerator;
+	sampleGenerator.Generate(m_samplesPerPixel);
+	const SampleList &samples = sampleGenerator.GetSampleList();
 
-	// Calculate the side length of a single grid square in pixels.
-	double sideLengthOfUnit = 1.0 / gridUnitsPerSide;
-
-	// Generate a ray for each grid unit.
-	for (int gridY = 0; gridY < gridUnitsPerSide; gridY++)
+	rayList.resize(samples.size());
+	for (size_t i = 0; i < samples.size(); i++)
 	{
-		for (int gridX = 0; gridX < gridUnitsPerSide; gridX++)
-		{
-			// Generate the random position of the ray inside the current square, and map it into pixel space.
-			double pixelX = (GetRandomOnUnitLine() + gridX) * sideLengthOfUnit;
-			double pixelY = (GetRandomOnUnitLine() + gridY) * sideLengthOfUnit;
-			rayList.push_back(GetRayThroughPoint(imageX + pixelX, imageY + pixelY));
-		}
+		rayList[i] = GetRayThroughPoint(imageX + samples[i].first, imageY + samples[i].second);
 	}
 
 	// Return the list of rays.

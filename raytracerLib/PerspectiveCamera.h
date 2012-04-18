@@ -33,11 +33,6 @@ private:
 	Ray GetRayThroughPoint(double imageX, double imageY);
 
 	/**
-	 * Gets a random number in the interval [0.0, 1.0].
-	 */
-	double GetRandomOnUnitLine();
-
-	/**
 	 * The camera's location and facing direction.
 	 */
 	Ray m_positionAndDirection;

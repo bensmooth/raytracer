@@ -87,7 +87,7 @@ Color PerlinShader::Marble(Intersection& intersection)
 Color PerlinShader::Shade(Intersection& intersection)
 {
 //	return (BrushedMetal(intersection));
-//	return (DirtyMirror(intersection));
-	return (Marble(intersection));
+	return (DirtyMirror(intersection));
+//	return (Marble(intersection));
 }
 

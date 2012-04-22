@@ -19,7 +19,7 @@ Color GlazeShader::Shade(Intersection& intersection)
 	Color diffuseColor = CosineShader::Shade(intersection);
 
 	// Shoot off a ray to get the reflection.
-	Color reflectedColor = m_scene->CastReflectionRay(intersection);
+	Color reflectedColor = m_scene->CastReflectionRay(intersection, 0.0);
 
 	// Combine the reflected color and the diffuse color.
 	diffuseColor.LinearMult(1.0 - m_mirrorCoef);

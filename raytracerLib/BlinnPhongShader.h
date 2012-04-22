@@ -14,8 +14,9 @@ public:
 	 * @param specular The specular color.
 	 * @param phongExp The glossiness of the surface.
 	 * @param mirrorCoef The mirrorness of the surface.
+	 * @param roughness The roughness of the surface.
 	 */
-	BlinnPhongShader(Scene *scene, const Color &diffuse, const Color &specular, double phongExp, double mirrorCoef);
+	BlinnPhongShader(Scene *scene, const Color &diffuse, const Color &specular, double phongExp, double mirrorCoef, double roughness);
 
 	/**
 	 * Sets the value of the mirror coeficient.
@@ -36,4 +37,6 @@ private:
 	double m_phongExp;
 
 	double m_mirrorCoef;
+
+	double m_roughness;
 };

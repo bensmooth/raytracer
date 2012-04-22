@@ -22,6 +22,11 @@ typedef std::vector<ILight*> LightList;
  */
 const double EPSILON = 0.00005;
 
+/**
+ * Returns true if the two numbers are equal.
+ */
+#define EQUAL(a, b) (fabs((a) - (b)) < EPSILON)
+
 
 /**
  * Represents the entirety of a scene.
@@ -93,8 +98,9 @@ public:
 	 * Casts an intersection ray.
 	 * Decrements the number of allowed reflections.
 	 * @param intersection The intersection that this ray will be bouncing from.
+	 * @param roughness The roughness of the reflection.  0.0 is perfectly reflective.
 	 */
-	Color CastReflectionRay(Intersection &intersection);
+	Color CastReflectionRay(Intersection &intersection, double roughness);
 
 	/**
 	 * Get a constant iterator to the beginning of the list of lights.

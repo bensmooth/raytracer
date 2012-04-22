@@ -331,8 +331,11 @@ public:
 			double mirrorCoef = 0;
 			ReadDouble(sdMap, "shader_mirrorCoef", mirrorCoef);
 
+			double roughness = 0;
+			ReadDouble(sdMap, "shader_roughness", roughness);
+
 			// Add shader to list.
-			m_scene->m_shaders.insert(make_pair(name, new BlinnPhongShader(m_scene, diffuse, specular, phongExp, mirrorCoef)));
+			m_scene->m_shaders.insert(make_pair(name, new BlinnPhongShader(m_scene, diffuse, specular, phongExp, mirrorCoef, roughness)));
 
 			// Print parameters out if verbose.
 			if (m_scene->VerboseOutput)
@@ -341,6 +344,7 @@ public:
 				cout << "\tSpecular=" << specular << endl;
 				cout << "\tPhong Exp=" << phongExp << endl;
 				cout << "\tMirror Coef=" << mirrorCoef << endl;
+				cout << "\t" << endl;
 			}
 		}
 		else if (type == "Glaze")
@@ -993,7 +997,7 @@ bool Scene::CastShadowRay(ILight* light, Intersection &intersection)
 }
 
 
-Color Scene::CastReflectionRay(Intersection& intersection)
+Color Scene::CastReflectionRay(Intersection& intersection, double roughness)
 {
 	// Terminate if we have bounced around too much.
 	if (intersection.allowedReflectionCount <= 0)
@@ -1008,6 +1012,21 @@ Color Scene::CastReflectionRay(Intersection& intersection)
 	const Vector3D &normal = intersection.surfaceNormal;
 	Vector3D viewRay = intersection.collidedRay.GetDirection();
 	Vector3D rayDirection = viewRay - 2 * (viewRay.dot(normal)) * normal;
+
+	// If roughness is not equal to 0, we need to perturb the reflected ray.
+	if (!EQUAL(roughness, 0.0))
+	{
+		// Calculate a basis around the reflected ray.
+		Basis reflectedBasis;
+		reflectedBasis.Calculate(rayDirection);
+
+		// Compute perturbed direction.
+		Sample sample = intersection.areaLightSamples.GetCurrentSample();
+		double u = -roughness/2.0 + sample.second*roughness;
+		double v = -roughness/2.0 + sample.first*roughness;
+		rayDirection = rayDirection + u*reflectedBasis.GetU() + v*reflectedBasis.GetV();
+	}
+
 	Ray reflectedRay(intersectPoint, rayDirection);
 
 	// Step reflectedRay out of any object it may be inside of.

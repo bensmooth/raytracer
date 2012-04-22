@@ -5,13 +5,14 @@ using namespace std;
 using namespace sivelab;
 
 
-BlinnPhongShader::BlinnPhongShader(Scene* scene, const Color& diffuse, const Color& specular, double phongExp, double mirrorCoef)
+BlinnPhongShader::BlinnPhongShader(Scene* scene, const Color& diffuse, const Color& specular, double phongExp, double mirrorCoef, double roughness)
 {
 	m_scene = scene;
 	m_diffuse = diffuse;
 	m_specular = specular;
 	m_phongExp = phongExp;
 	m_mirrorCoef = mirrorCoef;
+	m_roughness = roughness;
 }
 
 
@@ -36,7 +37,7 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 		// The direction halfway between the light direction and the view direction.
 		Vector3D halfDir = lightDir + viewDir;
 		halfDir.normalize();
-		
+
 		// Always add the ambient amount of light.
 		Color ambient = m_scene->GetAmbient();
 		ambient.MultiplyColors(m_diffuse);
@@ -75,7 +76,7 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 	if (m_mirrorCoef > EPSILON)
 	{
 		// The surface acts as a mirror.
-		Color reflectedColor = m_scene->CastReflectionRay(intersection);
+		Color reflectedColor = m_scene->CastReflectionRay(intersection, m_roughness);
 		// Combine the reflected color with the diffuse color.
 		finalDiffuseColor.LinearMult(1.0 - m_mirrorCoef);
 		reflectedColor.LinearMult(m_mirrorCoef);

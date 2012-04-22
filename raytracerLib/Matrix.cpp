@@ -4,14 +4,9 @@
 
 #include "Matrix.h"
 #include "RaytraceException.h"
+#include "Scene.h"
 
 using namespace std;
-
-
-/**
- * Returns true if the two numbers are equal.
- */
-#define EQUAL(a, b) (fabs((a) - (b)) < 0.0005)
 
 
 void MatrixRow::Swap(MatrixRow& row1, MatrixRow& row2)

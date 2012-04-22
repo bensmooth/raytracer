@@ -31,7 +31,7 @@ Color PerlinShader::DirtyMirror(Intersection& intersection)
 	noise = (noise + 1.0) / 2.0;
 
 	// Calculate the reflective part of the scene.
-	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, noise);
+	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, noise, 0.0);
 	Color diffuse = blinnPhong.Shade(intersection);
 
 	return (diffuse);
@@ -49,7 +49,7 @@ Color PerlinShader::BrushedMetal(Intersection& intersection)
 	noise = (noise + 1.0) / 2.0;
 
 	// Calculate the reflective part of the scene.
-	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, 0.0);
+	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, 0.0, 0.0);
 	Color diffuse = blinnPhong.Shade(intersection);
 
 	// Combine the blinnPhong color and the noise color.
@@ -75,7 +75,7 @@ Color PerlinShader::Marble(Intersection& intersection)
 	noise = (noise + 1.0) / 2.0;
 
 	// Calculate the reflective part of the scene.
-	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, 0.05);
+	BlinnPhongShader blinnPhong(m_scene, gradient.GetStart(), Color(1.0, 1.0, 1.0), 320.0, 0.05, 0.0);
 	Color diffuse = blinnPhong.Shade(intersection);
 
 	// Combine the blinnPhong color and the noise color.

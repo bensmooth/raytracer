@@ -4,6 +4,7 @@
 
 #include "Vector3D.h"
 #include "Ray.h"
+#include "JitteredSampler.h"
 
 class IObject;
 
@@ -19,6 +20,7 @@ struct Intersection
 		allowedReflectionCount = 7;
 		t = 0.0;
 		object = NULL;
+		
 	}
 
 	/**
@@ -32,6 +34,12 @@ struct Intersection
 	 * the t value should correspond to the intersection with the smallest t value.
 	 */
 	double t;
+
+	/**
+	 * The list of area light samples.
+	 * Generate must be called if area lights are present in the scene.
+	 */
+	JitteredSampler areaLightSamples;
 
 	/**
 	 * The normal of the surface where the ray hit.

@@ -35,7 +35,7 @@ Color CosineShader::Shade(Intersection& intersection)
 		finalColor.AddColors(ambient);
 
 		// See if we are in shadow.
-		if (m_scene->CastShadowRay(*iter, intersectPoint) == false)
+		if (m_scene->CastShadowRay(*iter, intersection) == false)
 		{
 			// We are not in shadow.
 			// color = diffuse * lightRadiance * max(0, n dot l)

@@ -74,19 +74,20 @@ public:
 	 * Casts the given ray into the scene and returns the color it hit.
 	 * @param ray The ray to cast.
 	 * @param result If this returns true, the color the ray ran into.
+	 * @param intersect The intersection structure to use.
 	 * @param maxT The maximum t value that should be considered.
 	 * @param allowedReflectionCount Used to prevent recursive calls from going on forever.  When >0, does not call shader, and returns the background color.
 	 * @return If true there was an intersection, or false otherwise.
 	 */
-	bool CastRayAndShade(const Ray &ray, Color &result, double maxT = DBL_MAX, int allowedReflectionCount = DEFAULT_REFLECTION_DEPTH);
+	bool CastRayAndShade(const Ray &ray, Color &result, Intersection &intersect, double maxT = DBL_MAX, int allowedReflectionCount = DEFAULT_REFLECTION_DEPTH);
 
 	/**
 	 * Casts a shadow ray.
 	 * @param light The light that will be testing for casting a shadow.
-	 * @param intersectPoint The position that we want to know if there is a shadow at.
+	 * @param intersection The position that we want to know if there is a shadow at.
 	 * @return True if we are in shadow, false otherwise.
 	 */
-	bool CastShadowRay(ILight *light, sivelab::Vector3D intersectPoint);
+	bool CastShadowRay(ILight *light, Intersection &intersection);
 
 	/**
 	 * Casts an intersection ray.

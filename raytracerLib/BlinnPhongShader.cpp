@@ -43,7 +43,7 @@ Color BlinnPhongShader::Shade(Intersection& intersection)
 		finalDiffuseColor.AddColors(ambient);
 
 		// See if we are in shadow.
-		bool inShadow = m_scene->CastShadowRay(*currentLight, intersectPoint);
+		bool inShadow = m_scene->CastShadowRay(*currentLight, intersection);
 		if (inShadow == false)
 		{
 			// The radiance at the point of intersection.

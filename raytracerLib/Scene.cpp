@@ -25,6 +25,7 @@
 #include "Matrix.h"
 #include "Instance.h"
 #include "Mesh.h"
+#include "AreaLight.h"
 
 /**
  * Converts degrees to radians.
@@ -227,6 +228,35 @@ public:
 			{
 				cout << "\tPosition=" << position << endl;
 				cout << "\tIntensity=" << intensity << endl;
+			}
+		}
+		else if (type == "area")
+		{
+			Vector3D position;
+			ReadVector(sdMap, "light_position", position);
+
+			Vector3D intensity;
+			ReadVector(sdMap, "light_intensity", intensity);
+
+			Vector3D normal;
+			ReadVector(sdMap, "light_normal", normal);
+
+			double width;
+			ReadDouble(sdMap, "light_width", width);
+
+			double height;
+			ReadDouble(sdMap, "light_length", height);
+
+			m_scene->m_lights.push_back(new AreaLight(position, normal, intensity, width, height));
+
+			// Print info if verbose.
+			if (m_scene->VerboseOutput)
+			{
+				cout << "\tPosition=" << position << endl;
+				cout << "\tIntensity=" << intensity << endl;
+				cout << "\tNormal=" << normal << endl;
+				cout << "\tWidth=" << width << endl;
+				cout << "\tLength=" << height << endl;
 			}
 		}
 		else
@@ -741,13 +771,17 @@ Color Scene::RaytracePixel(int x, int y)
 
 	int raysPerPixel = rayList.size();
 
+	// Fill our intersection structure with samples.
+	Intersection intersect;
+	intersect.areaLightSamples.Generate(raysPerPixel);
+
 	Color finalColor;
 	for (int i = 0; i < raysPerPixel; i++)
 	{
 		const Ray &ray = rayList[i];
 		// See if ray intersects any objects.
 		Color rayColor;
-		if (CastRayAndShade(ray, rayColor) == false)
+		if (CastRayAndShade(ray, rayColor, intersect) == false)
 		{
 			// We hit nothing, add in the background color.
 			finalColor.AddColors(Color(0.0, 0.0, 0.0));
@@ -757,6 +791,9 @@ Color Scene::RaytracePixel(int x, int y)
 			// We hit something.
 			finalColor.AddColors(rayColor);
 		}
+
+		// Advance to the next sample.
+		intersect.areaLightSamples.Next();
 	}
 
 	// Take average of each ray's color.
@@ -912,12 +949,11 @@ void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight,
 }
 
 
-inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT, int allowedReflectionCount)
+inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, Intersection &intersect, double maxT, int allowedReflectionCount)
 {
-	Intersection intersect;
 	if (CastRay(ray, intersect, maxT) == true)
 	{
-		result = ShadeIntersection(intersect, allowedReflectionCount);
+ 		result = ShadeIntersection(intersect, allowedReflectionCount);
 		return (true);
 	}
 	else
@@ -927,17 +963,33 @@ inline bool Scene::CastRayAndShade(const Ray& ray, Color& result, double maxT, i
 }
 
 
-bool Scene::CastShadowRay(ILight* light, Vector3D intersectPoint)
+bool Scene::CastShadowRay(ILight* light, Intersection &intersection)
 {
-	// Construct ray from the intersection point to the light.
-	Ray shadowRay(intersectPoint, light->GetPosition() - intersectPoint);
+	Vector3D intersectPoint = intersection.collidedRay.GetPositionAtTime(intersection.t);
 
-	// Step ray forward by a small amount to overcome numerical inaccuracy.
+	// If this is an area light, we need to sample it at the right spot.
+	Vector3D lightPos;
+	AreaLight *areaLight = dynamic_cast<AreaLight*>(light);
+	if (areaLight != NULL)
+	{
+		// Grab the sample of the light that we want.
+		lightPos = areaLight->GetPosition(intersection.areaLightSamples.GetCurrentSample());
+	}
+	else
+	{
+		// This is a regular light.
+		lightPos = light->GetPosition();
+	}
+
+	// Construct ray from the intersection point to the light.
+	Ray shadowRay(intersectPoint, lightPos - intersectPoint);
+
+	// Step ray towards light by a small amount to overcome numerical inaccuracy.
 	shadowRay.SetPosition(shadowRay.GetPositionAtTime(EPSILON));
 
 	// Cast ray into scene with max t of 1.0, so that objects beyond the light are not taken into account.
-	Intersection intersection;
-	return (CastRay(shadowRay, intersection, 1.0));
+	Intersection unused;
+	return (CastRay(shadowRay, unused, 1.0));
 }
 
 
@@ -962,13 +1014,16 @@ Color Scene::CastReflectionRay(Intersection& intersection)
 	reflectedRay.SetPosition(reflectedRay.GetPositionAtTime(EPSILON));
 
 	Color rayColor;
-	CastRayAndShade(reflectedRay, rayColor, numeric_limits<double>::max(), intersection.allowedReflectionCount);
+	CastRayAndShade(reflectedRay, rayColor, intersection, numeric_limits<double>::max(), intersection.allowedReflectionCount);
 	return (rayColor);
 }
 
 
 bool Scene::CastRay(const Ray& ray, Intersection &result, double maxT)
 {
+	// Ensure that any in-data (like area light samples) doesn't get wiped.
+	JitteredSampler areaLightSamples = result.areaLightSamples;
+
 	Intersection closestIntersect;
 	closestIntersect.t = maxT;
 	for (size_t i = 0; i < m_objects.size(); i++)
@@ -988,6 +1043,10 @@ bool Scene::CastRay(const Ray& ray, Intersection &result, double maxT)
 	{
 		// We had an intersection.
 		result = closestIntersect;
+
+		// Copy in-data back into result.
+		result.areaLightSamples = areaLightSamples;
+
 		return (true);
 	}
 	else

@@ -16,7 +16,9 @@ do
     if test -f "$i"
     then
        echo "Rendering $i.."
-       ../build/raytracer/raytracer -i $i -o ../renders/$i.png -w 1280 -h 800 -r 9
+       cd ../build/raytracer/
+       ./raytracer -i ../../SceneFiles/$i -o ../../renders/$i.png -w 1280 -h 800 -r 9
+       cd ../../SceneFiles/
     fi
 done
 

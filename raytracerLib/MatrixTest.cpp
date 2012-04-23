@@ -7,10 +7,10 @@ using namespace std;
 int main()
 {
 	Matrix a;
-	a[0] = MatrixRow(6, 2, 3, 9);
-	a[1] = MatrixRow(3, -7, 5, 1);
-	a[2] = MatrixRow(3, -7, 5, -2);
-	a[3] = MatrixRow(5, 4, 1, 7);
+	a[0] = MatrixRow(0, 1, 1.732, 0);
+	a[1] = MatrixRow(2, 0, 0, 2);
+	a[2] = MatrixRow(0, 1.732, -1, 1);
+	a[3] = MatrixRow(0, 0, 0, 1);
 
 	Matrix b;
 	b[0] = MatrixRow(-2, 1, 7, 1);

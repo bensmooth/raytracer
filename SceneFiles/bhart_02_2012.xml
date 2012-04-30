@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scene>
+	<camera name="main" type="perspective">
+		<position>6.0 3.0 12</position>
+		<lookatPoint>-1.0 2.0 0.0</lookatPoint>
+		<focalLength>1.25</focalLength>
+		<imagePlaneWidth>1.0</imagePlaneWidth>
+	</camera>
+
+	<light type="area">
+		<position>0 5.0 -9</position>
+		<intensity>1.75 1.75 1.75</intensity>
+		<normal>0 -0.1 1</normal>
+		<width>20</width>
+		<length>20</length>
+	</light>
+
+	<shader name="chrome" type="BlinnPhong">
+		<diffuse>.8 .8 .8</diffuse>
+		<specular>1 1 1</specular>
+		<phongExp>32.0</phongExp>
+		<mirrorCoef>1</mirrorCoef>
+		<roughness>1</roughness>
+	</shader>
+
+	<shader name="Red" type="Lambertian">
+		<diffuse>.5 0.1 0.1</diffuse>
+	</shader>
+
+	<shader name="Cream" type="Lambertian">
+		<diffuse>.9 .9 .9</diffuse>
+	</shader>
+
+	<shader name="White" type="Lambertian">
+		<diffuse>1.1 1.1 1.1</diffuse>
+	</shader>
+
+	<shader name="Blue" type="BlinnPhong">
+		<diffuse>0 0 1</diffuse>
+		<specular>1 1 1</specular>
+		<phongExp>32.0</phongExp>
+		<mirrorCoef>0</mirrorCoef>
+	</shader>
+
+	<shader name="Green" type="BlinnPhong">
+		<diffuse>0 .8 0</diffuse>
+		<specular> 1 1 1</specular>
+		<phongExp>32.0</phongExp>
+		<mirrorCoef>0</mirrorCoef>
+	</shader>
+
+	<!-- Some objects -->
+	<shape name="outside" type="box">
+		<shader ref="White" />
+		<minPt>-15.0 -15.0 -100</minPt>
+		<maxPt>15.0 15.0 -15</maxPt>
+	</shape>
+
+	<shape name="bottomLip" type="box">
+		<shader ref="Cream" />
+		<minPt>-5 0 -2.0</minPt>
+		<maxPt>5 1 -1.75</maxPt>
+	</shape>
+
+	<shape name="topLip" type="box">
+		<shader ref="Cream" />
+		<minPt>-5 4 -2.0</minPt>
+		<maxPt>5 5 -1.75</maxPt>
+	</shape>
+
+	<shape name="leftWall" type="box">
+	   <shader ref="Cream" />
+	   <minPt>-5 0 -1.9</minPt>
+	   <maxPt>-4.9 5 5</maxPt>
+	</shape>
+
+	<shape name="rightWall" type="box">
+	   <shader ref="Cream" />
+	   <minPt>4.9 0 -1.9</minPt>
+	   <maxPt>5.75 5 6.5</maxPt>
+	</shape>
+
+	<shape name="floor" type="box">
+	   <shader ref="Red" />
+	   <minPt>-10 -0.5 -5.25</minPt>
+	   <maxPt>10 0 10</maxPt>
+	</shape>
+
+	<shape name="ceiling" type="box">
+	   <shader ref="Cream" />
+	   <minPt>-10 5 -10</minPt>
+	   <maxPt>10 5.5 10</maxPt>
+	</shape>
+
+	<shape name="backLeftPillar" type="box">
+		<shader ref="Cream" />
+		<minPt>-5.0 0.0 -2.0</minPt>
+		<maxPt>-4.0 5.0 -1.25</maxPt>
+	</shape>
+
+	<shape name="backCenterPillar" type="box">
+	   <shader ref="Cream" />
+	   <minPt>-1.5 0.0 -2.0</minPt>
+	   <maxPt>-0.5 5.0 -1.25</maxPt>
+	</shape>
+
+	<shape name="backRightPillar" type="box">
+		<shader ref="Cream" />
+		<minPt>2.0 0.0 -2.0</minPt>
+		<maxPt>5.0 5.0 -1.25</maxPt>
+	</shape>
+
+	<shape name="centerPillar" type="box">
+		<shader ref="Cream" />
+		<minPt>-1.5 0.0 4.0</minPt>
+		<maxPt>-0.5 5.0 4.75</maxPt>
+	</shape>
+</scene>

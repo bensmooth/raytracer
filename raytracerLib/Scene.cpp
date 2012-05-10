@@ -26,6 +26,7 @@
 #include "Instance.h"
 #include "Mesh.h"
 #include "AreaLight.h"
+#include "Image.h"
 
 /**
  * Converts degrees to radians.
@@ -827,8 +828,8 @@ void Scene::Render(string outfile, int imageWidth, int imageHeight, int threadCo
 
 void Scene::RenderSingleThreaded(std::string outfile, int imageWidth, int imageHeight)
 {
-    // This is the image we will be writing to.
-    png::image<png::rgb_pixel> outputImage(imageWidth, imageHeight);
+	// This is the image we will be writing to.
+	Image outputImage(imageWidth, imageHeight);
 
 	m_camera->SetImageDimensions(imageWidth, imageHeight);
 
@@ -839,13 +840,13 @@ void Scene::RenderSingleThreaded(std::string outfile, int imageWidth, int imageH
 		{
 			Color color = RaytracePixel(imageX, imageY);
 
-			// Save color to PNG structure.  Flip Y,  because we are rendering upside down.
-			outputImage.set_pixel(imageX, imageHeight -1 - imageY, color.GetImageColor());
+			// Save color to image structure.  Flip Y,  because we are rendering upside down.
+			outputImage(imageX, imageHeight -1 - imageY) = color;
 		}
 	}
 
-	// Write out PNG.
-	outputImage.write(outfile);
+	// Write out to disk.
+	outputImage.WriteToDisk(outfile);
 }
 
 
@@ -862,8 +863,7 @@ struct RenderingThreadInfo
 	/**
 	 * The image that will be written to.
 	 */
-	png::image<png::rgb_pixel> *outputImage;
-	ThreadEngine::Mutex *imageLock;
+	Image *outputImage;
 
 	/**
 	 * The dimensions of the rectangle required to be rendered by the thread.
@@ -896,9 +896,7 @@ void *RenderThread(void *info)
 			Color color = threadInfo->scene->RaytracePixel(imageX, imageY);
 
 			// Save color to PNG structure.  Flip Y,  because we are rendering upside down.
-			//threadInfo->imageLock->Lock();
-			threadInfo->outputImage->set_pixel(imageX, threadInfo->finalImageHeight -1 - imageY, color.GetImageColor());
-			//threadInfo->imageLock->Unlock();
+			threadInfo->outputImage->operator()(imageX, threadInfo->finalImageHeight -1 - imageY) = color;
 		}
 	}
 
@@ -909,9 +907,7 @@ void *RenderThread(void *info)
 void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight, int threadCount)
 {
 	// The image we will be rendering to.
-	png::image<png::rgb_pixel> outputImage(imageWidth, imageHeight);
-	// The mutex associated with the image.
-	ThreadEngine::Mutex imageMutex;
+	Image outputImage(imageWidth, imageHeight);
 
 	// Tell the camera how big the image is.
 	m_camera->SetImageDimensions(imageWidth, imageHeight);
@@ -936,7 +932,6 @@ void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight,
 		renderInfo.finalImageHeight = imageHeight;
 		renderInfo.scene = this;
 		renderInfo.outputImage = &outputImage;
-		renderInfo.imageLock = &imageMutex;
 
 		// Add a job to the pool for each chunk.
 		renderPool.AddJob(RenderThread, &threadInfoList[y]);
@@ -949,7 +944,7 @@ void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight,
 	delete[] threadInfoList;
 
 	// Write out PNG.
-	outputImage.write(outfile);
+	outputImage.WriteToDisk(outfile);
 }
 
 

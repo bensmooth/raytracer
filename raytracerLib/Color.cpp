@@ -99,10 +99,17 @@ png::rgb_pixel Color::GetImageColor() const
 {
 	png::rgb_pixel rgb;
 
+/*
 	// For now, simply clip the values over 1.0.
 	double red = min(m_red, 1.0);
 	double green = min(m_green, 1.0);
 	double blue = min(m_blue, 1.0);
+*/
+
+	// Do some global HDR.  Maps [0, inf) to [0, 1]
+	double red = m_red / (m_red + 1.0);
+	double green = m_green / (m_green + 1.0);
+	double blue = m_blue / (m_blue + 1.0);
 
 	// Map [0.0, 1.0] to [0, 255].
 	double maxValue = (double)numeric_limits<uint8_t>::max();

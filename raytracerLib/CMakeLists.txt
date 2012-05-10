@@ -41,6 +41,7 @@ add_library(raytracerLib
   Mesh.cpp Mesh.h
   JitteredSampler.cpp JitteredSampler.h
   AreaLight.cpp AreaLight.h
+  Image.cpp Image.h
 )
 target_link_libraries(raytracerLib cs5721Graphics)
 target_link_libraries(raytracerLib ThreadLib)

@@ -54,7 +54,6 @@ int main()
 		rowOps.pop();
 	}
 
-
 	cout << "Vector4 x:" << endl;
 	Vector4D x(-2.0, 6.0, 11.0, 17.0);
 	cout << x.ToString() << endl;

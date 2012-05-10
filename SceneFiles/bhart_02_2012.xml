@@ -9,7 +9,7 @@
 
 	<light type="area">
 		<position>0 5.0 -9</position>
-		<intensity>1.75 1.75 1.75</intensity>
+		<intensity>5.75 5.75 5.75</intensity>
 		<normal>0 -0.1 1</normal>
 		<width>20</width>
 		<length>20</length>

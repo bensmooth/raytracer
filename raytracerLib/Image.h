@@ -20,6 +20,11 @@ public:
 	const Color &operator()(int x, int y) const;
 
 	/**
+	 * Applies a global tone mapping technique that guarantees that none of the colors will be above 1.0.
+	 */
+	void DoGlobalHDR();
+
+	/**
 	 * Writes the image to disk as a png.
 	 */
 	void WriteToDisk(std::string filename);

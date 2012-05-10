@@ -43,8 +43,31 @@ const Color& Image::operator()(int x, int y) const
 }
 
 
+void Image::DoGlobalHDR()
+{
+	Image &self = *this;
+
+	for (int imageY = 0; imageY < m_height; imageY++)
+	{
+		for (int imageX = 0; imageX < m_width; imageX++)
+		{
+			Color &current = self(imageX, imageY);
+			double red = current.GetRed();
+			double green = current.GetGreen();
+			double blue = current.GetBlue();
+
+			// Do some global HDR.  Maps [0, inf) to [0, 1].
+			current.SetRed(red / (red + 1.0));
+			current.SetGreen(green / (green + 1.0));
+			current.SetBlue(blue / (blue + 1.0));
+		}
+	}
+}
+
 void Image::WriteToDisk(std::string filename)
 {
+	DoGlobalHDR();
+
 	// Copy entire image into a png image.
 	png::image<png::rgb_pixel> outputImage(m_width, m_height);
 	for (int imageY = 0; imageY < m_height; imageY++)

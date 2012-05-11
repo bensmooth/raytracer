@@ -122,9 +122,9 @@ Color CombineAdjacentColors(stack<Color> &adjacentColors, stack<int> &offsets, d
 void Image::GaussianBlur(double stdDev, int radius)
 {
 	// Make a copy of the original image to read from while blurring.
-	Image original(*this);
+	Image &original = *this;
 
-	// Start blurring with the horizontal lines.
+	// Blur horizontally.
 	for (int y = 0; y < m_height; y++)
 	{
 		for (int x = 0; x < m_width; x++)
@@ -133,20 +133,52 @@ void Image::GaussianBlur(double stdDev, int radius)
 			// These are the colors and corresponding local offsets around the current pixel.
 			stack<Color> adjacentColors;
 			stack<int> offsets;
+
 			for (int localX = -radius; localX < radius; localX++)
 			{
 				int absoluteX = x + localX;
-
+				
 				// Clamp absoluteX into the image dimensions [0, width-1].
 				absoluteX = max(absoluteX, 0);
 				absoluteX = min(absoluteX, m_width-1);
-
+				
 				// By the time we get here, we are within the bounds of the image.
 				Color current = original(absoluteX, y);
-
+				
 				// Add the current local offset and the current color to the stacks.
 				adjacentColors.push(current);
 				offsets.push(localX);
+			}
+
+			// Compute and set the resultant color for the current pixel.
+			this->operator()(x, y) = CombineAdjacentColors(adjacentColors, offsets, stdDev);
+		}
+	}
+
+	// Blur vertically.
+	for (int y = 0; y < m_height; y++)
+	{
+		for (int x = 0; x < m_width; x++)
+		{
+			// Apply Gaussian filter around current pixel.
+			// These are the colors and corresponding local offsets around the current pixel.
+			stack<Color> adjacentColors;
+			stack<int> offsets;
+
+			for (int localY = -radius; localY < radius; localY++)
+			{
+				int absoluteY = y + localY;
+				
+				// Clamp absoluteY into the image dimensions [0, height-1].
+				absoluteY = max(absoluteY, 0);
+				absoluteY = min(absoluteY, m_height-1);
+				
+				// By the time we get here, we are within the bounds of the image.
+				Color current = original(x, absoluteY);
+				
+				// Add the current local offset and the current color to the stacks.
+				adjacentColors.push(current);
+				offsets.push(localY);
 			}
 
 			// Compute and set the resultant color for the current pixel.
@@ -266,7 +298,7 @@ void Image::Postprocess()
 	brightpassed.ConvertToGreyscale();
 
 	// Blur the brightpassed image.
-	brightpassed.GaussianBlur(10.0, 50);
+	brightpassed.GaussianBlur(27.0, 50);
 
 	brightpassed.WriteToDisk("brightpassed.png");
 

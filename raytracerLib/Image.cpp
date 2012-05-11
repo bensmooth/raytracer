@@ -276,29 +276,42 @@ void Image::Postprocess()
 	Image brightpassed(*this);
 
 	// Apply bright-pass filter.
-	Color subtractsOne(-1.0, -1.0, -1.0);
 	for (int y = 0; y < m_height; y++)
 	{
 		for (int x = 0; x < m_width; x++)
 		{
 			Color &current = brightpassed.m_image[y][x];
 
-			// This will subtract one from each channel; the still-positive channels were
-			// above one, and should be included in the bright-passed image.
-			current.AddColors(subtractsOne);
-
-			// Clamp each channel to be above 0.
-			current.SetRed(max(current.GetRed(), 0.0));
-			current.SetGreen(max(current.GetGreen(), 0.0));
-			current.SetBlue(max(current.GetBlue(), 0.0));
+			// If a channel is not above 1, discard it.
+			if (current.GetRed() < 1.0)
+			{
+				current.SetRed(0.0);
+			}
+ 			if (current.GetGreen() < 1.0)
+			{
+				current.SetGreen(0.0);
+			}
+			if (current.GetBlue() < 1.0)
+			{
+				current.SetBlue(0.0);
+			}
 		}
 	}
 
-	// Convert the brightpassed image to greyscale.
-	brightpassed.ConvertToGreyscale();
-
 	// Blur the brightpassed image.
-	brightpassed.GaussianBlur(27.0, 50);
+	brightpassed.GaussianBlur(4, 10);
+
+	// Create a more blurry brightpassed image, and combine with the original.
+	Image moreBlurry(brightpassed);
+	brightpassed.GaussianBlur(8, 15);
+	brightpassed.Add(moreBlurry);
+
+	// Make more blur.
+	moreBlurry.GaussianBlur(10, 20);
+	brightpassed.Add(moreBlurry);
+	moreBlurry.GaussianBlur(30, 50);
+	brightpassed.Add(moreBlurry);
+	brightpassed.DoGlobalHDR();
 
 	brightpassed.WriteToDisk("brightpassed.png");
 

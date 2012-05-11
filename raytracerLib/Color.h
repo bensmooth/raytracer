@@ -63,6 +63,10 @@ public:
 	 */
 	Color &LinearMult(double scalar);
 
+	/**
+	 * Gets the human-scaled luminance of the color.
+	 */
+	double GetLuminance();
 
 	// Gets each component.
 	double GetRed() const;

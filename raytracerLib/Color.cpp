@@ -95,6 +95,17 @@ double Color::GetGreen() const
 }
 
 
+double Color::GetLuminance()
+{
+	// Some constants that control how much each channel contributes to the luminance.
+	const double redW = 0.299;
+	const double greenW = 0.587;
+	const double blueW = 0.114;
+
+	return (m_red*redW + m_green*greenW + m_blue*blueW);
+}
+
+
 png::rgb_pixel Color::GetImageColor() const
 {
 	png::rgb_pixel rgb;

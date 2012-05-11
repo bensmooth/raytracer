@@ -190,11 +190,6 @@ void Image::GaussianBlur(double stdDev, int radius)
 
 void Image::ConvertToGreyscale()
 {
-	// Some constants that control how much each channel contributes to the luminance.
-	const double redW = 0.299;
-	const double greenW = 0.587;
-	const double blueW = 0.114;
-
 	for (int y = 0; y < m_height; y++)
 	{
 		for (int x = 0; x < m_width; x++)
@@ -203,7 +198,7 @@ void Image::ConvertToGreyscale()
 			Color &current = operator()(x, y);
 
 			// Calculate luminance of current pixel.
-			double luminance = current.GetRed()*redW + current.GetGreen()*greenW + current.GetBlue()*blueW;
+			double luminance = current.GetLuminance();
 
 			// Set each channel to the luminance.
 			current.SetRed(luminance);
@@ -282,18 +277,12 @@ void Image::Postprocess()
 		{
 			Color &current = brightpassed.m_image[y][x];
 
-			// If a channel is not above 1, discard it.
-			if (current.GetRed() < 1.0)
+			// Scale pixels based on the luminance.
+			double lum = current.GetLuminance();
+			if (lum < 1.0)
 			{
-				current.SetRed(0.0);
-			}
- 			if (current.GetGreen() < 1.0)
-			{
-				current.SetGreen(0.0);
-			}
-			if (current.GetBlue() < 1.0)
-			{
-				current.SetBlue(0.0);
+				// Scale colors down.
+				current.LinearMult(max(lum - 0.5, 0.0));
 			}
 		}
 	}

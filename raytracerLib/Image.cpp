@@ -156,11 +156,37 @@ void Image::GaussianBlur(double stdDev, int radius)
 }
 
 
+void Image::ConvertToGreyscale()
+{
+	// Some constants that control how much each channel contributes to the luminance.
+	const double redW = 0.299;
+	const double greenW = 0.587;
+	const double blueW = 0.114;
+
+	for (int y = 0; y < m_height; y++)
+	{
+		for (int x = 0; x < m_width; x++)
+		{
+			// Grab current pixel.
+			Color &current = operator()(x, y);
+
+			// Calculate luminance of current pixel.
+			double luminance = current.GetRed()*redW + current.GetGreen()*greenW + current.GetBlue()*blueW;
+
+			// Set each channel to the luminance.
+			current.SetRed(luminance);
+			current.SetGreen(luminance);
+			current.SetBlue(luminance);
+		}
+	}
+}
+
+
 void Image::Add(const Image& other)
 {
 	if ((m_width != other.m_width) || (m_height != other.m_height))
 	{
-		throw RaytraceException("Images not the same size in Image::Add()");
+		throw RaytraceException("Images are not the same size in Image::Add()");
 	}
 
 	for (int y = 0; y < m_height; y++)
@@ -236,8 +262,11 @@ void Image::Postprocess()
 		}
 	}
 
+	// Convert the brightpassed image to greyscale.
+	brightpassed.ConvertToGreyscale();
+
 	// Blur the brightpassed image.
-	brightpassed.GaussianBlur(5.0, 20);
+	brightpassed.GaussianBlur(10.0, 50);
 
 	brightpassed.WriteToDisk("brightpassed.png");
 

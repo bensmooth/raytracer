@@ -33,6 +33,11 @@ public:
 	void GaussianBlur(double stdDev, int radius);
 
 	/**
+	 * Converts the image, in-place, to greyscale, using a luminance operator that takes into account human perception.
+	 */
+	void ConvertToGreyscale();
+
+	/**
 	 * Destructively adds the other image to this image.
 	 * @warning If images are not the same size, an exception will be thrown.
 	 */

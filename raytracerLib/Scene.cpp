@@ -846,6 +846,7 @@ void Scene::RenderSingleThreaded(std::string outfile, int imageWidth, int imageH
 	}
 
 	// Write out to disk.
+	outputImage.Postprocess();
 	outputImage.WriteToDisk(outfile);
 }
 
@@ -944,6 +945,7 @@ void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight,
 	delete[] threadInfoList;
 
 	// Write out PNG.
+	outputImage.Postprocess();
 	outputImage.WriteToDisk(outfile);
 }
 

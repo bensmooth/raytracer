@@ -11,6 +11,7 @@ class Image
 {
 public:
 	Image(int width, int height);
+	Image(const Image &other);
 	virtual ~Image();
 
 	/**
@@ -25,12 +26,40 @@ public:
 	void DoGlobalHDR();
 
 	/**
+	 * Blurs the image.  A larger standard deviation will produce a blurrier image.
+	 * @param stdDev The standard deviation to use when weighting the pixels.
+	 * @param radius The number of pixels to go out from the center of each blurred pixel.
+	 */
+	void GaussianBlur(double stdDev, int radius);
+
+	/**
+	 * Destructively adds the other image to this image.
+	 * @warning If images are not the same size, an exception will be thrown.
+	 */
+	void Add(const Image &other);
+
+	/**
+	 * Postprocesses.
+	 */
+	void Postprocess();
+
+	/**
 	 * Writes the image to disk as a png.
 	 */
 	void WriteToDisk(std::string filename);
 
 private:
+	/**
+	 * Throws an exception if the given coodinate pair is out of bounds.
+	 */
 	void ThrowIfOutOfBounds(int x, int y) const;
+
+	/**
+	 * Allocates the image buffer with the given width and height.
+	 * Also sets the width and height member variables.
+	 * @warning Does not free anything already in the buffer.
+	 */
+	void AllocateBuffer(int width, int height);
 
 	int m_width, m_height;
 	Color **m_image;

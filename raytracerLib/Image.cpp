@@ -298,18 +298,13 @@ void Image::Postprocess()
 	// Make more blur.
 	moreBlurry.GaussianBlur(10, 20);
 	brightpassed.Add(moreBlurry);
+
 	moreBlurry.GaussianBlur(30, 50);
 	brightpassed.Add(moreBlurry);
 	brightpassed.DoGlobalHDR();
 
-	brightpassed.WriteToDisk("brightpassed.png");
-
-	WriteToDisk("preAdd.png");
-
 	// Combine the brightpassed image with the original.
 	Add(brightpassed);
-
-	WriteToDisk("postAdd.png");
 
 	// Scale everything back to [0, 1].
 	DoGlobalHDR();

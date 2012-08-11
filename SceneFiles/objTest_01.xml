@@ -42,13 +42,7 @@
     <mirrorCoef>0.45</mirrorCoef>
   </shader>
 
-
-  <texture name="calibrationTex" type="image">
-    <sourcefile>images/textureMapCalibration.png</sourcefile>
-  </texture>
-  <shader name="greyTextured" type="Lambertian">
-    <diffuse>1.0 1.0 1.0</diffuse>
-    <diffusetex>calibrationTex</diffusetex>
+  <shader name="greyTextured" type="Tile">
   </shader>
   <shape name="ground" type="box">
     <shader ref="greyTextured" />

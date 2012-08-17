@@ -162,9 +162,10 @@ Timer::Timer( bool enable_high_res_timer )
 #endif
 }
 
+
 Timer_t Timer::tic() const
 {
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(__arm__)
   if (_use_high_res_timer)
     {
       Timer_t x;CLK(x);return x;
@@ -175,7 +176,7 @@ Timer_t Timer::tic() const
       struct timeval tv;
       gettimeofday(&tv, NULL);
       return ((Timer_t)tv.tv_sec)*1000000+(Timer_t)tv.tv_usec;
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(__arm__)
     }
 #endif
 }

@@ -61,6 +61,13 @@ add_executable(matrixTest
 target_link_libraries(matrixTest raytracerLib)
 
 
+add_executable(expTest
+  ExpTest.cpp
+)
+target_link_libraries(expTest raytracerLib)
+target_link_libraries(expTest rt)
+target_link_libraries(expTest ${PNG_LIBRARY})
+
 add_executable(bboxTest
   BBoxTest.cpp
 )

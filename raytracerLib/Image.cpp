@@ -1,7 +1,7 @@
 #include <math.h>
+#include <stack>
 #include "Image.h"
 #include "RaytraceException.h"
-#include <stack>
 
 using namespace std;
 
@@ -69,6 +69,42 @@ const Color& Image::operator()(int x, int y) const
 }
 
 
+double Exponent(double x)
+{
+	double result;
+
+	// For x in (-inf, -2] we can approximate e^x as the line through (-2, e^-2) and (-inf, 0)
+	if (x <= -2.0)
+	{
+		double MinDouble = std::numeric_limits<double>::min();
+		// The line through (-2, e^-2) and (-inf, 0) is y=(c-x)/(e^2 (c+2))
+		double denominator = M_E * M_E * (MinDouble + 2.0);
+		return ((MinDouble - x) / denominator);
+	}
+
+	// Original.
+	//result = exp(x);
+
+	// Less precision.
+//	result = (double)expf(x);
+
+	// Taylor series.  Form is (x^n)/(n!).
+	// First two terms.
+	result = 1.0 + x;
+
+	// Third term.
+	result += (x*x)/2.0;
+
+	// Fourth term.
+	result += (x*x*x)/6.0;
+
+	// Fifth term.
+	result += (x*x*x*x)/24.0;
+
+	return (result);
+}
+
+
 /**
  * Calculates the Gaussian weight of the given pixel offset from the center tap.
  */
@@ -78,7 +114,7 @@ double CalculateWeight(int x, double stdDev)
 	const double sqrt2Pi = 2.506628274631;
 
 	// For a mean of 0, this is the normal function.
-	double dividend = exp(-(x*x)/(2.0*stdDev*stdDev));
+	double dividend = Exponent(-(x*x)/(2.0*stdDev*stdDev));
 	double divisor = stdDev * sqrt2Pi;
 
 	return (dividend / divisor);

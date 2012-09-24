@@ -69,3 +69,9 @@ private:
 	int m_width, m_height;
 	Color **m_image;
 };
+
+
+/**
+ * Fast and dirty exp() implementation.
+ */
+double Exponent(double x);

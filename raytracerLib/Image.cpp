@@ -363,6 +363,19 @@ void Image::WriteToDisk(std::string filename)
 }
 
 
+int Image::GetWidth()
+{
+	return (m_width);
+}
+
+
+int Image::GetHeight()
+{
+	return (m_height);
+}
+
+
+
 void Image::ThrowIfOutOfBounds(int x, int y) const
 {
 	if (x < 0)

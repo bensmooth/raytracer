@@ -11,6 +11,7 @@
 #include "ILight.h"
 #include "RaytraceException.h"
 
+class Image;
 typedef std::map<std::string, IShader*> ShaderMap;
 typedef std::map<std::string, IObject*> InstanceableMap;
 typedef std::vector<IObject*> ObjectList;
@@ -52,13 +53,11 @@ public:
 
 	/**
 	 * Renders the scene, generating a png file with the given name.
-	 * @param outfile The output filename.
-	 * @param imageWidth The width of the image.
-	 * @param imageHeight The height of the image.
+	 * @param image The image to render to.
 	 * @param threadCount The number of threads to use when rendering the image.  Set to -1 to guess at the number that would be most effecient.
 	 * @throws RaytraceException If something goes wrong.
 	 */
-	void Render(std::string outfile, int imageWidth, int imageHeight, int threadCount);
+	void Render(Image &image, int threadCount);
 
 	/**
 	 * Casts the given ray in the scene.
@@ -137,8 +136,8 @@ private:
 	 * Same idea as public Render() above.
 	 * Comes in single and multithreaded flavors.
 	 */
-	void RenderSingleThreaded(std::string outfile, int imageWidth, int imageHeight);
-	void RenderMultiThreaded(std::string outfile, int imageWidth, int imageHeight, int threadCount);
+	void RenderSingleThreaded(Image &image);
+	void RenderMultiThreaded(Image &image, int threadCount);
 
 	ICamera *m_camera;
 	ObjectList m_objects;

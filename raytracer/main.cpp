@@ -5,6 +5,7 @@
 #include "handleGraphicsArgs.h"
 #include "Scene.h"
 #include "RaytraceException.h"
+#include <Image.h>
 #include "ThreadPool.h"
 
 
@@ -77,7 +78,15 @@ int main(int argc, char *argv[])
 		}
 		cout << "Rendering with " << args.numCpus << " threads..." << endl;
 		int64_t beginTime = GetTickCount();
-		scene->Render(args.outputFileName, args.width, args.height, args.numCpus);
+		Image image(args.width, args.height);
+		scene->Render(image, args.numCpus);
+
+		if (args.doHdr)
+		{
+			image.Postprocess();
+		}
+
+		image.WriteToDisk(args.outputFileName);
 		cout << "Rendering scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
 	catch (RaytraceException &e)

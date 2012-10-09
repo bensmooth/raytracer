@@ -807,7 +807,7 @@ Color Scene::RaytracePixel(int x, int y)
 }
 
 
-void Scene::Render(string outfile, int imageWidth, int imageHeight, int threadCount)
+void Scene::Render(Image &image, int threadCount)
 {
 	// See if we are guessing the number of threads.
 	if (threadCount <= 0)
@@ -817,19 +817,19 @@ void Scene::Render(string outfile, int imageWidth, int imageHeight, int threadCo
 
 	if (threadCount == 1)
 	{
-		RenderSingleThreaded(outfile, imageWidth, imageHeight);
+		RenderSingleThreaded(image);
 	}
 	else
 	{
-		RenderMultiThreaded(outfile, imageWidth, imageHeight, threadCount);
+		RenderMultiThreaded(image, threadCount);
 	}
 }
 
 
-void Scene::RenderSingleThreaded(std::string outfile, int imageWidth, int imageHeight)
+void Scene::RenderSingleThreaded(Image &image)
 {
-	// This is the image we will be writing to.
-	Image outputImage(imageWidth, imageHeight);
+	int imageWidth = image.GetWidth();
+	int imageHeight = image.GetHeight();
 
 	m_camera->SetImageDimensions(imageWidth, imageHeight);
 
@@ -841,13 +841,9 @@ void Scene::RenderSingleThreaded(std::string outfile, int imageWidth, int imageH
 			Color color = RaytracePixel(imageX, imageY);
 
 			// Save color to image structure.  Flip Y,  because we are rendering upside down.
-			outputImage(imageX, imageHeight -1 - imageY) = color;
+			image(imageX, imageHeight -1 - imageY) = color;
 		}
 	}
-
-	// Write out to disk.
-	outputImage.Postprocess();
-	outputImage.WriteToDisk(outfile);
 }
 
 
@@ -905,10 +901,10 @@ void *RenderThread(void *info)
 }
 
 
-void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight, int threadCount)
+void Scene::RenderMultiThreaded(Image &image, int threadCount)
 {
-	// The image we will be rendering to.
-	Image outputImage(imageWidth, imageHeight);
+	int imageWidth = image.GetWidth();
+	int imageHeight = image.GetHeight();
 
 	// Tell the camera how big the image is.
 	m_camera->SetImageDimensions(imageWidth, imageHeight);
@@ -932,7 +928,7 @@ void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight,
 		renderInfo.height = 1;
 		renderInfo.finalImageHeight = imageHeight;
 		renderInfo.scene = this;
-		renderInfo.outputImage = &outputImage;
+		renderInfo.outputImage = &image;
 
 		// Add a job to the pool for each chunk.
 		renderPool.AddJob(RenderThread, &threadInfoList[y]);
@@ -943,10 +939,6 @@ void Scene::RenderMultiThreaded(string outfile, int imageWidth, int imageHeight,
 
 	// Free list of renderinfos.
 	delete[] threadInfoList;
-
-	// Write out PNG.
-	outputImage.Postprocess();
-	outputImage.WriteToDisk(outfile);
 }
 
 

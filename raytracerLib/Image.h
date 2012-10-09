@@ -44,7 +44,7 @@ public:
 	void Add(const Image &other);
 
 	/**
-	 * Postprocesses.
+	 * Postprocesses, performing a global HDR technique, and producing bloom effect.
 	 */
 	void Postprocess();
 
@@ -53,6 +53,15 @@ public:
 	 */
 	void WriteToDisk(std::string filename);
 
+	/**
+	 * Gets the width of the image.
+	 */
+	int GetWidth();
+
+	/**
+	 * Gets the height of the image.
+	 */
+	int GetHeight();
 private:
 	/**
 	 * Throws an exception if the given coodinate pair is out of bounds.

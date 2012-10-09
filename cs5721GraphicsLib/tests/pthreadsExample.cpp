@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <unistd.h>
 
 // Needed for the pthread system
 #include <pthread.h>

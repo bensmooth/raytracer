@@ -45,6 +45,7 @@ namespace sivelab {
     float aspectRatio;
     bool useShadow;
     Vector3D bgColor;
+	bool doHdr;
     
     bool useDepthOfField;
     float depthOfFieldDistance;

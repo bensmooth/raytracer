@@ -15,7 +15,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with libsivelab.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,70 +25,73 @@
 using namespace sivelab;
 
 GraphicsArgs::GraphicsArgs()
-  : verbose(false), width(100), height(100), 
-    aspectRatio(1.0), useShadow(true), bgColor(0.0, 0.0, 0.0),
-    useDepthOfField(false),
-    depthOfFieldDistance(0),
-    numCpus(-1), rpp(1), splitMethod("objectMedian"),
-    inputFileName(""), outputFileName("")
+	: verbose(false), width(100), height(100),
+	  aspectRatio(1.0), useShadow(true), bgColor(0.0, 0.0, 0.0),
+	  useDepthOfField(false), doHdr(false),
+	  depthOfFieldDistance(0),
+	  numCpus(-1), rpp(1), splitMethod("objectMedian"),
+	  inputFileName(""), outputFileName("")
 {
 }
 
 void GraphicsArgs::process(int argc, char *argv[])
 {
-  ArgumentParsing argParser;
+	ArgumentParsing argParser;
 
-  argParser.reg("help", "help/usage information", ArgumentParsing::NONE, '?');
-  argParser.reg("verbose", "turn on verbose output", ArgumentParsing::NONE, 'v');
-  argParser.reg("inputfile", "input file name to use", ArgumentParsing::STRING, 'i');
-  argParser.reg("outputfile", "output file name to use", ArgumentParsing::STRING, 'o');
-  argParser.reg("numcpus", "num of cores to use", ArgumentParsing::INT, 'n');
-  argParser.reg("width", "width of image (default is 100)", ArgumentParsing::INT, 'w');
-  argParser.reg("height", "height of image (default is 100)", ArgumentParsing::INT, 'h');
-  argParser.reg("aspect", "aspect ratio in width/height of image (default is 1)", ArgumentParsing::FLOAT, 'a');
-  argParser.reg("depth", "depth of field focus distance (default is 0.0 or OFF)", ArgumentParsing::FLOAT, 'd');
-  argParser.reg("rpp", "rays per pixel (default is 1)", ArgumentParsing::INT, 'r');
-  argParser.reg("split", "split method for bvh construction (default is objectMedian)", ArgumentParsing::STRING, 's');
+	argParser.reg("help", "help/usage information", ArgumentParsing::NONE, '?');
+	argParser.reg("verbose", "turn on verbose output", ArgumentParsing::NONE, 'v');
+	argParser.reg("inputfile", "input file name to use", ArgumentParsing::STRING, 'i');
+	argParser.reg("outputfile", "output file name to use", ArgumentParsing::STRING, 'o');
+	argParser.reg("numcpus", "num of cores to use", ArgumentParsing::INT, 'n');
+	argParser.reg("width", "width of image (default is 100)", ArgumentParsing::INT, 'w');
+	argParser.reg("height", "height of image (default is 100)", ArgumentParsing::INT, 'h');
+	argParser.reg("aspect", "aspect ratio in width/height of image (default is 1)", ArgumentParsing::FLOAT, 'a');
+	argParser.reg("depth", "depth of field focus distance (default is 0.0 or OFF)", ArgumentParsing::FLOAT, 'd');
+	argParser.reg("rpp", "rays per pixel (default is 1)", ArgumentParsing::INT, 'r');
+	argParser.reg("split", "split method for bvh construction (default is objectMedian)", ArgumentParsing::STRING, 's');
+	argParser.reg("hdr-bloom", "HDR bloom (default is off)", ArgumentParsing::NONE, 'b');
 
-  argParser.processCommandLineArgs(argc, argv);
+	argParser.processCommandLineArgs(argc, argv);
 
-  if (argParser.isSet("help"))
-    {
-      argParser.printUsage();
-      exit(EXIT_SUCCESS);
-    }
+	if (argParser.isSet("help"))
+	{
+		argParser.printUsage();
+		exit(EXIT_SUCCESS);
+	}
 
-  verbose = argParser.isSet("verbose");
-  if (verbose) std::cout << "Verbose Output: ON" << std::endl;
-  
-  argParser.isSet("width", width);
-  if (verbose) std::cout << "Setting width to " << width << std::endl;
-  
-  argParser.isSet("height", height);
-  if (verbose) std::cout << "Setting height to " << height << std::endl;
-  
-  argParser.isSet("aspect", aspectRatio);
-  if (verbose) std::cout << "Setting aspect ratio to " << aspectRatio << std::endl;
+	verbose = argParser.isSet("verbose");
 
-  if (argParser.isSet("depth", depthOfFieldDistance))
-    {
-      useDepthOfField = true;
-      if (verbose) std::cout << "Setting depth of field distance to " << depthOfFieldDistance << std::endl;
-    }
+	doHdr = argParser.isSet("hdr-bloom");
+	if (verbose) std::cout << "HDR bloom: ON" << std::endl;
 
-  argParser.isSet("numcpus", numCpus);
-  if (verbose) std::cout << "Setting num cpus to " << numCpus << std::endl;
+	argParser.isSet("width", width);
+	if (verbose) std::cout << "Setting width to " << width << std::endl;
 
-  argParser.isSet("rpp", rpp);
-  if (verbose) std::cout << "Setting rays per pixel to " << rpp << std::endl;
-  
-  argParser.isSet("split", splitMethod);
-  if (verbose) std::cout << "Setting split method to " << splitMethod << std::endl;
+	argParser.isSet("height", height);
+	if (verbose) std::cout << "Setting height to " << height << std::endl;
 
-  argParser.isSet("inputfile", inputFileName);
-  if (verbose) std::cout << "Setting inputFileName to " << inputFileName << std::endl;
+	argParser.isSet("aspect", aspectRatio);
+	if (verbose) std::cout << "Setting aspect ratio to " << aspectRatio << std::endl;
 
-  argParser.isSet("outputfile", outputFileName);
-  if (verbose) std::cout << "Setting outputFileName to " << outputFileName << std::endl;
+	if (argParser.isSet("depth", depthOfFieldDistance))
+	{
+		useDepthOfField = true;
+		if (verbose) std::cout << "Setting depth of field distance to " << depthOfFieldDistance << std::endl;
+	}
+
+	argParser.isSet("numcpus", numCpus);
+	if (verbose) std::cout << "Setting num cpus to " << numCpus << std::endl;
+
+	argParser.isSet("rpp", rpp);
+	if (verbose) std::cout << "Setting rays per pixel to " << rpp << std::endl;
+
+	argParser.isSet("split", splitMethod);
+	if (verbose) std::cout << "Setting split method to " << splitMethod << std::endl;
+
+	argParser.isSet("inputfile", inputFileName);
+	if (verbose) std::cout << "Setting inputFileName to " << inputFileName << std::endl;
+
+	argParser.isSet("outputfile", outputFileName);
+	if (verbose) std::cout << "Setting outputFileName to " << outputFileName << std::endl;
 }
 

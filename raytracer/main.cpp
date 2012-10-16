@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
 		int64_t beginTime = GetTickCount();
 		Image image(args.width, args.height);
 		scene->Render(image, args.numCpus);
+		cout << "Rendering scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 
 		if (args.doHdr)
 		{
@@ -87,7 +88,6 @@ int main(int argc, char *argv[])
 		}
 
 		image.WriteToDisk(args.outputFileName);
-		cout << "Rendering scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
 	catch (RaytraceException &e)
 	{

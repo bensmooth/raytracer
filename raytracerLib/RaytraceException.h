@@ -7,17 +7,17 @@
 
 #include <string>
 
-class RaytraceException : public std::exception
+class EngineException : public std::exception
 {
 public:
 	/**
 	 * Initializes the exception with the given message.
      * @param what The message.
      */
-	RaytraceException(std::string what = "exception!");
+	EngineException(std::string what = "exception!");
 
-	RaytraceException(const RaytraceException& orig);
-	~RaytraceException() throw();
+	EngineException(const RaytraceException& orig);
+	~EngineException() throw();
 
 	const char* what() const throw();
 private:

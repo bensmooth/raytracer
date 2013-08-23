@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stack>
 #include "Image.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 
 using namespace std;
 
@@ -130,7 +130,7 @@ Color CombineAdjacentColors(stack<Color> &adjacentColors, stack<int> &offsets, d
 {
 	if (adjacentColors.size() != offsets.size())
 	{
-		throw RaytraceException("adjacentColors and offset stacks are different sizes in CombineAdjacentColors()!");
+		throw EngineException("adjacentColors and offset stacks are different sizes in CombineAdjacentColors()!");
 	}
 
 	// Build up weighted result until the stacks are empty.
@@ -249,7 +249,7 @@ void Image::Add(const Image& other)
 {
 	if ((m_width != other.m_width) || (m_height != other.m_height))
 	{
-		throw RaytraceException("Images are not the same size in Image::Add()");
+		throw EngineException("Images are not the same size in Image::Add()");
 	}
 
 	for (int y = 0; y < m_height; y++)
@@ -380,18 +380,18 @@ void Image::ThrowIfOutOfBounds(int x, int y) const
 {
 	if (x < 0)
 	{
-		throw RaytraceException("X too small in Image.");
+		throw EngineException("X too small in Image.");
 	}
 	if (y < 0)
 	{
-		throw RaytraceException("Y too small in Image.");
+		throw EngineException("Y too small in Image.");
 	}
 	if (x >= m_width)
 	{
-		throw RaytraceException("X too big in Image.");
+		throw EngineException("X too big in Image.");
 	}
 	if (y >= m_height)
 	{
-		throw RaytraceException("Y too big in Image.");
+		throw EngineException("Y too big in Image.");
 	}
 }

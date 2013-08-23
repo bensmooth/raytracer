@@ -6,6 +6,7 @@ IF(${Boost_THREAD_FOUND})
     boostThreadExample.cpp
     )
   TARGET_LINK_LIBRARIES(boostThreadExample cs5721Graphics)
+  TARGET_LINK_LIBRARIES(boostThreadExample boost_system)
   TARGET_LINK_LIBRARIES(boostThreadExample ${Boost_THREAD_LIBRARIES})
   TARGET_LINK_LIBRARIES(boostThreadExample pthread)
 ENDIF()

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "PerspectiveCamera.h"
 #include "Vector3D.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 #include "JitteredSampler.h"
 
 using namespace sivelab;
@@ -22,7 +22,7 @@ PerspectiveCamera::PerspectiveCamera(const Ray& positionAndDirection, double vie
 	{
 		char buffer[128];
 		sprintf(buffer, "Unable to construct jittered samples: %i is not a perfect square!", m_samplesPerPixel);
-		throw RaytraceException(buffer);
+		throw EngineException(buffer);
 	}
 }
 

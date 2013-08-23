@@ -23,6 +23,7 @@
 #include <iostream>
 #include <cstdlib>
 
+#include <string.h>
 #include "png++/png.hpp"
 #include "handleGraphicsArgs.h"
 #include "Random.h"

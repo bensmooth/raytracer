@@ -15,7 +15,7 @@ add_definitions("-Werror -Wall -pedantic")
 
 add_library(raytracerLib
   Basis.cpp Basis.h
-  RaytraceException.cpp RaytraceException.h
+  EngineException.cpp EngineException.h
   Scene.cpp Scene.h
   Ray.cpp Ray.h
   Sphere.cpp Sphere.h

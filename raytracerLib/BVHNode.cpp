@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "BVHNode.h"
 #include "Intersection.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 
 using namespace std;
 
@@ -72,7 +72,7 @@ BVHNode::BVHNode(BBObjectList objects, int dimensionToSortOn)
 	}
 	if (objectCount == 0)
 	{
-		throw RaytraceException("List with 0 objects passed into BVH builder.");
+		throw EngineException("List with 0 objects passed into BVH builder.");
 	}
 
 	// Sort the list along the given dimension.
@@ -126,7 +126,7 @@ BBox BVHNode::GetBoundingBox()
 IShader* BVHNode::GetShader()
 {
 	// This should never be called.
-	throw RaytraceException("BVHNode::GetShader() should never be called!");
+	throw EngineException("BVHNode::GetShader() should never be called!");
 }
 
 
@@ -209,7 +209,7 @@ bool BVHNode::Intersect(const Ray& ray, Intersection& result)
 	else
 	{
 		// Something really funky is going on.
-		throw RaytraceException("Invalid BVH intersection!");
+		throw EngineException("Invalid BVH intersection!");
 	}
 
 	// If we got here, we had a hit.

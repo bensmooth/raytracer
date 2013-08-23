@@ -4,6 +4,7 @@
 #include <vector>
 
 // Needed for the boost system
+#include <stdint.h>
 #include <boost/thread.hpp>
 
 #ifdef WIN32

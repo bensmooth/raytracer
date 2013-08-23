@@ -1,5 +1,5 @@
 #include "Instance.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 #include "IShader.h"
 #include "Ray.h"
 #include "Intersection.h"
@@ -11,7 +11,7 @@ InstanceObject::InstanceObject(Matrix transf, IObject* original, IShader* shader
 	// Calculate inverse of transformation matrix.
 	if (transf.Inverse(m_invTrans) == false)
 	{
-		throw RaytraceException("Unable to invert matrix:\n" + transf.ToString() + "\n");
+		throw EngineException("Unable to invert matrix:\n" + transf.ToString() + "\n");
 	}
 
 	// Transform the points that make up the original object's bounding box.

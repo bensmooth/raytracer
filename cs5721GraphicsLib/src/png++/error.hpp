@@ -35,6 +35,7 @@
 #include <cerrno>
 #include <cstdlib>
 #include <string>
+#include <cstring>
 
 namespace png
 {

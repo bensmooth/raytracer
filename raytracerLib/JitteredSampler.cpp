@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "JitteredSampler.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 
 
 JitteredSampler::JitteredSampler()
@@ -24,7 +24,7 @@ void JitteredSampler::Generate(int sampleCount)
 	{
 		char buffer[128];
 		sprintf(buffer, "Unable to construct jittered samples: %i is not a perfect square!", sampleCount);
-		throw RaytraceException(buffer);
+		throw EngineException(buffer);
 	}
 
 	// Divide the area up into a grid of equally-sized squares.
@@ -74,7 +74,7 @@ void JitteredSampler::ThrowIfNoSamples() const
 {
 	if (m_samples.empty())
 	{
-		throw RaytraceException("Tried to do something before calling JitteredSampler::Generate()!");
+		throw EngineException("Tried to do something before calling JitteredSampler::Generate()!");
 	}
 }
 

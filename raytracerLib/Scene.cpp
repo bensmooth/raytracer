@@ -53,7 +53,7 @@ void ReadString(map<string, SceneDataContainer> &map, string fieldName, string &
 		// We didn't find it.
 		if (required)
 		{
-			throw RaytraceException("Missing required field \"" + fieldName + "\" in scene file!");
+			throw EngineException("Missing required field \"" + fieldName + "\" in scene file!");
 		}
 		else
 		{
@@ -414,7 +414,7 @@ public:
 		ShaderMap::iterator shaderIter = m_scene->m_shaders.find(shaderName);
 		if (shaderIter == m_scene->m_shaders.end())
 		{
-			throw RaytraceException("Unable to find the shader ref \"" + shaderName + "\" for object \"" + objectName + "\" in the list of shaders!");
+			throw EngineException("Unable to find the shader ref \"" + shaderName + "\" for object \"" + objectName + "\" in the list of shaders!");
 		}
 
 		return (shaderIter->second);
@@ -429,7 +429,7 @@ public:
 		InstanceableMap::iterator instanceIter = m_scene->m_instances.find(instName);
 		if (instanceIter == m_scene->m_instances.end())
 		{
-			throw RaytraceException("Unable to find the instance ref \"" + instName + "\" for object \"" + objectName + "\" in the list of instanceable object!");
+			throw EngineException("Unable to find the instance ref \"" + instName + "\" for object \"" + objectName + "\" in the list of instanceable object!");
 		}
 
 		return (instanceIter->second);
@@ -717,7 +717,7 @@ Scene::Scene(std::string filename, int raysPerPixel, bool useBvh, bool verbose)
 	// Make sure they set a camera.
 	if (m_camera == NULL)
 	{
-		throw RaytraceException("Camera not set!");
+		throw EngineException("Camera not set!");
 	}
 
 	// If they wanted to use a BVH, build it up.

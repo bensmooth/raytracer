@@ -2,11 +2,11 @@
 #include <cstdlib>
 #include <time.h>
 
-#include "handleGraphicsArgs.h"
-#include "Scene.h"
-#include "RaytraceException.h"
+#include <handleGraphicsArgs.h>
+#include <Scene.h>
+#include <EngineException.h>
 #include <Image.h>
-#include "ThreadPool.h"
+#include <ThreadPool.h>
 
 
 using namespace std;
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 		scene = new Scene(args.inputFileName, args.rpp, true, args.verbose);
 		cout << "Parsing scene took " << (GetTickCount() - beginTime) << " ms." << endl;
 	}
-	catch (RaytraceException &e)
+	catch (EngineException &e)
 	{
 		cerr << "Error reading in scene file " << args.inputFileName << ": " << e.what() << endl;
 		exit(EXIT_FAILURE);
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
 		image.WriteToDisk(args.outputFileName);
 	}
-	catch (RaytraceException &e)
+	catch (EngineException &e)
 	{
 		cerr << "Error rendering scene: " << e.what() << endl;
 		exit(EXIT_FAILURE);

@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include "IShader.h"
 #include "BVHNode.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 
 
 Mesh::Mesh(std::string filename, IShader* shader)
@@ -12,7 +12,7 @@ Mesh::Mesh(std::string filename, IShader* shader)
 	if (mOBJ.import(filename.c_str()) == false)
 	{
 		// Something went wrong.
-		throw RaytraceException("Mesh at \"" + filename + "\" was unable to be read!");
+		throw EngineException("Mesh at \"" + filename + "\" was unable to be read!");
 	}
 
 	const ModelOBJ::Mesh *pMesh = 0;

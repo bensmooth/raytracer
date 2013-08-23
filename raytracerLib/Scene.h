@@ -9,7 +9,7 @@
 #include "IObject.h"
 #include "IShader.h"
 #include "ILight.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 
 class Image;
 typedef std::map<std::string, IShader*> ShaderMap;

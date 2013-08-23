@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "Matrix.h"
-#include "RaytraceException.h"
+#include "EngineException.h"
 #include "Scene.h"
 
 using namespace std;
@@ -88,7 +88,7 @@ double& MatrixRow::operator[](int index)
 {
 	if ((index < 0) || (index > MATRIX_COLS))
 	{
-		throw RaytraceException("Matrix column index out of bounds.");
+		throw EngineException("Matrix column index out of bounds.");
 	}
 
 	return (m_columns[index]);
@@ -99,7 +99,7 @@ double MatrixRow::operator[](int index) const
 {
 	if ((index < 0) || (index > MATRIX_COLS))
 	{
-		throw RaytraceException("Matrix column index out of bounds.");
+		throw EngineException("Matrix column index out of bounds.");
 	}
 
 	return (m_columns[index]);
@@ -303,7 +303,7 @@ string RowOperation::ToString()
 		} break;
 		default:
 		{
-			throw RaytraceException("Unknown row operation type.");
+			throw EngineException("Unknown row operation type.");
 		} break;
 	}
 
@@ -534,7 +534,7 @@ void Matrix::ApplyOperation(RowOperation& op)
 		default:
 		{
 			// We don't know what this is.
-			throw RaytraceException("Unknown row operation type.");
+			throw EngineException("Unknown row operation type.");
 		} break;
 	}
 }
@@ -759,7 +759,7 @@ MatrixRow& Matrix::operator[](int index)
 {
 	if ((index < 0) || (index >= MATRIX_ROWS))
 	{
-		throw RaytraceException("Row index is out of range!");
+		throw EngineException("Row index is out of range!");
 	}
 
 	return (m_rows[index]);
@@ -770,7 +770,7 @@ MatrixRow Matrix::operator[](int index) const
 {
 	if ((index < 0) || (index >= MATRIX_ROWS))
 	{
-		throw RaytraceException("Row index is out of range!");
+		throw EngineException("Row index is out of range!");
 	}
 
 	return (m_rows[index]);

@@ -9,242 +9,6 @@
 using namespace std;
 
 
-void MatrixRow::Swap(MatrixRow& row1, MatrixRow& row2)
-{
-	// Take advantage of our overloaded equals sign.
-	MatrixRow temp = row1;
-	row1 = row2;
-	row2 = temp;
-}
-
-
-MatrixRow::MatrixRow()
-{
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		m_columns[i] = 0.0;
-	}
-}
-
-
-MatrixRow::MatrixRow(const MatrixRow& other)
-{
-	*this = other;
-}
-
-
-MatrixRow::MatrixRow(double v0, double v1, double v2, double v3)
-{
-	m_columns[0] = v0;
-	m_columns[1] = v1;
-	m_columns[2] = v2;
-	m_columns[3] = v3;
-}
-
-
-MatrixRow::MatrixRow(const double values[MATRIX_COLS])
-{
-	memcpy(m_columns, values, sizeof(double) * MATRIX_COLS);
-}
-
-
-int MatrixRow::FindFirstNonzeroValue() const
-{
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		if (!EQUAL(m_columns[i], 0.0))
-		{
-			return (i);
-		}
-	}
-
-	// If we got here, the entire row is zero.
-	return (-1);
-}
-
-
-std::string MatrixRow::ToString() const
-{
-	char buffer[128];
-
-	snprintf(buffer, 128, "[%2.3f %2.3f %2.3f %2.3f]", m_columns[0], m_columns[1], m_columns[2], m_columns[3]);
-
-	return (buffer);
-}
-
-
-MatrixRow& MatrixRow::operator=(const MatrixRow& rhs)
-{
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		m_columns[i] = rhs.m_columns[i];
-	}
-
-	return (*this);
-}
-
-
-double& MatrixRow::operator[](int index)
-{
-	if ((index < 0) || (index > MATRIX_COLS))
-	{
-		throw EngineException("Matrix column index out of bounds.");
-	}
-
-	return (m_columns[index]);
-}
-
-
-double MatrixRow::operator[](int index) const
-{
-	if ((index < 0) || (index > MATRIX_COLS))
-	{
-		throw EngineException("Matrix column index out of bounds.");
-	}
-
-	return (m_columns[index]);
-}
-
-
-MatrixRow MatrixRow::operator+(const MatrixRow& other) const
-{
-	double cols[MATRIX_COLS];
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		cols[i] = m_columns[i] + other.m_columns[i];
-	}
-
-	MatrixRow result(cols);
-	result.SnapToInts();
-
-	return (result);
-}
-
-
-MatrixRow& MatrixRow::operator+=(const MatrixRow& other)
-{
-	*this = *this + other;
-
-	return (*this);
-}
-
-
-MatrixRow MatrixRow::operator-(const MatrixRow& other) const
-{
-	double cols[MATRIX_COLS];
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		cols[i] = m_columns[i] - other.m_columns[i];
-	}
-
-	MatrixRow result(cols);
-	result.SnapToInts();
-
-	return (result);
-}
-
-
-MatrixRow& MatrixRow::operator-=(const MatrixRow& other)
-{
-	*this = *this - other;
-
-	return (*this);
-}
-
-
-MatrixRow MatrixRow::operator-() const
-{
-	double cols[MATRIX_COLS];
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		cols[i] = -m_columns[i];
-	}
-
-	return (cols);
-}
-
-
-MatrixRow MatrixRow::operator*(double c) const
-{
-	double cols[MATRIX_COLS];
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		cols[i] = m_columns[i] * c;
-	}
-
-	MatrixRow result(cols);
-	result.SnapToInts();
-
-	return (result);
-}
-
-
-MatrixRow& MatrixRow::operator*=(double c)
-{
-	*this = *this * c;
-
-	return (*this);
-}
-
-
-MatrixRow MatrixRow::operator/(double c) const
-{
-	double cols[MATRIX_COLS];
-	for (int i = 0; i < MATRIX_COLS; i++)
-	{
-		cols[i] = m_columns[i] / c;
-	}
-
-	MatrixRow result(cols);
-	result.SnapToInts();
-
-	return (result);
-}
-
-
-MatrixRow& MatrixRow::operator/=(double c)
-{
-	*this = *this / c;
-
-	return (*this);
-}
-
-
-bool MatrixRow::operator==(const MatrixRow& other) const
-{
-	for (int col = 0; col < MATRIX_COLS; col++)
-	{
-		if (!EQUAL(m_columns[col], other.m_columns[col]))
-		{
-			return false;
-		}
-	}
-
-	// If we got here, we are equal.
-	return true;
-}
-
-
-bool MatrixRow::operator!=(const MatrixRow& other) const
-{
-	return !(*this == other);
-}
-
-
-void MatrixRow::SnapToInts()
-{
-	for (int col = 0; col < MATRIX_COLS; col++)
-	{
-		int closestInt = (int)round(m_columns[col]);
-
-		if (EQUAL((double)closestInt, m_columns[col]))
-		{
-			m_columns[col] = closestInt;
-		}
-	}
-}
-
-
 RowOperation RowOperation::Swap(int row1, int row2)
 {
 	RowOperation rowOp;
@@ -513,7 +277,7 @@ void Matrix::ApplyOperation(RowOperation& op)
 		case RowOperation::RowSwap:
 		{
 			// Simply swap the rows.
-			MatrixRow::Swap(operator[](op.targetRow), operator[](op.swapInfo.otherRow));
+			MatrixRow<MATRIX_ROWS>::Swap(operator[](op.targetRow), operator[](op.swapInfo.otherRow));
 		} break;
 		case RowOperation::RowScale:
 		{
@@ -522,8 +286,11 @@ void Matrix::ApplyOperation(RowOperation& op)
 		} break;
 		case RowOperation::RowAdd:
 		{
+			// Pretty sure the same row should never be the source and target.
+			assert(op.addInfo.sourceRow != op.targetRow);
+
 			// First, make a copy of the row we are going to add to the target row.
-			MatrixRow source(operator[](op.addInfo.sourceRow));
+			MatrixRow<MATRIX_ROWS> source(operator[](op.addInfo.sourceRow));
 
 			// Apply scalar.
 			source *= op.addInfo.scalar;
@@ -543,6 +310,9 @@ void Matrix::ApplyOperation(RowOperation& op)
 bool Matrix::EliminateWithPivot(RowOperation& opNeeded, int pivotRow, int pivotCol, int targetRow) const
 {
 	const Matrix &self = *this;
+
+	// Eliminating the pivot row with the pivot row makes no sense.
+	assert(targetRow != pivotRow);
 
 	// This is the value we are trying to cancel out.
 	double valueToBeCancelled = self[targetRow][pivotCol];
@@ -638,6 +408,7 @@ void Matrix::RowReduce(bool reducedEchelon, queue<RowOperation> *operationsTaken
 		{
 			// A swap is needed.
 			RowOperation swapOp = RowOperation::Swap(pivotRow, topRow);
+			pivotRow = topRow;
 			ApplyOperation(swapOp);
 			if (operationsTaken != NULL)
 			{
@@ -755,7 +526,7 @@ Matrix& Matrix::operator=(const Matrix& rhs)
 }
 
 
-MatrixRow& Matrix::operator[](int index)
+MatrixRow<MATRIX_ROWS>& Matrix::operator[](int index)
 {
 	if ((index < 0) || (index >= MATRIX_ROWS))
 	{
@@ -766,7 +537,7 @@ MatrixRow& Matrix::operator[](int index)
 }
 
 
-MatrixRow Matrix::operator[](int index) const
+MatrixRow<MATRIX_ROWS> Matrix::operator[](int index) const
 {
 	if ((index < 0) || (index >= MATRIX_ROWS))
 	{

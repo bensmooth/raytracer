@@ -2,8 +2,10 @@
 
 #include <string>
 #include <queue>
+#include "MatrixRow.h"
 #include "Vector4D.h"
 #include "Ray.h"
+
 
 /**
  * The number of rows in a Matrix.
@@ -11,105 +13,9 @@
 const int MATRIX_ROWS = 4;
 
 /**
- * The number of columns in a MatrixRow.
+ * The number of columns in a MatrixRow
  */
 const int MATRIX_COLS = 4;
-
-
-/**
- * This class represents a single row of a 4x4 matrix.
- */
-class MatrixRow
-{
-public:
-	/**
-	 * Swaps the content of the given two rows.
-	 */
-	static void Swap(MatrixRow &row1, MatrixRow &row2);
-
-	/**
-	 * Ctor.  Fills columns with zeros.
-	 */
-	MatrixRow();
-
-	/**
-	 * Copy ctor.
-	 */
-	MatrixRow(const MatrixRow &other);
-
-	/**
-	 * Ctor that takes in the 4 values of the row.
-	 */
-	MatrixRow(double v0, double v1, double v2, double v3);
-	MatrixRow(double const values[MATRIX_COLS]);
-
-
-	/**
-	 * Returns the column of the first nonzero value in the row.
-	 * Returns -1 if all of the entries in the row are zero.
-	 */
-	int FindFirstNonzeroValue() const;
-
-
-	/**
-	 * Constructs a string representation of the row.
-	 */
-	std::string ToString() const;
-
-	/**
-	 * Assignment operator.
-	 */
-	MatrixRow &operator=(const MatrixRow &rhs);
-
-	/**
-	 * Allows array-like access to each element in the row.
-	 */
-	double &operator[](int index);
-	double operator[](int index) const;
-
-	/**
-	 * Adds the content of this row and the other row.
-	 */
-	MatrixRow operator+(const MatrixRow &other) const;
-	MatrixRow &operator+=(const MatrixRow &other);
-
-	/**
-	 * Subtracts the content of the other row from this row.
-	 */
-	MatrixRow operator-(const MatrixRow &other) const;
-	MatrixRow &operator-=(const MatrixRow &other);
-
-	/**
-	 * Gets the value of the row if everything were negated.
-	 */
-	MatrixRow operator-() const;
-
-	/**
-	 * Multiplies a row by a constant.
-	 */
-	MatrixRow operator*(double c) const;
-	MatrixRow &operator*=(double c);
-
-	/**
-	 * Divides a row by a constant.
-	 */
-	MatrixRow operator/(double c) const;
-	MatrixRow &operator/=(double c);
-
-	/**
-	 * Equality testing.
-	 */
-	bool operator==(const MatrixRow &other) const;
-	bool operator!=(const MatrixRow &other) const;
-
-private:
-	/**
-	 * If any value in the row is within an epsilon of an integer, it is set to that integer.
-	 */
-	void SnapToInts();
-
-	double m_columns[MATRIX_COLS];
-};
 
 
 /**
@@ -262,9 +168,9 @@ public:
 	/**
 	 * Tries to find the add operation needed to reduce the given column in the given row to zero with the given pivot row.
 	 * @param opNeeded If true is returned, this will contain the operation needed to zero out the given row and column with the pivot.
-	 * @param pivotRow The row the pivot is in.
+	 * @param pivotRow The row the pivot is in.  Should not be the same as targetRow.
 	 * @param pivotCol The column the pivot is in.
-	 * @param targetRow The row to produce a zero in.
+	 * @param targetRow The row to produce a zero in. Should not be the same as pivotRow.
 	 * @return True if the operation in opNeeded will successfully zero out [targetRow][pivotCol], false if either the pivot value or row to zero is already zero.
 	 */
 	bool EliminateWithPivot(RowOperation &opNeeded, int pivotRow, int pivotCol, int targetRow) const;
@@ -294,8 +200,8 @@ public:
 	/**
 	 * Gets a reference to the row at the given index.
 	 */
-	MatrixRow &operator[](int index);
-	MatrixRow operator[](int index) const;
+	MatrixRow<MATRIX_COLS> &operator[](int index);
+	MatrixRow<MATRIX_COLS> operator[](int index) const;
 
 	/**
 	 * Multiplies matrices with each other.
@@ -320,6 +226,6 @@ public:
 	bool operator!=(const Matrix &other) const;
 
 private:
-	MatrixRow m_rows[MATRIX_ROWS];
+	MatrixRow<MATRIX_COLS> m_rows[MATRIX_ROWS];
 };
 

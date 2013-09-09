@@ -4,19 +4,29 @@
 using namespace std;
 
 
+double a1[] = {0, 1, 1.7, 0};
+double a2[] = {2, 0, 0, 2};
+double a3[] = {0, 1.7, -1, 1};
+double a4[] = {0, 0, 0, 1};
+
+double b1[] = {-2, 1, 7, 1};
+double b2[] = {3, -6, 6, -20};
+double b3[] = {1, 2, 5, 12};
+double b4[] = {9, 8, 3, 7};
+
 int main()
 {
 	Matrix a;
-	a[0] = MatrixRow(0, 1, 1.732, 0);
-	a[1] = MatrixRow(2, 0, 0, 2);
-	a[2] = MatrixRow(0, 1.732, -1, 1);
-	a[3] = MatrixRow(0, 0, 0, 1);
+	a[0] = MatrixRow<4>(a1);
+	a[1] = MatrixRow<4>(a2);
+	a[2] = MatrixRow<4>(a3);
+	a[3] = MatrixRow<4>(a4);
 
 	Matrix b;
-	b[0] = MatrixRow(-2, 1, 7, 1);
-	b[1] = MatrixRow(3, -6, 6, -20);
-	b[2] = MatrixRow(1, 2, 5, 12);
-	b[3] = MatrixRow(9, 8, 3, 7);
+	b[0] = MatrixRow<4>(b1);
+	b[1] = MatrixRow<4>(b2);
+	b[2] = MatrixRow<4>(b3);
+	b[3] = MatrixRow<4>(b4);
 
 	cout << "A:" << endl << a.ToString() << endl;
 	cout << "B:" << endl << b.ToString() << endl;
@@ -39,7 +49,12 @@ int main()
 	cout << "A*Ainv" << endl;
 	cout << (a*aInv).ToString() << endl;
 
-	cout << "det A: " << a.Determinant() << endl;
+	double aDet = a.Determinant();
+	cout << "det A: " << aDet << endl;
+	if (fabs(aDet - 7.78) > 0.005)
+	{
+		cerr << "Unexpected value for determinant of A; expected 7.78" << endl;
+	}
 
 	cout << "A row-reduced:" << endl;
 	queue<RowOperation> rowOps;

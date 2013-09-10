@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 double a1[] = {0, 1, 1.7, 0};
 double a2[] = {2, 0, 0, 2};
 double a3[] = {0, 1.7, -1, 1};
@@ -46,8 +45,15 @@ int main()
 		cout << "A is not invertable." << endl;
 	}
 
+	Matrix aTimesAInv = a*aInv;
+	Matrix identity;
+	identity.ConstructIdentity();
 	cout << "A*Ainv" << endl;
-	cout << (a*aInv).ToString() << endl;
+	cout << aTimesAInv.ToString();
+	if (aTimesAInv != identity)
+	{
+		cerr << "A*Ainv is supposed to be the identity matrix!" << endl << endl;
+	}
 
 	double aDet = a.Determinant();
 	cout << "det A: " << aDet << endl;

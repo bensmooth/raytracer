@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <stdio.h>
+#include <float.h>
 
 #include "EngineException.h"
 
@@ -312,15 +313,20 @@ private:
 			return (true);
 		}
 
-		const double maxRelDiff = 0.001;
-
 		// Calculate the difference.
+		const double maxDiff = DBL_EPSILON*4;
 		double diff = fabs((double)a - (double)b);
+		if (diff <= maxDiff)
+		{
+			return (true);
+		}
+
 		a = (Type)fabs((double)a);
 		b = (Type)fabs((double)b);
 		// Find the largest
 		double largest = (double)((b > a) ? b : a);
 
+		const double maxRelDiff = DBL_EPSILON*4;
 		if (diff <= largest * maxRelDiff)
 		{
 			return true;
@@ -332,4 +338,6 @@ private:
 	}
 
 	Type m_columns[Dimension];
+
+	friend class Matrix;
 };

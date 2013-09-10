@@ -372,6 +372,12 @@ void Matrix::RowReduce(bool reducedEchelon, queue<RowOperation> *operationsTaken
 	// Allow easier access to the [] operator.
 	Matrix &self = *this;
 
+	// Get rid of any values that are extremely close to zero, but are not zero.
+	for (int i = 0; i < MATRIX_ROWS; i++)
+	{
+		self[i].SnapToInts();
+	}
+
 	// Step over each row of the matrix, ignoring all rows above topRow.
 	for (int topRow = 0; topRow < MATRIX_ROWS; topRow++)
 	{

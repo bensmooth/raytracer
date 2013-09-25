@@ -1,20 +1,28 @@
 #!/bin/sh
 # Script that renders all of the scenes.
 
+if [ "$#" != "3" ]; then
+	echo "Usage:"
+	echo "doBuildAndRender.sh <image width> <image height> <rays per pixel>"
+	exit 1
+fi
+
 # These variables control the dimensions of the generated images.
-imageWidth=1920
-imageHeight=1080
-raysPerPixel=9
+imageWidth=${1}
+imageHeight=${2}
+raysPerPixel=${3}
+
+echo "${imageWidth}x${imageHeight} and ${raysPerPixel} rays per pixel"
 
 # Build it.
 mkdir build
+mkdir renders
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cd raytracer
 make -j
 
 # Render each scene.
-mkdir renders
 cd ../../SceneFiles/
 for filename in *.xml
 do

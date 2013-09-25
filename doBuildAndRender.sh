@@ -7,22 +7,22 @@ if [ "$#" != "3" ]; then
 	exit 1
 fi
 
-# These variables control the dimensions of the generated images.
+# These variables control the dimensions and parameters of the generated images.
 imageWidth=${1}
 imageHeight=${2}
 raysPerPixel=${3}
-
-echo "${imageWidth}x${imageHeight} and ${raysPerPixel} rays per pixel"
+outputDir="../../renders/"
 
 # Build it.
 mkdir build
-mkdir renders
+mkdir ${outputDir}
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cd raytracer
 make -j
 
 # Render each scene.
+mkdir ${outputDir}
 cd ../../SceneFiles/
 for filename in *.xml
 do
@@ -34,11 +34,10 @@ do
        echo "Rendering ${filename}.."
        cd ../build/raytracer/
 		# Do a normal one and an HDR one.
-       ./raytracer -i ../../SceneFiles/${filename} -o ../../renders/${imageFilename}.png -w ${imageWidth} -h ${imageHeight} -r ${raysPerPixel}
-       ./raytracer -i ../../SceneFiles/${filename} -o ../../renders/${imageFilename}HDR.png -w ${imageWidth} -h ${imageHeight} -r ${raysPerPixel} -b
+       ./raytracer -i ../../SceneFiles/${filename} -o ${outputDir}${imageFilename}.png -w ${imageWidth} -h ${imageHeight} -r ${raysPerPixel}
+       ./raytracer -i ../../SceneFiles/${filename} -o ${outputDir}${imageFilename}HDR.png -w ${imageWidth} -h ${imageHeight} -r ${raysPerPixel} -b
        cd ../../SceneFiles/
     fi
 done
 
-echo "Done rendering!"
-echo "All renders are in renders/"
+echo "Done rendering"

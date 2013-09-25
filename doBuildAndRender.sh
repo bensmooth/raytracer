@@ -1,23 +1,33 @@
 #!/bin/sh
-# Make some folders.
-mkdir build
-mkdir renders
-cd build
+# Script that renders all of the scenes.
+
+# These variables control the dimensions of the generated images.
+imageWidth=1920
+imageHeight=1080
+raysPerPixel=9
 
 # Build it.
+mkdir build
+cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cd raytracer
 make -j
 
 # Render each scene.
+mkdir renders
 cd ../../SceneFiles/
-for i in *.xml
+for filename in *.xml
 do
-    if test -f "$i"
+    if test -f "${filename}"
     then
-       echo "Rendering $i.."
+		# Image filename will be <scene name>.<raysPerPixel>
+       imageFilename=${filename%%???}${raysPerPixel}
+
+       echo "Rendering ${filename}.."
        cd ../build/raytracer/
-       ./raytracer -i ../../SceneFiles/$i -o ../../renders/$i.png -w 1280 -h 800 -r 9
+		# Do a normal one and an HDR one.
+       ./raytracer -i ../../SceneFiles/${filename} -o ../../renders/${imageFilename}.png -w ${imageWidth} -h ${imageHeight} -r ${raysPerPixel}
+       ./raytracer -i ../../SceneFiles/${filename} -o ../../renders/${imageFilename}HDR.png -w ${imageWidth} -h ${imageHeight} -r ${raysPerPixel} -b
        cd ../../SceneFiles/
     fi
 done

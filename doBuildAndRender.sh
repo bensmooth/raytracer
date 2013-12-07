@@ -21,6 +21,12 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 cd raytracer
 make -j
 
+# Make sure we were actually able to build it before running anything.
+if [ ! -f ./raytracer ]; then
+	echo "Build failed!"
+	exit
+fi
+
 # Render each scene.
 mkdir ${outputDir}
 cd ../../SceneFiles/

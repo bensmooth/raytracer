@@ -63,7 +63,7 @@ void *countReallyHigh(void *unused)
 {
 	printf("Starting to count really high!\n");
 	int i;
-	for (i = 1; i != 0; i++);
+	for (i = 1; i < 2147483645; i++);
 	printf("Finished counting high, ended at %i\n", i);
 
 	return (NULL);

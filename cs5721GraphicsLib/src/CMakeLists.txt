@@ -9,3 +9,4 @@ add_library (cs5721Graphics
   XMLSceneParser.h XMLSceneParser.cpp
 )
 
+target_link_libraries(cs5721Graphics ${PNG_LIBRARY})

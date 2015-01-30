@@ -1,7 +1,7 @@
 #include "ThreadPool.h"
 
-#include <unistd.h>
 #include <time.h>
+#include <thread>
 
 using namespace ThreadEngine;
 
@@ -13,9 +13,7 @@ void *ThreadEngine::ProcessJobs(void *inData)
 	bool halt = false;
 
 	// This is the amount of time we will sleep in between checking for jobs when we don't have one.
-	timespec sleepTime;
-	memset(&sleepTime, 0, sizeof(sleepTime));
-	sleepTime.tv_nsec = 10000000; // 10 milliseconds.
+	const int SLEEP_TIME_MS = 10;
 
 	while (halt == false)
 	{
@@ -46,7 +44,7 @@ void *ThreadEngine::ProcessJobs(void *inData)
 			pool->m_jobListLock.Unlock();
 
 			// Sleep a bit here so that we don't hog CPU time while waiting for jobs.
-			nanosleep(&sleepTime, NULL);
+			std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MS));
 		}
 	}
 
@@ -90,7 +88,7 @@ ThreadEngine::ThreadPool::~ThreadPool()
 
 int ThreadEngine::ThreadPool::GetNumberOfProcessors()
 {
-	return (sysconf( _SC_NPROCESSORS_ONLN ));
+	return (std::thread::hardware_concurrency());
 }
 
 

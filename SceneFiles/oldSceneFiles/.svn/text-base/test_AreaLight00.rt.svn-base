@@ -1,5 +1,0 @@
-shape sphere 0.0 2.0 0.0 1.0 lambertian 0.4 0.4 1.0
-shape triangle -50.0 0.0 50.0 50.0 0.0 50.0 50.0 0.0 -50.0 lambertian 0.5 0.5 0.5
-shape triangle -50.0 0.0 50.0 50.0 0.0 -50.0 -50.0 0.0 -50.0 lambertian 0.5 0.5 0.5
-camera 0.0 3.0 8.0 0.0 -1.0 -3.0 0.40 0.5
-light 0.0 10.0 0.0 1.0 1.0 1.0 area 32.0 32.0 normal 0.0 -1.0 0.0
